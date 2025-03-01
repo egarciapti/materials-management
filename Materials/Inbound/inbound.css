@@ -1,0 +1,399 @@
+@import url("../materials.css"); /* ✅ Reuse Main Styles */
+
+/* ✅ Title Bar Styling */
+#title-bar {
+    position: fixed; /* Ensure title bar stays at the top */
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background-color: #004080;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    height: 70px; /* Ensure enough height */
+    width: 100%;
+    z-index: 1000;
+}
+
+/* ✅ Ensure Space Below Title Bar for Counters */
+#table-counters {
+    margin-top: 110px; /* Ensure space between title and counters */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #eef5ff;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+/* ✅ Style Individual Counters */
+#table-counters p {
+    margin: 0px 5px;
+    padding: 1px 5px;
+    font-size: 25px;
+    font-weight: bold;
+
+}
+
+/* ✅ Keep Date/Shift in the Title Bar */
+/* ✅ Adjust Date & Shift Position (Move Left by 2cm) */
+#date-shift-container {
+    position: absolute;
+    right: calc(0px + 2cm); /* Move it 2cm left */
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: right;
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+}
+
+
+/* ✅ Layout for Scanning and Table Side by Side */
+#inbound-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    margin-top: 10px; /* Ensure space below title and counters */
+    height: calc(100vh - 160px); /* Full screen height minus title bar */
+}
+
+/* ✅ Layout for Scanning and Table Side by Side */
+#inbound-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    margin-top: 20px; /* Reduce space so title is visible */
+    height: calc(100vh - 160px); /* Full screen height minus title bar */
+}
+
+/* ✅ Left Scanning Section */
+#scanning-section {
+    width: 25%;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+    height: 65vh;
+    overflow: hidden;
+    margin-top: -30px; /* Ensure space between title and counters */
+}
+
+/* ✅ Right Scanned Pallets Table */
+#scanned-pallets {
+    width: 69%;
+    padding: 20px;
+    background-color: #eef5ff;
+    border-radius: 10px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+    height: 65vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    margin-top: -30px; /* Ensure space between title and counters */
+}
+
+/* ✅ Adjust Font Size for Table Headers */
+#scanned-pallets thead th {
+    font-size: 16px; /* Adjust for header */
+}
+
+/* ✅ Adjust Font Size for Table Content */
+#scanned-pallets tbody td {
+    font-size: 13px; /* Adjust for content */
+}
+
+/* ✅ Reduce the Height of Only the Table Content Rows */
+#scanned-pallets tbody td {
+    padding: 2px 8px; /* Reduce padding to shrink row height */
+    line-height: 1; /* Reduce spacing inside rows */
+    height: 18px; /* Adjust this for smaller rows */
+}
+
+/* ✅ Keep the Header Row Unaffected */
+#scanned-pallets thead th {
+    padding: 12px; /* Keep header padding unchanged */
+    height: auto; /* Allow default height */
+}
+
+/* ✅ Ensure Table Fills Container */
+#scanned-pallets table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    table-layout: fixed;
+    flex-grow: 1;
+}
+
+/* ✅ Table Headers Stick to the Top */
+#scanned-pallets thead {
+    position: sticky;
+    top: 0;
+    background-color: #004080;
+    color: white;
+    z-index: 10;
+}
+
+/* ✅ Table Cell Styling */
+#scanned-pallets th, #scanned-pallets td {
+    border: 2px solid #ccc;
+    padding: 12px;
+    text-align: center;
+    font-size: 16px;
+}
+
+/* ✅ Limit Max Height of Table Body */
+#scanned-pallets tbody {
+    display: block;
+    max-height: 55vh;
+    overflow-y: auto;
+}
+
+#scanned-pallets thead, #scanned-pallets tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+/* ✅ Input Fields */
+.input-field {
+    width: 95%;
+    padding: 10px;
+    font-size: 18px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 2px solid #ccc;
+}
+
+
+
+/* ✅ Set a smaller width for the first column (row numbers) */
+#scannedPalletsTable th:first-child,
+#scannedPalletsTable td:first-child {
+    width: 20px;  /* Adjust width to fit max 2 digits */
+    text-align: left; /* Keep numbers centered */
+}
+
+/* ✅ Set a smaller width for the "Quantity" column */
+#scannedPalletsTable th:nth-child(5),
+#scannedPalletsTable td:nth-child(5) {
+    width: 60px; /* Adjust width to fit reasonable quantity values */
+    text-align: center; /* Keep numbers centered */
+}
+
+/* ✅ Scrollable Table with Fixed Header */
+#scanned-pallets table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    table-layout: fixed; /* Ensures columns stay aligned */
+}
+
+/* ✅ Table Header Stays Fixed */
+#scanned-pallets thead {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    position: sticky;
+    top: 0;
+    background-color: #004080;
+    color: white;
+    z-index: 10;
+}
+
+/* ✅ Scrollable Table Body */
+#scanned-pallets tbody {
+    display: block;
+    overflow-y: auto;
+    max-height: 55vh;
+    width: 100%;
+}
+
+/* ✅ Ensure Rows Align with Headers */
+#scanned-pallets tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+/* ✅ Hide Scrollbar to Prevent Header Misalignment */
+#scanned-pallets tbody::-webkit-scrollbar {
+    width: 12px;
+}
+
+#scanned-pallets tbody::-webkit-scrollbar-track {
+    background: #eef5ff;
+}
+
+#scanned-pallets tbody::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 6px;
+}
+
+/* ✅ Delete Button Styling */
+.delete-button {
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    padding: 3px 5px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.delete-button:hover {
+    background-color: #cc0000;
+    transform: scale(1.1);
+}
+
+/* ✅ Sidebar Styling */
+#sidebar {
+    position: fixed;
+    left: -250px; /* Hidden initially */
+    top: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #004080;
+    color: white;
+    padding-top: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    transition: left 0.3s ease-in-out;
+    z-index: 1100;
+}
+
+#sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#sidebar ul li {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid white;
+}
+
+#sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    background-color: #002c5a;
+}
+
+/* ✅ Close Button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+
+
+/* ✅ Ensure New Truck Button is Positioned on the Left */
+#new-truck-container {
+    position: absolute;
+    left: 20px; /* Moves it to the left */
+    top: 110px; /* Adjust to align with counters */
+}
+
+/* ✅ Styling for the New Truck Button */
+#newTruckButton {
+    padding: 12px 25px;
+    font-size: 18px;
+    background: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+}
+
+#newTruckButton:hover {
+    background: #c9302c;
+    transform: scale(1.05);
+}
+
+/* ✅ Resize the Counters Box to Fit Above the Right Table */
+#table-counters {
+    margin-top: 130px; /* Keep alignment below the title */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #eef5ff;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    width: 67%; /* Match the width of the right table */
+    margin-left: 405px; /* Align it with the right table */
+    margin-right: 0px; /* Align it with the right table */
+    text-align: center;
+}
+
+/* ✅ Menu Button (☰ Icon) - Move to Top Left Under Logo */
+#menu-btn {
+    position: absolute; /* Ensures it stays positioned inside the title bar */
+    top: 60px; /* Adjust the spacing to position it under the logo */
+    left: 20px; /* Keep it aligned to the left */
+    background: none;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 1100;
+}
+
+/* ✅ Overlay to Detect Clicks Outside the Menu */
+#overlay {
+    position: fixed;
+    top: 70px; /* Match the sidebar position */
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 70px); /* Cover everything below the title bar */
+    background: rgba(0, 0, 0, 0.2); /* Light transparency */
+    display: none; /* Hidden by default */
+    z-index: 1050; /* Below the sidebar but above content */
+}
+
+
+
+/* ✅ Sidebar Styling */
+#sidebar {
+    position: fixed;
+    left: -250px; /* Hidden initially */
+    top: 70px; /* Start below the title bar */
+    width: 250px;
+    height: calc(100vh - 70px); /* Cover below the title bar */
+    background-color: #004080;
+    color: white;
+    padding-top: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    transition: left 0.3s ease-in-out;
+    z-index: 1100;
+}
+

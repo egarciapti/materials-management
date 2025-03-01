@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inbound - Materials Management</title>
+    <link rel="stylesheet" href="inbound.css">
+</head>
+<body>
+
+    <!-- ✅ Title Bar with Centered Title -->
+    <div id="title-bar">
+        <img src="https://lh3.googleusercontent.com/d/1xRLuEF67gw8aST0g702xuH924SsoYVeA=w300"
+             alt="Inbound Materials"
+             class="title-image">
+        <h1>Inbound Materials</h1>
+    </div>
+
+    <!-- ✅ Scanning and Table Layout -->
+    <div id="inbound-container">
+
+        <!-- ✅ Left Scanning Section -->
+        <div id="scanning-section">
+            <h2>SCAN PALLET</h2>
+
+            <label>📦 Part Number:</label>
+            <input type="text" id="partNumber" class="input-field">
+
+            <label>📋 HU Number:</label>
+            <input type="text" id="huNumber" class="input-field">
+
+            <label>🔢 Serial Number:</label>
+            <input type="text" id="serialNumber" class="input-field">
+
+            <label>📊 Quantity:</label>
+            <input type="text" id="quantity" class="input-field">
+        </div>
+
+        <!-- ✅ Right Scanned Pallets Table -->
+        <div id="scanned-pallets">
+            <h2>SCANNED PALLETS</h2>
+            <table id="scannedPalletsTable">
+                <thead>
+                    <tr>
+                        <th>Part Number</th>
+                        <th>HU Number</th>
+                        <th>Serial Number</th>
+                        <th>Quantity</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- New rows will be added here automatically -->
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <!-- ✅ Back Button -->
+    <button id="backToMaterials" class="home-button">🏠 Home</button>
+
+    <script src="inbound.js"></script> <!-- ✅ JavaScript -->
+</body>
+</html>

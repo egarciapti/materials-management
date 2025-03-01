@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboards - Paint Line Scanner</title>
+    <link rel="stylesheet" href="Dashboards.css"> <!-- ✅ Adjusted Path -->
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dashboards - Paint Line Scanner</title>
+        <link rel="stylesheet" href="Dashboards.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  <!-- ✅ Load Chart.js here -->
+    </head>
+    
+</head>
+<body onload="initializeDashboardScreen()">
+
+    <!-- ✅ Title Bar with Image and Centered Title -->
+    <div id="title-bar">
+        <img src="https://lh3.googleusercontent.com/d/1xRLuEF67gw8aST0g702xuH924SsoYVeA=w300"
+             alt="Production Facility"
+             class="title-image">
+        <h1>Roseville Production Building I</h1>
+    </div>
+
+    <!-- ✅ Dashboard Information Section (Date & Shift) -->
+    <div id="dashboard-info">
+        <h2 id="currentDate">📅 Date: Loading...</h2>
+        <h2 id="currentShift">🕒 Shift: Loading...</h2>
+    </div>
+
+    <!-- ✅ Sidebar Menu -->
+    <div id="sidebar">
+        <button class="close-btn" onclick="closeSidebar()">✖</button>
+        <ul>
+            <li><a href="/materials-management/index.html">🏠 Home</a></li>
+<li><a href="/materials-management/Materials/index.html">📦 Materials</a></li>
+<li><a href="/materials-management/Production/index.html">🏭 Production</a></li>
+
+        </ul>
+    </div>
+
+    <!-- ✅ Sidebar Toggle Button -->
+    <button id="menu-btn">☰</button>
+
+    <!-- ✅ Transparent overlay for closing the menu -->
+    <div id="overlay"></div>
+
+    <div id="filter-container">
+        <label for="datePicker">📅 Select Date:</label>
+        <input type="date" id="datePicker">
+    
+        <label for="shiftPicker">🕒 Select Shift:</label>
+        <select id="shiftPicker">
+            <option value="1st Shift">1st Shift</option>
+            <option value="2nd Shift">2nd Shift</option>
+        </select>
+    
+        <button onclick="updateCharts()">🔄 Update Charts</button>
+    </div>
+    
+
+    <!-- ✅ Container for Both Charts (Side by Side) -->
+    <div id="dashboard-container">
+        <div class="chart-box">
+            <h2>Total Scanned Parts</h2>
+            <canvas id="scannedPartsChart"></canvas>
+        </div>
+        <div class="chart-box">
+            <h2>Scanned Parts Per Hour</h2>
+            <canvas id="hourlyScannedPartsChart"></canvas>
+        </div>
+    </div>
+
+    <script src="Dashboards.js"></script> <!-- ✅ Adjusted Path -->
+</body>
+</html>

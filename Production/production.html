@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- ✅ Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+    <script src="../firebase.js"></script> <!-- ✅ Load Firebase Configuration -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Production - Paint Line Scanner</title>
+    <link rel="stylesheet" href="production.css">
+</head>
+<body>
+
+    <!-- ✅ Title Bar with Image and Centered Title -->
+    <div id="title-bar">
+        <img src="https://lh3.googleusercontent.com/d/1xRLuEF67gw8aST0g702xuH924SsoYVeA=w300"
+             alt="Production Facility"
+             class="title-image">
+        <h1>Roseville Production Building I</h1>
+    </div>
+
+    <!-- ✅ Sidebar Menu -->
+    <div id="sidebar">
+        <button class="close-btn" onclick="closeSidebar()">✖</button>
+        <ul>
+            <li><a href="/materials-management/index.html">🏠 Home</a></li>
+<li><a href="/materials-management/Materials/index.html">📦 Materials</a></li>
+<li><a href="/materials-management/Production/index.html">🏭 Production</a></li>
+
+        </ul>
+    </div>
+
+    <!-- ✅ Sidebar Toggle Button -->
+    <button id="menu-btn" onclick="openSidebar()">☰</button>
+
+    <!-- ✅ Transparent overlay for closing the menu -->
+    <div id="overlay"></div>
+
+    <!-- ✅ Platform Selection Screen -->
+    <div id="platform-selection">
+        <h2>Select the platform:</h2>
+        <button id="platform1Button" class="menu-button">🛠 Platform 1</button>
+        <button id="platform2Button" class="menu-button">🛠 Platform 2</button>
+
+        <!-- ✅ Corrected "Charts" Button with the Right Path -->
+        <button id="chartsButton" class="menu-button charts-button">📊 Charts</button>
+    </div>
+
+    <script src="production.js"></script>
+</body>
+</html>

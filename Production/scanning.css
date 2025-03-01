@@ -1,0 +1,198 @@
+@import url("../styles.css"); /* ✅ Keep Main Screen Styles */
+
+/* ✅ Title Bar */
+#title-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #004080;
+    padding: 40px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* ✅ Left-Aligned Image */
+.title-image {
+    position: absolute;
+    left: 20px;
+    width: 100px;
+    height: auto;
+    border-radius: 5px;
+}
+
+/* ✅ Centered Title */
+#title-bar h1 {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 40px;
+    color: white;
+    font-weight: bold;
+}
+
+/* ✅ Scanning Information */
+#scanning-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin-top: 10px;
+}
+
+#scanning-info h2 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+    white-space: nowrap;
+}
+
+/* ✅ Back Button */
+.home-button {
+    margin-top: 40px;
+    padding: 20px 40px;
+    font-size: 22px;
+    background: #555; 
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 12px;
+    width: 300px;
+    height: 80px;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.home-button img {
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+}
+
+.home-button:hover {
+    background: #333;
+    transform: scale(1.05);
+}
+
+/* ✅ Table Styling */
+table {
+    width: 80%;
+    margin: 30px auto;
+    border-collapse: collapse;
+    background-color: #f9f9f9;
+    font-size: 30px;
+    border-radius: 8px;
+    table-layout: fixed;
+}
+
+/* ✅ Headers */
+th {
+    background-color: #d3d3d3;
+    color: black;
+    font-size: 32px;
+    padding: 10px;
+    text-align: center;
+    border: 2px solid #666;
+    border-radius: 6px;
+}
+
+/* ✅ Table Cells */
+td {
+    border: 2px solid #666;
+    padding: 10px;
+    font-size: 28px;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 6px;
+}
+
+/* ✅ Input Fields */
+.input-cell {
+    width: 85%;
+    padding: 8px;
+    font-size: 30px;
+    text-align: center;
+    border: 2px solid #ccc;
+    background-color: #ffffcc;
+    border-radius: 6px;
+}
+
+/* ✅ Sidebar Styling */
+#sidebar {
+    position: fixed;
+    left: -250px; /* Hidden initially */
+    top: 70px; /* Start below the title bar */
+    width: 250px;
+    height: calc(100vh - 70px); /* Cover below the title bar */
+    background-color: #004080;
+    color: white;
+    padding-top: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    transition: left 0.3s ease-in-out;
+    z-index: 1100;
+}
+
+#sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#sidebar ul li {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid white;
+}
+
+#sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    background-color: #002c5a;
+}
+
+/* ✅ Close Button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* ✅ Menu Button (☰ Icon) - Move to Top Left Under Logo */
+#menu-btn {
+    position: absolute; /* Ensures it stays positioned inside the title bar */
+    top: 60px; /* Adjust the spacing to position it under the logo */
+    left: 20px; /* Keep it aligned to the left */
+    background: none;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 1100;
+}
+
+/* ✅ Overlay to Detect Clicks Outside the Menu */
+#overlay {
+    position: fixed;
+    top: 70px; /* Match the sidebar position */
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 70px); /* Cover everything below the title bar */
+    background: rgba(0, 0, 0, 0.2); /* Light transparency */
+    display: none; /* Hidden by default */
+    z-index: 1050; /* Below the sidebar but above content */
+}

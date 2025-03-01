@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- ✅ Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+<script src="../firebase.js"></script> <!-- ✅ Load Firebase Configuration -->
+
+
+    <!-- ✅ Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scanning - Paint Line Scanner</title>
+    <link rel="stylesheet" href="scanning.css">
+</head>
+<body onload="initializeScanningScreen()">
+
+    <!-- ✅ Title Bar with Image and Centered Title -->
+    <div id="title-bar">
+        <img src="https://lh3.googleusercontent.com/d/1xRLuEF67gw8aST0g702xuH924SsoYVeA=w300"
+             alt="Production Facility"
+             class="title-image">
+        <h1>Roseville Production Building I</h1>
+    </div>
+
+    <!-- ✅ Scanning Information -->
+    <div id="scanning-info">
+        <h2 id="currentDate">📅 Date: Loading...</h2>
+        <h2 id="currentShift">🕒 Shift: Loading...</h2>
+        <h2 id="selectedPlatform">🔹 Platform: Loading...</h2>
+    </div>
+
+    <!-- ✅ Scanning Inputs -->
+    <div id="scanning-section">
+        <h2>LOAD SCANNING</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Part Number</th>
+                    <th>Scanning Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Loading Part</td>
+                    <td><input type="text" id="C11" class="input-cell" onchange="validateC11()" autofocus></td>
+                    <td id="D11" class="error"></td>
+                </tr>
+                <tr>
+                    <td>Quantity</td>
+                    <td><input type="text" id="C12" class="input-cell" onchange="validateC12()" disabled></td>
+                    <td id="D12" class="error"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p id="scanMessage"></p>
+    </div>
+
+   <!-- ✅ Scanned Pallets Log -->
+<div id="scannedPalletsLog">
+    <h2>📦 Recently Scanned Pallets</h2>
+    <p id="lastScanInfo">No scans recorded yet.</p>
+</div>
+
+
+
+    <!-- ✅ Back Button with Click Event -->
+    <button id="backToMain" class="home-button" onclick="goBackToPlatformSelection()">
+        <img src="https://cdn-icons-png.flaticon.com/128/130/130882.png" alt="Back Icon">
+        Back to Platform Selection
+    </button>
+    
+
+    <script src="scanning.js"></script> <!-- JavaScript for Scanning -->
+
+    <!-- ✅ Sidebar Menu -->
+<div id="sidebar">
+    <button class="close-btn" onclick="closeSidebar()">✖</button>
+    <ul>
+        <li><a href="../../index.html">🏠 Home</a></li>
+        <li><a href="../materials.html">📦 Materials</a></li>
+        <li><a href="../../Production/production.html">🏭 Production</a></li>
+    </ul>
+</div>
+
+<!-- ✅ Sidebar Toggle Button -->
+<button id="menu-btn">☰</button>
+
+<!-- ✅ Transparent overlay for closing the menu -->
+<div id="overlay"></div>
+
+</body>
+</html>

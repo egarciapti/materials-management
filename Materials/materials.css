@@ -1,0 +1,91 @@
+@import url("../styles.css"); /* ✅ Reuse Main Screen Styles */
+
+/* ✅ Fixed Title Bar at the Top (Same as Production) */
+#title-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #004080;
+    padding: 40px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* ✅ Left-Aligned Image */
+.title-image {
+    position: absolute;
+    left: 20px;
+    width: 150px;
+    height: auto;
+    border-radius: 5px;
+}
+
+/* ✅ Centered Title */
+#title-bar h1 {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 40px;
+    color: white;
+    font-weight: bold;
+}
+
+/* ✅ Ensure Content is Properly Positioned Below the Title Bar */
+#platform-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 120px;
+}
+
+h2 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* ✅ Buttons (Now Same Colors as Production Screen) */
+.menu-button {
+    width: 300px;
+    padding: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    background-color: #0073e6; /* 🔹 Yellow Buttons Like Production */
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.menu-button:hover {
+    background-color: #004080; /* 🔸 Darker Yellow on Hover */
+    transform: scale(1.05);
+}
+
+/* ✅ Home Button (Same as Production Screen) */
+.home-button {
+    margin-top: 40px;
+    padding: 20px 40px;
+    font-size: 24px;
+    font-weight: bold;
+    background-color: #555; /* Neutral Gray (Like Production) */
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    width: 300px;
+    height: 70px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.home-button:hover {
+    background-color: #333;
+    transform: scale(1.05);
+}

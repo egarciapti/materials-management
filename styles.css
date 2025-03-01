@@ -1,0 +1,97 @@
+/* ✅ General Page Layout */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #e6e6e6; /* Light gray background */
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ✅ Full-Width Title Bar with Gradient */
+/* ✅ Full-Width Title Bar with Solid Color */
+#title-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #004080; /* Solid Dark Blue */
+    padding: 40px 0;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Optional subtle shadow */
+}
+
+#title-bar h1 {
+    color: white;
+    margin: 0;
+    font-size: 48px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* ✅ Centered Button Layout */
+#main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 80px; /* More spacing between buttons */
+    flex-wrap: wrap;
+    margin-top: 80px; /* Push down from the title */
+}
+
+/* ✅ Larger Buttons with Modern Hover Effect */
+.menu-button {
+    padding: 30px 50px; /* Bigger padding for a larger button */
+    font-size: 24px; /* Bigger text */
+    background: #0073e6; /* Light Blue */
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px; /* Rounded corners */
+    width: 300px; /* Larger width */
+    height: 100px; /* Larger height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+}
+
+/* ✅ Hover Effect */
+.menu-button:hover {
+    background: #004080; /* Darker blue on hover */
+    transform: scale(1.05); /* Slight zoom effect */
+}
+
+/* ✅ Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+    #main-content {
+        flex-direction: column;
+        gap: 40px;
+    }
+    
+    .menu-button {
+        width: 90%; /* Full width on small screens */
+    }
+}
+
+/* ✅ Main Image Styling */
+.main-image {
+    width: 50%; /* Adjust size */
+    max-width: 600px; /* Prevent it from being too large */
+    margin: 30px auto; /* Add space */
+    display: block; /* Center the image */
+    border-radius: 10px; /* Optional rounded corners */
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2); /* Optional shadow */
+}
+
+/* ✅ Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+    .main-image {
+        width: 80%; /* Increase size on mobile */
+    }
+}

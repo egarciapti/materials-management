@@ -1,0 +1,237 @@
+/* ✅ General Page Layout */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #e6e6e6;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ✅ Fixed Title Bar at the Top */
+#title-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Keep the title centered */
+    background-color: #004080; /* Same as Main Screen */
+    padding: 13px 0; /* Same height */
+    position: fixed; /* Fix to top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure it stays on top */
+}
+
+/* ✅ Bigger Image, Still Aligned to the Left */
+.title-image {
+    position: absolute;
+    left: 20px; /* Keep image on the left */
+    width: 150px; /* Increase size */
+    height: auto;
+    border-radius: 5px;
+}
+
+/* ✅ Centered Title */
+#title-bar h1 {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 40px; /* Same font size */
+    color: white;
+    font-weight: bold;
+}
+
+/* ✅ Keep Date & Shift in the Top-Right Corner Over the Title Bar */
+#dashboard-info {
+    position: absolute;
+    top: 0px; /* Adjust positioning */
+    right: 20px;
+    z-index: 1000; /* ✅ Ensures it's above the title bar */
+    text-align: right;
+    font-size: 18px;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+
+#dashboard-info h2 {
+    font-size: 24px;
+    color: #ffffff;
+}
+
+/* ✅ Sidebar Styling */
+#sidebar {
+    position: fixed;
+    left: -250px; /* Hidden initially */
+    top: 125px; /* Start below the title bar */
+    width: 250px;
+    height: calc(100vh - 70px); /* Cover below the title bar */
+    background-color: #004080;
+    color: white;
+    padding-top: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    transition: left 0.3s ease-in-out;
+    z-index: 1100;
+}
+
+#sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#sidebar ul li {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid white;
+}
+
+#sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    background-color: #002c5a;
+}
+
+/* ✅ Sidebar Toggle Button */
+#menu-btn {
+    position: absolute;
+    top: 80px; /* Adjust the spacing to position it under the logo */
+    left: 20px; /* Keep it aligned to the left */
+    background: none;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 1100;
+}
+
+#menu-btn:hover {
+    background: #004080;
+}
+
+/* ✅ Close Button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+/* ✅ Overlay for Closing Sidebar */
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 900;
+}
+
+/* ✅ Responsive Design */
+@media (max-width: 768px) {
+    #dashboard-info h2 {
+        font-size: 20px;
+    }
+}
+
+/* ✅ Chart Container Styling */
+#chart-container {
+    width: 80%;
+    max-width: 800px;
+    margin-top: 150px;
+}
+
+/* ✅ Styling for Hourly Chart */
+#hourly-chart-container {
+    width: 80%;
+    max-width: 800px;
+    margin-top: 50px;
+}
+/* ✅ Dashboard Container - Side by Side Layout */
+#dashboard-container {
+    display: flex;
+    justify-content: space-between; /* Ensures spacing between both charts */
+    align-items: flex-start;
+    width: 90%;
+    max-width: 1400px; /* Allow enough space for both charts */
+    margin-top: 100px; /* Space below the title bar */
+}
+
+/* ✅ Chart Box Styling */
+.chart-box {
+    width: 48%; /* Ensures both charts fit side by side */
+    max-width: 600px;
+    background: rgb(222, 222, 222);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ✅ Ensure Charts Scale Properly */
+canvas {
+    width: 100% !important;
+    height: auto !important;
+}
+
+/* ✅ Responsive Design - Stack Charts on Smaller Screens */
+@media (max-width: 1024px) {
+    #dashboard-container {
+        flex-direction: column; /* Stack charts on smaller screens */
+        align-items: center;
+    }
+
+    .chart-box {
+        width: 90%; /* Increase width when stacked */
+        margin-bottom: 20px; /* Add spacing */
+    }
+}
+
+/* ✅ Filter Section Styling */
+#filter-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 80px; /* Space below title bar */
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+#filter-container label {
+    font-weight: bold;
+}
+
+#filter-container input,
+#filter-container select,
+#filter-container button {
+    padding: 8px;
+    font-size: 16px;
+}
+
+#filter-container button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#filter-container button:hover {
+    background-color: #0056b3;
+}
+

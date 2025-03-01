@@ -1,0 +1,108 @@
+@import url("../materials.css"); /* ✅ Reuse Main Styles */
+
+/* ✅ Layout for Scanning and Table Side by Side */
+#inbound-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    margin-top: 120px;
+    height: calc(100vh - 160px); /* Full screen height minus title bar */
+}
+
+/* ✅ Left Scanning Section */
+#scanning-section {
+    width: 25%;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+    height: 65vh; /* Increased height */
+    overflow: hidden;
+}
+
+/* ✅ Right Scanned Pallets Table (Fixed Size + Scrollable) */
+#scanned-pallets {
+    width: 69%; /* Slightly increased width for better layout */
+    padding: 20px;
+    background-color: #eef5ff;
+    border-radius: 10px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+    height: 65vh; /* Fixed height based on viewport */
+    overflow-y: auto;  /* Enable vertical scrolling */
+    display: flex;
+    flex-direction: column;
+}
+
+/* ✅ Ensure Table Fills Container */
+#scanned-pallets table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    table-layout: fixed;
+    flex-grow: 1; /* Allow table to fill available space */
+}
+
+/* ✅ Table Headers Stick to the Top */
+#scanned-pallets thead {
+    position: sticky;
+    top: 0;
+    background-color: #004080;
+    color: white;
+    z-index: 10;
+}
+
+/* ✅ Table Cell Styling */
+#scanned-pallets th, #scanned-pallets td {
+    border: 2px solid #ccc;
+    padding: 12px;
+    text-align: center;
+    font-size: 16px; /* Increased for better readability */
+}
+
+/* ✅ Limit Max Height of Table Body */
+#scanned-pallets tbody {
+    display: block;
+    max-height: 55vh; /* Prevents table from growing indefinitely */
+    overflow-y: auto; /* Enables scrolling */
+}
+
+#scanned-pallets thead, #scanned-pallets tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+/* ✅ Input Fields */
+.input-field {
+    width: 95%;
+    padding: 10px;
+    font-size: 18px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 2px solid #ccc;
+}
+
+/* ✅ Home Button */
+.home-button {
+    margin-top: 20px;
+    padding: 15px 40px;
+    font-size: 22px;
+    background: #555;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 12px;
+    width: 250px;
+    height: 60px;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.home-button:hover {
+    background: #333;
+    transform: scale(1.05);
+}
