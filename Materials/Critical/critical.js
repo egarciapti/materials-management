@@ -105,22 +105,23 @@ document.addEventListener("DOMContentLoaded", function () {
         submitButton.addEventListener("click", function () {
             let partData = [];
 
-            // ✅ Select all input fields and ensure ALL values are sent
+            // ✅ Select all input fields and ensure each part number is sent
             document.querySelectorAll(".quantity-input").forEach(input => {
                 let partNumber = input.dataset.partNumber;
-                let quantity = input.value.trim() === "" ? 0 : parseInt(input.value, 10); // ✅ Set empty fields to 0
-                
-                partData.push({ partNumber, quantity }); // ✅ Always include all part numbers
+                let quantity = input.value.trim(); // ✅ Get input value
+                quantity = quantity === "" ? 0 : parseInt(quantity); // ✅ Convert empty fields to 0
+
+                partData.push({ partNumber, quantity });
             });
 
             let url = "https://script.google.com/macros/s/AKfycbxKA6cdOCJF5Em10bGZvmnUkye4aznylDYxk-CuisAP7PQ1TlezEky2BiRuWTllRM8D/exec"; 
 
-            // ✅ Send ALL part numbers & their quantities (0 if untouched)
+            // ✅ Send the entire array of part numbers and quantities
             fetch(url, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ data: partData }), // ✅ Ensures all part numbers are included
-                mode: "no-cors" // ✅ Prevents CORS issues
+                body: JSON.stringify({ data: partData }),
+                mode: "no-cors" // ✅ Disable CORS errors
             })
             .then(() => {
                 console.log("✅ All values (including zeros) sent successfully!");
