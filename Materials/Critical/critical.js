@@ -105,28 +105,35 @@ document.addEventListener("DOMContentLoaded", function () {
         submitButton.addEventListener("click", function () {
             let partData = [];
 
-            // ✅ Select all input fields and extract their part numbers & quantities
+            // ✅ Loop through all quantity inputs
             document.querySelectorAll(".quantity-input").forEach(input => {
                 let partNumber = input.dataset.partNumber;
-                let quantity = parseInt(input.value) || 0;
+                let quantity = input.value.trim() === "" ? 0 : parseInt(input.value); // ✅ Default to 0 if empty
+                
                 partData.push({ partNumber, quantity });
             });
 
-            // ✅ Google Apps Script Web App URL (Replace with your correct URL)
-            let proxyUrl = "https://cors-anywhere.herokuapp.com/"; // 🚀 CORS Bypass
             let url = "https://script.google.com/macros/s/AKfycbxKA6cdOCJF5Em10bGZvmnUkye4aznylDYxk-CuisAP7PQ1TlezEky2BiRuWTllRM8D/exec"; 
 
-
+            // ✅ Send the entire array of part numbers and quantities
             fetch(url, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ partNumber, quantity }),
+                body: JSON.stringify({ data: partData }),
                 mode: "no-cors" // ✅ Disable CORS errors
             })
-            
+            .then(() => {
+                console.log("✅ Data sent successfully!");
+                alert("✅ Data sent successfully!");
+            })
+            .catch(error => {
+                console.error("❌ Error sending data:", error);
+                alert("❌ Failed to send data!");
+            });
         });
     }
 });
+
 
 
 
