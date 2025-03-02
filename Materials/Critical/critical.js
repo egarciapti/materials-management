@@ -143,21 +143,29 @@ document.addEventListener("DOMContentLoaded", function () {
         submitButton.addEventListener("click", function () {
             let partData = [];
 
-            // ✅ Loop through all quantity inputs
+            // ✅ Loop through all defined part numbers
             document.querySelectorAll(".quantity-input").forEach(input => {
                 let partNumber = input.dataset.partNumber;
                 let quantity = input.value.trim() === "" ? 0 : parseInt(input.value, 10); // ✅ Convert empty fields to 0
                 
-                partData.push({ partNumber, quantity });
+                partData.push({ partNumber, quantity }); // ✅ Always include all part numbers
+            });
+
+            // ✅ Ensure all part numbers are accounted for (even if untouched)
+            document.querySelectorAll(".quantity-input").forEach(input => {
+                let partNumber = input.dataset.partNumber;
+                if (!partData.some(item => item.partNumber === partNumber)) {
+                    partData.push({ partNumber, quantity: 0 });
+                }
             });
 
             let url = "https://script.google.com/macros/s/AKfycbxKA6cdOCJF5Em10bGZvmnUkye4aznylDYxk-CuisAP7PQ1TlezEky2BiRuWTllRM8D/exec"; 
 
-            // ✅ Send the entire array of part numbers and quantities
+            // ✅ Send all part numbers and their quantities (0 if untouched)
             fetch(url, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ data: partData }), // ✅ All part numbers & quantities sent (0 if empty)
+                body: JSON.stringify({ data: partData }), // ✅ Ensures all part numbers are included
                 mode: "no-cors" // ✅ Prevents CORS issues
             })
             .then(() => {
@@ -171,5 +179,4 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
-
 
