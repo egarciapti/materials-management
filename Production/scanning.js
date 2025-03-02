@@ -176,7 +176,7 @@ function sendScanToGoogleSheets(partNumber, quantity) {
         }]
     };
 
-    let url = "https://script.google.com/macros/s/AKfycbxKA6cdOCJF5Em10bGZvmnUkye4aznylDYxk-CuisAP7PQ1TlezEky2BiRuWTllRM8D/exec"; // ✅ Replace with actual Web App URL
+    let url = "https://script.google.com/macros/s/AKfycbwBWcpHc8GILRYcIoF9czoyOUtGYtra4Ni1fmCIlDHJ_na1UEJtez4C4rDBAaZ0pICZ/exec"; // ✅ Replace with actual Web App URL
 
     fetch(url, {
         method: "POST",
