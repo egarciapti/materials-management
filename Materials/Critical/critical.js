@@ -105,11 +105,11 @@ document.addEventListener("DOMContentLoaded", function () {
         submitButton.addEventListener("click", function () {
             let partData = [];
 
-            // ✅ Select all input fields and ensure each part number is sent
+            // ✅ Ensure all part numbers are included, even if their input is empty
             document.querySelectorAll(".quantity-input").forEach(input => {
                 let partNumber = input.dataset.partNumber;
                 let quantity = input.value.trim(); // ✅ Get input value
-                quantity = quantity === "" ? 0 : parseInt(quantity); // ✅ Convert empty fields to 0
+                quantity = quantity === "" ? 0 : parseInt(quantity, 10); // ✅ Convert empty fields to 0
 
                 partData.push({ partNumber, quantity });
             });
@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 mode: "no-cors" // ✅ Disable CORS errors
             })
             .then(() => {
-                console.log("✅ All values (including zeros) sent successfully!");
+                console.log("✅ All part numbers (including zeros) sent successfully!");
                 alert("✅ Data sent successfully!");
             })
             .catch(error => {
