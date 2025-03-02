@@ -136,21 +136,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
     const submitButton = document.getElementById("submit-btn");
 
     if (submitButton) {
         submitButton.addEventListener("click", function () {
             let partData = [];
-            
+
             // ✅ Loop through all quantity inputs
             document.querySelectorAll(".quantity-input").forEach(input => {
                 let partNumber = input.dataset.partNumber;
-                let quantity = parseInt(input.value) || 0;
+                let quantity = input.value.trim() === "" ? 0 : parseInt(input.value, 10); // ✅ Convert empty fields to 0
                 
                 partData.push({ partNumber, quantity });
             });
@@ -161,8 +157,8 @@ document.addEventListener("DOMContentLoaded", function () {
             fetch(url, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ data: partData }),
-                mode: "no-cors" // ✅ Disable CORS errors
+                body: JSON.stringify({ data: partData }), // ✅ All part numbers & quantities sent (0 if empty)
+                mode: "no-cors" // ✅ Prevents CORS issues
             })
             .then(() => {
                 console.log("✅ Data sent successfully!");
