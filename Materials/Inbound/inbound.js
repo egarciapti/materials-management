@@ -1,14 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
     initializeInboundScreen();
-});
 
-// ✅ "New Truck" Button - Reset Process with Confirmation
-document.getElementById("newTruckButton").addEventListener("click", function () {
-    let confirmation = confirm("⚠️ Warning: This will reset all scanned pallets and counters. Do you want to continue?");
-    if (confirmation) {
-        resetInboundProcess();
+    // ✅ Ensure the button exists before adding an event listener
+    let newTruckButton = document.getElementById("newTruckButton");
+    if (newTruckButton) {
+        newTruckButton.addEventListener("click", function () {
+            let confirmation = confirm("⚠️ Warning: This will reset all scanned pallets and counters. Do you want to continue?");
+            if (confirmation) {
+                resetInboundProcess();
+            }
+        });
     }
 });
+
 
 // ✅ Function to Reset the Scanning Process
 function resetInboundProcess() {
