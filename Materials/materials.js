@@ -7,5 +7,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ✅ Function to Navigate to Different Sections
 function navigate(page) {
-    window.location.href = "./" + page; // ✅ Ensure correct folder navigation
+    window.location.href = page; // ✅ Ensure correct folder navigation
 }
