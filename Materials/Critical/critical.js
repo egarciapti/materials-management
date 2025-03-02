@@ -105,49 +105,11 @@ document.addEventListener("DOMContentLoaded", function () {
         submitButton.addEventListener("click", function () {
             let partData = [];
 
-            // ✅ Loop through all quantity inputs
+            // ✅ Select all input fields and ensure ALL values are sent
             document.querySelectorAll(".quantity-input").forEach(input => {
                 let partNumber = input.dataset.partNumber;
-                let quantity = input.value.trim() === "" ? 0 : parseInt(input.value); // ✅ Default to 0 if empty
+                let quantity = input.value.trim() === "" ? 0 : parseInt(input.value, 10); // ✅ Set empty fields to 0
                 
-                partData.push({ partNumber, quantity });
-            });
-
-            let url = "https://script.google.com/macros/s/AKfycbxKA6cdOCJF5Em10bGZvmnUkye4aznylDYxk-CuisAP7PQ1TlezEky2BiRuWTllRM8D/exec"; 
-
-            // ✅ Send the entire array of part numbers and quantities
-            fetch(url, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ data: partData }),
-                mode: "no-cors" // ✅ Disable CORS errors
-            })
-            .then(() => {
-                console.log("✅ Data sent successfully!");
-                alert("✅ Data sent successfully!");
-            })
-            .catch(error => {
-                console.error("❌ Error sending data:", error);
-                alert("❌ Failed to send data!");
-            });
-        });
-    }
-});
-
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    const submitButton = document.getElementById("submit-btn");
-
-    if (submitButton) {
-        submitButton.addEventListener("click", function () {
-            let partData = [];
-
-            // ✅ Ensure ALL part numbers are included (even if untouched)
-            document.querySelectorAll(".quantity-input").forEach(input => {
-                let partNumber = input.dataset.partNumber;
-                let quantity = input.value.trim() === "" ? 0 : parseInt(input.value, 10); // ✅ Convert empty fields to 0
-
                 partData.push({ partNumber, quantity }); // ✅ Always include all part numbers
             });
 
