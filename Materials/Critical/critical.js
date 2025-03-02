@@ -105,26 +105,27 @@ document.addEventListener("DOMContentLoaded", function () {
         submitButton.addEventListener("click", function () {
             let partData = [];
 
-            // ✅ Ensure all part numbers are included, even if their input is empty
+            // ✅ Loop through all quantity inputs
             document.querySelectorAll(".quantity-input").forEach(input => {
                 let partNumber = input.dataset.partNumber;
-                let quantity = input.value.trim(); // ✅ Get input value
-                quantity = quantity === "" ? 0 : parseInt(quantity, 10); // ✅ Convert empty fields to 0
+                let quantity = input.value.trim();
+
+                // ✅ Ensure every part number is sent with either its value or 0
+                quantity = quantity === "" ? 0 : parseInt(quantity, 10);
 
                 partData.push({ partNumber, quantity });
             });
 
-            let url = "https://script.google.com/macros/s/AKfycbxKA6cdOCJF5Em10bGZvmnUkye4aznylDYxk-CuisAP7PQ1TlezEky2BiRuWTllRM8D/exec"; 
+            let url = "https://script.google.com/macros/s/AKfycbwBWcpHc8GILRYcIoF9czoyOUtGYtra4Ni1fmCIlDHJ_na1UEJtez4C4rDBAaZ0pICZ/exec"; // ✅ Your new Web App URL
 
-            // ✅ Send the entire array of part numbers and quantities
             fetch(url, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ data: partData }),
-                mode: "no-cors" // ✅ Disable CORS errors
+                mode: "no-cors"
             })
             .then(() => {
-                console.log("✅ All part numbers (including zeros) sent successfully!");
+                console.log("✅ All values (including zeros) sent successfully!");
                 alert("✅ Data sent successfully!");
             })
             .catch(error => {
