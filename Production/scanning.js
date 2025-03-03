@@ -164,26 +164,22 @@ function sendScanToGoogleSheets(partNumber, quantity) {
     let timestamp = new Date().toLocaleString();
 
     let scanData = {
-        data: [  // ✅ Ensures the correct format expected by Google Apps Script
-            {
-                partNumber: partNumber,
-                quantity: quantity,
-                platform: platform,
-                date: currentDate,
-                shift: currentShift,
-                timestamp: timestamp
-            }
-        ]
+        partNumber: partNumber,
+        quantity: quantity,
+        platform: platform,
+        date: currentDate,
+        shift: currentShift,
+        timestamp: timestamp
     };
 
-    let url = "https://script.google.com/macros/s/AKfycbwBWcpHc8GILRYcIoF9czoyOUtGYtra4Ni1fmCIlDHJ_na1UEJtez4C4rDBAaZ0pICZ/exec";
+    let url = "https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbwBWcpHc8GILRYcIoF9czoyOUtGYtra4Ni1fmCIlDHJ_na1UEJtez4C4rDBAaZ0pICZ/exec";
 
     fetch(url, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(scanData)  // ✅ Sends correctly formatted JSON
+        body: JSON.stringify(scanData)
     })
     .then(response => response.json())
     .then(data => {
