@@ -172,7 +172,7 @@ function sendScanToGoogleSheets(partNumber, quantity) {
         timestamp: timestamp
     };
 
-    let url = "https://script.google.com/macros/s/YOUR-NEW-DEPLOYMENT-ID/exec"; // ✅ Update if URL changed
+    let url = "https://script.google.com/macros/s/https://script.google.com/macros/s/AKfycbwBWcpHc8GILRYcIoF9czoyOUtGYtra4Ni1fmCIlDHJ_na1UEJtez4C4rDBAaZ0pICZ/exec/exec"; // ✅ Update if URL changed
 
     fetch(url, {
         method: "POST",
