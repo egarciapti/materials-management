@@ -164,12 +164,16 @@ function sendScanToGoogleSheets(partNumber, quantity) {
     let timestamp = new Date().toLocaleString();
 
     let scanData = {
-        partNumber: partNumber,
-        quantity: quantity,
-        platform: platform,
-        date: currentDate,
-        shift: currentShift,
-        timestamp: timestamp
+        data: [  // ✅ Ensures the correct format expected by Google Apps Script
+            {
+                partNumber: partNumber,
+                quantity: quantity,
+                platform: platform,
+                date: currentDate,
+                shift: currentShift,
+                timestamp: timestamp
+            }
+        ]
     };
 
     let url = "https://script.google.com/macros/s/AKfycbwBWcpHc8GILRYcIoF9czoyOUtGYtra4Ni1fmCIlDHJ_na1UEJtez4C4rDBAaZ0pICZ/exec";
@@ -179,7 +183,7 @@ function sendScanToGoogleSheets(partNumber, quantity) {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(scanData)
+        body: JSON.stringify(scanData)  // ✅ Sends correctly formatted JSON
     })
     .then(response => response.json())
     .then(data => {
