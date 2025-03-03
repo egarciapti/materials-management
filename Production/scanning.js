@@ -163,25 +163,19 @@ function sendScanToGoogleSheets(partNumber, quantity) {
     let currentShift = document.getElementById("currentShift").innerText.replace("🕒 Shift: ", "").trim();
     let timestamp = new Date().toLocaleString();
 
-    let scanData = {
-        data: [{
-            partNumber: partNumber,
-            quantity: quantity,
-            platform: platform,
-            date: currentDate,
-            shift: currentShift
-        }]
-    };
+    let params = new URLSearchParams({
+        partNumber: partNumber,
+        quantity: quantity,
+        platform: platform,
+        date: currentDate,
+        shift: currentShift,
+        timestamp: timestamp
+    }).toString();
 
-    let url = "https://script.google.com/macros/s/AKfycbwBWcpHc8GILRYcIoF9czoyOUtGYtra4Ni1fmCIlDHJ_na1UEJtez4C4rDBAaZ0pICZ/exec"; // ✅ Replace with actual Web App URL
+    let url = `https://script.google.com/macros/s/AKfycbwBWcpHc8GILRYcIoF9czoyOUtGYtra4Ni1fmCIlDHJ_na1UEJtez4C4rDBAaZ0pICZ/exec?${params}`;
 
-    fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" }, // ✅ Matches your "Critical" screen setup
-        body: JSON.stringify(scanData)
-    })
-    .then(response => response.text()) // ✅ Ensures we get a response
-    .then(data => console.log("✅ Scan data sent successfully:", data))
-    .catch(error => console.error("❌ Error sending scan data:", error));
+    fetch(url)
+        .then(response => response.text())
+        .then(data => console.log("✅ Scan data sent successfully:", data))
+        .catch(error => console.error("❌ Error sending scan data:", error));
 }
-
