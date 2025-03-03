@@ -1,6 +1,3 @@
-// ✅ Initialize Firebase Firestore
-document.write('<script src="firebase.js"><\/script>');
-
 // ✅ Ensure Sidebar Works
 document.addEventListener("DOMContentLoaded", function () {
     initializeScanningScreen();
