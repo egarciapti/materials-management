@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // ✅ Define Functions BEFORE Calling initializeCriticalPartsScreen()
 function loadNeededPallets() {
-    let url = "https://script.google.com/macros/s/https://script.google.com/macros/s/AKfycbwBWcpHc8GILRYcIoF9czoyOUtGYtra4Ni1fmCIlDHJ_na1UEJtez4C4rDBAaZ0pICZ/exec"; // ✅ Replace with your actual Google Apps Script URL
+    let url = "https://script.google.com/macros/s/AKfycbwBWcpHc8GILRYcIoF9czoyOUtGYtra4Ni1fmCIlDHJ_na1UEJtez4C4rDBAaZ0pICZ/exec"; 
 
     fetch(url)
         .then(response => response.json())
@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 partData.push({ partNumber, quantity });
             });
 
-            let url = "https://script.google.com/macros/s/AKfycbwBWcpHc8GILRYcIoF9czoyOUtGYtra4Ni1fmCIlDHJ_na1UEJtez4C4rDBAaZ0pICZ/exec"; // ✅ Correct URL
+            let url = "https://script.google.com/macros/s/AKfycbwBWcpHc8GILRYcIoF9czoyOUtGYtra4Ni1fmCIlDHJ_na1UEJtez4C4rDBAaZ0pICZ/exec"; 
 
 fetch(url, {
     method: "POST",
