@@ -59,6 +59,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+// ✅ Attach Event Listeners for Input Fields
+function attachInputListeners() {
+    document.querySelectorAll(".quantity-input").forEach(input => {
+        input.addEventListener("input", function(event) {
+            console.log(`🔄 Input changed for Part: ${event.target.dataset.partNumber}, New Value: ${event.target.value}`);
+        });
+    });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     const submitButton = document.getElementById("submit-btn");
 
