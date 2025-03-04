@@ -24,6 +24,37 @@ function updateDateAndShift() {
     document.getElementById("currentShift").innerText = `🕒 ${shift}`;
 }
 
+// ✅ Load Needed Pallets from Firebase
+function loadNeededPallets() {
+    db.collection("criticalParts").onSnapshot((snapshot) => {
+        let storedData = {};
+        snapshot.forEach(doc => {
+            storedData[doc.id] = doc.data().neededPallets;
+        });
+
+        document.querySelectorAll(".quantity-input").forEach(input => {
+            let partNumber = input.dataset.partNumber;
+            if (storedData.hasOwnProperty(partNumber)) {
+                input.value = storedData[partNumber];
+            }
+        });
+
+        console.log("🔄 Loaded Needed Pallets from Firebase:", storedData);
+    });
+}
+
+// ✅ Save Updated Needed Pallets to Firebase
+function saveNeededPallets(event) {
+    let input = event.target;
+    let partNumber = input.dataset.partNumber;
+    let newQuantity = parseInt(input.value) || 0;
+
+    db.collection("criticalParts").doc(partNumber).set({
+        neededPallets: newQuantity
+    }, { merge: true })
+    .then(() => console.log(`✅ Updated Needed Pallets for ${partNumber}: ${newQuantity}`))
+    .catch(error => console.error("❌ Error updating pallets:", error));
+}
 
 // ✅ Attach Event Listeners for Input Fields
 function attachInputListeners() {
