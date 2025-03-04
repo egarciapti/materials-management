@@ -110,23 +110,25 @@ document.addEventListener("DOMContentLoaded", function () {
                 partData.push({ partNumber, quantity });
             });
 
-            let url = "https://script.google.com/macros/s/AKfycbwBWcpHc8GILRYcIoF9czoyOUtGYtra4Ni1fmCIlDHJ_na1UEJtez4C4rDBAaZ0pICZ/exec";
+            let url = "https://script.google.com/macros/s/AKfycbwBWcpHc8GILRYcIoF9czoyOUtGYtra4Ni1fmCIlDHJ_na1UEJtez4C4rDBAaZ0pICZ/exec"; // ✅ Correct URL
 
-
-            fetch(url, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ data: partData }) // ✅ Correct JSON format
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log("✅ Scan data sent successfully:", data);
-                alert("✅ Data sent successfully!");
-            })
-            .catch(error => {
-                console.error("❌ Error sending data:", error);
-                alert("❌ Failed to send data!");
-            });
+fetch(url, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+    },
+    body: JSON.stringify({ data: partData })
+})
+.then(response => response.json())
+.then(data => {
+    console.log("✅ Data sent successfully:", data);
+    alert("✅ Data saved!");
+})
+.catch(error => {
+    console.error("❌ Error sending data:", error);
+    alert("❌ Failed to send data!");
+});
         });
     }
 });
