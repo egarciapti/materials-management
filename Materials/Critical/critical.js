@@ -110,7 +110,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 partData.push({ partNumber, quantity });
             });
 
-            let url = "https://script.google.com/macros/s/YOUR-NEW-DEPLOYMENT-ID/exec"; // ✅ Update this with the new deployment URL
+            let url = "https://script.google.com/macros/s/AKfycbwBWcpHc8GILRYcIoF9czoyOUtGYtra4Ni1fmCIlDHJ_na1UEJtez4C4rDBAaZ0pICZ/exec";
+
 
             fetch(url, {
                 method: "POST",
