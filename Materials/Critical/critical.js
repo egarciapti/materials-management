@@ -3,12 +3,36 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-// ✅ Initialize the Critical Parts Screen
+// ✅ Define Functions BEFORE Calling initializeCriticalPartsScreen()
+function loadNeededPallets() {
+    let url = "https://script.google.com/macros/s/https://script.google.com/macros/s/AKfycbwBWcpHc8GILRYcIoF9czoyOUtGYtra4Ni1fmCIlDHJ_na1UEJtez4C4rDBAaZ0pICZ/exec"; // ✅ Replace with your actual Google Apps Script URL
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            document.querySelectorAll(".quantity-input").forEach(input => {
+                let partNumber = input.dataset.partNumber;
+                if (data[partNumber] !== undefined) {
+                    input.value = data[partNumber];
+                }
+            });
+            console.log("✅ Loaded Needed Pallets:", data);
+        })
+        .catch(error => console.error("❌ Error loading data:", error));
+}
+
+// ✅ Define the Function BEFORE Calling It
 function initializeCriticalPartsScreen() {
     updateDateAndShift();
     attachInputListeners();
-    loadNeededPallets();
+    loadNeededPallets(); // ✅ This function is now defined before it's called
 }
+
+// ✅ Call initializeCriticalPartsScreen() AFTER All Function Definitions
+document.addEventListener("DOMContentLoaded", function () {
+    initializeCriticalPartsScreen();
+});
+
 
 // ✅ Function to Update Date & Shift
 function updateDateAndShift() {
@@ -86,16 +110,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 partData.push({ partNumber, quantity });
             });
 
-            let url = "https://script.google.com/macros/s/AKfycbwBWcpHc8GILRYcIoF9czoyOUtGYtra4Ni1fmCIlDHJ_na1UEJtez4C4rDBAaZ0pICZ/exec"; // ✅ Your new Web App URL
+            let url = "https://script.google.com/macros/s/YOUR-NEW-DEPLOYMENT-ID/exec"; // ✅ Update this with the new deployment URL
 
             fetch(url, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ data: partData }),
-                mode: "no-cors"
+                body: JSON.stringify({ data: partData }) // ✅ Correct JSON format
             })
-            .then(() => {
-                console.log("✅ All values (including zeros) sent successfully!");
+            .then(response => response.json())
+            .then(data => {
+                console.log("✅ Scan data sent successfully:", data);
                 alert("✅ Data sent successfully!");
             })
             .catch(error => {
@@ -105,3 +129,4 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
