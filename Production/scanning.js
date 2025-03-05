@@ -138,7 +138,6 @@ function autoSubmit() {
 
     // ✅ Replace the content with only the last scanned item
     lastScanInfo.innerHTML = scanText;
-
     console.log(`✅ Last Recorded Scan: ${scanText}`);
 
     scanMessage.innerHTML = `✅ Scan Saved!`;
@@ -147,13 +146,15 @@ function autoSubmit() {
     // ✅ Send Scan Data to Google Sheets
     sendScanToGoogleSheets(partNumber, quantity);
 
+    // ✅ Clear Input Fields
     C11.value = "";
     C12.value = "";
     document.getElementById("D11").innerText = "";
     document.getElementById("D12").innerText = "";
     C12.disabled = true;
-    C11.focus();
+
+    // ✅ Ensure Cursor Resets to Part Number Field
+    setTimeout(() => {
+        C11.focus();
+    }, 100);  // Small delay to ensure UI updates properly
 }
-
-
-
