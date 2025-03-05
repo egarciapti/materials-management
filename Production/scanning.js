@@ -13,16 +13,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // ✅ Function to Open Sidebar
 function openSidebar() {
-    console.log("📂 Opening Sidebar"); // Debugging
+    console.log("📂 Opening Sidebar"); 
     document.getElementById("sidebar").style.left = "0";
-    document.getElementById("overlay").style.display = "block"; // Show overlay
+    document.getElementById("overlay").style.display = "block"; 
 }
 
 // ✅ Function to Close Sidebar
 function closeSidebar() {
-    console.log("📂 Closing Sidebar"); // Debugging
+    console.log("📂 Closing Sidebar"); 
     document.getElementById("sidebar").style.left = "-250px";
-    document.getElementById("overlay").style.display = "none"; // Hide overlay
+    document.getElementById("overlay").style.display = "none"; 
 }
 
 // ✅ Function to Initialize Scanning Screen
@@ -30,7 +30,6 @@ function initializeScanningScreen() {
     updateDateAndShift();
     loadSelectedPlatform();
 
-    // Ensure back button works
     let backButton = document.getElementById("backToMain");
     if (backButton) {
         backButton.addEventListener("click", goBackToPlatformSelection);
@@ -61,7 +60,7 @@ function loadSelectedPlatform() {
 // ✅ Function to Handle Back Button Navigation
 function goBackToPlatformSelection() {
     console.log("Navigating back to platform selection...");
-    window.location.href = "../index.html"; // Ensure correct path
+    window.location.href = "../index.html";
 }
 
 // ✅ Function to Handle Part Number Validation
@@ -110,6 +109,7 @@ function validateC12() {
     }
 }
 
+// ✅ Function to Auto Submit & Reset for Next Scan
 function autoSubmit() {
     let C11 = document.getElementById("C11");  // Part Number Input
     let C12 = document.getElementById("C12");  // Quantity Input
@@ -136,13 +136,12 @@ function autoSubmit() {
     let timestamp = new Date().toLocaleString();
     let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${timestamp}`;
 
-    // ✅ Replace the content with only the last scanned item
+    // ✅ Update Last Scan Info
     lastScanInfo.innerHTML = scanText;
     console.log(`✅ Last Recorded Scan: ${scanText}`);
 
     scanMessage.innerHTML = `✅ Scan Saved!`;
     scanMessage.className = "success";
-
 
     // ✅ Clear Input Fields
     C11.value = "";
@@ -154,5 +153,5 @@ function autoSubmit() {
     // ✅ Ensure Cursor Resets to Part Number Field
     setTimeout(() => {
         C11.focus();
-    }, 100);  // Small delay to ensure UI updates properly
+    }, 100);
 }
