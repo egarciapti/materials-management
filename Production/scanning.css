@@ -32,13 +32,18 @@
     font-weight: bold;
 }
 
+/* ✅ Push Main Content Down (Without Moving Title Bar) */
+body {
+    padding-top: 10px; /* Moves content down by 1 cm */
+}
+
 /* ✅ Scanning Information */
 #scanning-info {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 40px;
-    margin-top: 10px;
+    margin-top: 20px; /* Increased from 10px to 20px */
 }
 
 #scanning-info h2 {
@@ -51,7 +56,7 @@
 
 /* ✅ Back Button */
 .home-button {
-    margin-top: 40px;
+    margin-top: 50px; /* Increased to move it lower */
     padding: 20px 40px;
     font-size: 22px;
     background: #555; 
@@ -83,7 +88,7 @@
 /* ✅ Table Styling */
 table {
     width: 80%;
-    margin: 30px auto;
+    margin: 40px auto; /* Moves table further down */
     border-collapse: collapse;
     background-color: #f9f9f9;
     font-size: 30px;
@@ -121,6 +126,16 @@ td {
     border: 2px solid #ccc;
     background-color: #ffffcc;
     border-radius: 6px;
+}
+
+/* ✅ Move Scanning Section Lower */
+#scanning-section {
+    margin-top: 20px; /* Moves the scanning section down */
+}
+
+/* ✅ Move Scanned Pallets Log Lower */
+#scannedPalletsLog {
+    margin-top: 30px; /* Moves this section lower */
 }
 
 /* ✅ Sidebar Styling */
