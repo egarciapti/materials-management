@@ -86,32 +86,12 @@
 </div>
 
 
-
-
-
-
 <!-- ✅ Sidebar Toggle Button -->
 <button id="menu-btn">☰</button>
 
 <!-- ✅ Transparent overlay for closing the menu -->
 <div id="overlay"></div>
 
-<script>
-    function sendScanToGoogleSheets(partNumber, quantity) {
-        let platform = document.getElementById("selectedPlatform").innerText.replace("🔹 Platform: ", "").trim();
-        let currentDate = document.getElementById("currentDate").innerText.replace("📅 Date: ", "").trim();
-        let currentShift = document.getElementById("currentShift").innerText.replace("🕒 Shift: ", "").trim();
-  
-        google.script.run
-            .withSuccessHandler(function(response) {
-                console.log("✅ Scan data sent successfully:", response);
-            })
-            .withFailureHandler(function(error) {
-                console.error("❌ Error sending scan data:", error);
-            })
-            .saveScanData(partNumber, quantity, platform, currentDate, currentShift);
-    }
-  </script>
   </body>
   </html>
   

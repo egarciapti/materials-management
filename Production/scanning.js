@@ -157,33 +157,3 @@ function autoSubmit() {
 
 
 
-function sendScanToGoogleSheets(partNumber, quantity) {
-    let platform = document.getElementById("selectedPlatform").innerText.replace("🔹 Platform: ", "").trim();
-    let currentDate = document.getElementById("currentDate").innerText.replace("📅 Date: ", "").trim();
-    let currentShift = document.getElementById("currentShift").innerText.replace("🕒 Shift: ", "").trim();
-    let timestamp = new Date().toLocaleString();
-
-    let scanData = {
-        partNumber: partNumber,
-        quantity: quantity,
-        platform: platform,
-        date: currentDate,
-        shift: currentShift,
-        timestamp: timestamp
-    };
-
-    let url = "https://script.google.com/macros/s/AKfycbwBWcpHc8GILRYcIoF9czoyOUtGYtra4Ni1fmCIlDHJ_na1UEJtez4C4rDBAaZ0pICZ/exec";
-
-    fetch(url, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(scanData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log("✅ Scan data sent successfully:", data);
-    })
-    .catch(error => console.error("❌ Error sending scan data:", error));
-}
