@@ -143,8 +143,6 @@ function autoSubmit() {
     scanMessage.innerHTML = `✅ Scan Saved!`;
     scanMessage.className = "success";
 
-    // ✅ Send Scan Data to Google Sheets
-    sendScanToGoogleSheets(partNumber, quantity);
 
     // ✅ Clear Input Fields
     C11.value = "";
