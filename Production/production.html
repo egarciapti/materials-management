@@ -2,11 +2,6 @@
 <html lang="en">
 <head>
 
-    <!-- ✅ Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
-    <script src="../firebase.js"></script> <!-- ✅ Load Firebase Configuration -->
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Production - Paint Line Scanner</title>
@@ -45,14 +40,14 @@
     <div id="overlay"></div>
 
     <!-- ✅ Platform Selection Screen -->
-    <div id="platform-selection">
-        <h2>Select the platform:</h2>
-        <button id="platform1Button" class="menu-button">🛠 Platform 1</button>
-        <button id="platform2Button" class="menu-button">🛠 Platform 2</button>
+<div id="platform-selection">
+    <h2>Select the platform:</h2>
+    
+    <button onclick="navigate('Load/load.html')" class="menu-button">🛠 Load</button>
+    <button onclick="navigate('PaintBooth/paintbooth.html')" class="menu-button">🛠 Paint Booth</button>
+    <button onclick="navigate('Charts/charts.html')" class="menu-button charts-button">📊 Charts</button>
+</div>
 
-        <!-- ✅ Corrected "Charts" Button with the Right Path -->
-        <button id="chartsButton" class="menu-button charts-button">📊 Charts</button>
-    </div>
 
     <script src="production.js"></script>
 </body>
