@@ -149,8 +149,8 @@ body {
     grid-template-columns: repeat(3, 1fr); /* ✅ 3 columns */
     grid-template-rows: repeat(6, auto); /* ✅ 6 rows */
     gap: 20px; /* ✅ Space between buttons */
-    width: 90%; /* ✅ Keeps buttons well distributed */
-    max-width: 1200px; /* ✅ Ensures grid is centered */
+    width: 95%; /* ✅ Slightly wider buttons */
+    max-width: 1300px; /* ✅ Keeps grid centered */
 }
 
 /* ✅ Button Styling */
@@ -160,7 +160,8 @@ body {
 
 .inspection-button {
     width: 100%;
-    padding: 15px;
+    height: 80px; /* ✅ Same height for all buttons */
+    padding: 10px;
     font-size: 20px;
     font-weight: bold;
     text-align: center;
@@ -170,6 +171,10 @@ body {
     border-radius: 10px;
     cursor: pointer;
     transition: 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .inspection-button span {
@@ -188,18 +193,23 @@ body {
     padding: 5px;
     border-radius: 5px;
     display: inline-block;
-    min-width: 40px;
+    min-width: 50px;
     text-align: center;
 }
 
 /* ✅ Rework Button (Different Color) */
 .rework {
     background-color: #ff6600;
+    height: 80px; /* ✅ Same height as other buttons */
 }
 
 /* ✅ Responsive Design */
 @media (max-width: 768px) {
     .grid-container {
         grid-template-columns: repeat(2, 1fr); /* ✅ 2 columns for smaller screens */
+    }
+
+    .inspection-button {
+        height: 90px; /* ✅ Slightly taller for small screens */
     }
 }
