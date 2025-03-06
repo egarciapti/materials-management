@@ -1,5 +1,6 @@
-@import url("../../styles.css"); 
+@import url("../styles.css"); /* ✅ Keep Main Screen Styles */
 
+/* ✅ Title Bar */
 #title-bar {
     display: flex;
     align-items: center;
@@ -13,6 +14,7 @@
     z-index: 1000;
 }
 
+/* ✅ Left-Aligned Image */
 .title-image {
     position: absolute;
     left: 20px;
@@ -21,6 +23,7 @@
     border-radius: 5px;
 }
 
+/* ✅ Centered Title */
 #title-bar h1 {
     flex-grow: 1;
     text-align: center;
@@ -29,6 +32,81 @@
     font-weight: bold;
 }
 
+/* ✅ Sidebar Styling */
+#sidebar {
+    position: fixed;
+    left: -250px;
+    top: 70px;
+    width: 250px;
+    height: calc(100vh - 70px);
+    background-color: #004080;
+    color: white;
+    padding-top: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    transition: left 0.3s ease-in-out;
+    z-index: 1100;
+}
+
+#sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#sidebar ul li {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid white;
+}
+
+#sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    background-color: #002c5a;
+}
+
+/* ✅ Close Button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* ✅ Menu Button */
+#menu-btn {
+    position: absolute;
+    top: 60px;
+    left: 20px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 1100;
+}
+
+/* ✅ Overlay */
+#overlay {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 70px);
+    background: rgba(0, 0, 0, 0.2);
+    display: none;
+    z-index: 1050;
+}
+
+/* ✅ Quality Section */
 #quality-section {
     text-align: center;
     margin-top: 120px;
