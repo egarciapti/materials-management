@@ -9,7 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (closeBtn) closeBtn.addEventListener("click", closeSidebar);
 
     updateDateAndShift();
-    updateTotalDefects(); // ✅ Initialize total defect count
+    loadCounters(); // ✅ Load saved counters from LocalStorage
+    updateTotalDefects(); // ✅ Update total defects on page load
 
     // ✅ Select all buttons inside the inspection grid (Only Once)
     const buttons = document.querySelectorAll(".inspection-button");
@@ -20,12 +21,42 @@ document.addEventListener("DOMContentLoaded", function () {
             const counter = document.getElementById(`counter${index + 1}`);
             if (counter) {
                 let count = parseInt(counter.innerText, 10) || 0; // Get current count
-                counter.innerText = count + 1; // ✅ Increase by 1 (Now works correctly)
+                count += 1; // ✅ Increase by 1
+                counter.innerText = count; // ✅ Update UI
+                saveCounters(); // ✅ Save updated counters to LocalStorage
                 updateTotalDefects(); // ✅ Recalculate total after every click
             }
         });
     });
 });
+
+// ✅ Function to Save Counters to LocalStorage
+function saveCounters() {
+    let counterValues = {};
+    const counters = document.querySelectorAll(".counter");
+
+    counters.forEach((counter, index) => {
+        counterValues[`counter${index + 1}`] = counter.innerText; // ✅ Store each counter value
+    });
+
+    localStorage.setItem("finalInspectionCounters", JSON.stringify(counterValues)); // ✅ Save as JSON
+}
+
+// ✅ Function to Load Counters from LocalStorage
+function loadCounters() {
+    let savedCounters = localStorage.getItem("finalInspectionCounters");
+
+    if (savedCounters) {
+        savedCounters = JSON.parse(savedCounters); // ✅ Convert back to object
+
+        Object.keys(savedCounters).forEach(key => {
+            let counterElement = document.getElementById(key);
+            if (counterElement) {
+                counterElement.innerText = savedCounters[key]; // ✅ Restore value
+            }
+        });
+    }
+}
 
 // ✅ Function to Open Sidebar
 function openSidebar() {
@@ -67,7 +98,7 @@ function updateTotalDefects() {
     const counters = document.querySelectorAll(".counter");
 
     counters.forEach(counter => {
-        total += parseInt(counter.innerText, 10) || 0; // Sum all counters
+        total += parseInt(counter.innerText, 10) || 0; // ✅ Sum all counters
     });
 
     document.getElementById("totalDefects").innerHTML = `🔢 Total Defects: <b>${total}</b>`;
