@@ -2,12 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeCriticalPartsScreen();
 });
 
-// ✅ Define the Function BEFORE Calling It
-function initializeCriticalPartsScreen() {
-    updateDateAndShift();
-    attachInputListeners();
-    loadNeededPallets(); // ✅ This function is now defined before it's called
-}
 
 // ✅ Call initializeCriticalPartsScreen() AFTER All Function Definitions
 document.addEventListener("DOMContentLoaded", function () {
@@ -63,14 +57,5 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
-
-// ✅ Attach Event Listeners for Input Fields
-function attachInputListeners() {
-    document.querySelectorAll(".quantity-input").forEach(input => {
-        input.addEventListener("input", function(event) {
-            console.log(`🔄 Input changed for Part: ${event.target.dataset.partNumber}, New Value: ${event.target.value}`);
-        });
-    });
-}
 
 
