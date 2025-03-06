@@ -14,12 +14,20 @@
     z-index: 1000;
 }
 
+#title-bar {
+    margin: 0; /* ✅ Ensures no extra space */
+    padding: 40px 0; /* ✅ Same as Quality screen */
+}
+
+
 /* ✅ Left-Aligned Image */
 .title-image {
     position: absolute;
     left: 20px;
     width: 100px;
     height: auto;
+    border-radius: 5px;
+    height: 50px; /* ✅ Ensures it matches Quality screen */
     border-radius: 5px;
 }
 
@@ -30,6 +38,8 @@
     font-size: 40px;
     color: white;
     font-weight: bold;
+    margin: 0; /* ✅ Ensures no extra space */
+    padding: 0; /* ✅ Ensures no extra space */
 }
 
 /* ✅ Sidebar Styling */
@@ -118,4 +128,10 @@
     font-size: 32px;
     font-weight: bold;
     margin-bottom: 10px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
