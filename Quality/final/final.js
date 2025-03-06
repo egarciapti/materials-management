@@ -108,27 +108,26 @@ const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxAiBAzo6CTA_
 
 document.addEventListener("DOMContentLoaded", function () {
     updateDateAndShift();
-    loadCounters(); // ✅ Load saved counters from LocalStorage
-    updateTotalDefects(); // ✅ Update total defects on page load
+    loadCounters();
+    updateTotalDefects();
 
-    // ✅ Select all buttons inside the inspection grid (Only Once)
+    // ✅ Select all buttons inside the inspection grid
     const buttons = document.querySelectorAll(".inspection-button");
 
     buttons.forEach((button, index) => {
         button.addEventListener("click", function () {
-            // Find the corresponding counter (next sibling element)
             const counter = document.getElementById(`counter${index + 1}`);
             if (counter) {
-                let count = parseInt(counter.innerText, 10) || 0; // Get current count
-                count += 1; // ✅ Increase by 1
-                counter.innerText = count; // ✅ Update UI
-                saveCounters(); // ✅ Save updated counters to LocalStorage
-                updateTotalDefects(); // ✅ Recalculate total after every click
-                sendDataToGoogleSheets(button.innerText); // ✅ Send Data to Google Sheets
+                let count = parseInt(counter.innerText, 10) || 0;
+                counter.innerText = count + 1;
+                saveCounters();
+                updateTotalDefects();
+                sendDataToGoogleSheets(button); // ✅ Pass the button element
             }
         });
     });
 });
+
 
 // ✅ Function to Send Data to Google Sheets
 function sendDataToGoogleSheets(buttonElement) {
