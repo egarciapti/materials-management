@@ -2,25 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeCriticalPartsScreen();
 });
 
-
-// ✅ Define Functions BEFORE Calling initializeCriticalPartsScreen()
-function loadNeededPallets() {
-    let url = "https://script.google.com/macros/s/AKfycbwBWcpHc8GILRYcIoF9czoyOUtGYtra4Ni1fmCIlDHJ_na1UEJtez4C4rDBAaZ0pICZ/exec"; 
-
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            document.querySelectorAll(".quantity-input").forEach(input => {
-                let partNumber = input.dataset.partNumber;
-                if (data[partNumber] !== undefined) {
-                    input.value = data[partNumber];
-                }
-            });
-            console.log("✅ Loaded Needed Pallets:", data);
-        })
-        .catch(error => console.error("❌ Error loading data:", error));
-}
-
 // ✅ Define the Function BEFORE Calling It
 function initializeCriticalPartsScreen() {
     updateDateAndShift();
