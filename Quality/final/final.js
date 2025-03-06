@@ -133,12 +133,16 @@ document.addEventListener("DOMContentLoaded", function () {
 // ✅ Function to Send Data to Google Sheets
 function sendDataToGoogleSheets(defectName) {
     const shift = document.getElementById("currentShift").innerText.replace("🕒 Shift: ", "").trim();
-    
+
+    // ✅ Extract only the first line of the button text (main defect name)
+    const mainDefect = defectName.split("\n")[0].trim(); 
+
     fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ defect: defectName, shift: shift })
-    }).then(() => console.log(`✅ Sent: ${defectName} | Shift: ${shift}`))
+        body: JSON.stringify({ defect: mainDefect, shift: shift })
+    }).then(() => console.log(`✅ Sent: ${mainDefect} | Shift: ${shift}`))
       .catch(error => console.error("❌ Error:", error));
 }
+
