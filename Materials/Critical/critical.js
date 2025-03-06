@@ -92,44 +92,4 @@ function attachInputListeners() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    const submitButton = document.getElementById("submit-btn");
-
-    if (submitButton) {
-        submitButton.addEventListener("click", function () {
-            let partData = [];
-
-            // ✅ Loop through all quantity inputs
-            document.querySelectorAll(".quantity-input").forEach(input => {
-                let partNumber = input.dataset.partNumber;
-                let quantity = input.value.trim();
-
-                // ✅ Ensure every part number is sent with either its value or 0
-                quantity = quantity === "" ? 0 : parseInt(quantity, 10);
-
-                partData.push({ partNumber, quantity });
-            });
-
-            let url = "https://script.google.com/macros/s/AKfycbwBWcpHc8GILRYcIoF9czoyOUtGYtra4Ni1fmCIlDHJ_na1UEJtez4C4rDBAaZ0pICZ/exec"; 
-
-fetch(url, {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-    },
-    body: JSON.stringify({ data: partData })
-})
-.then(response => response.json())
-.then(data => {
-    console.log("✅ Data sent successfully:", data);
-    alert("✅ Data saved!");
-})
-.catch(error => {
-    console.error("❌ Error sending data:", error);
-    alert("❌ Failed to send data!");
-});
-        });
-    }
-});
 
