@@ -3,12 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-// ✅ Call initializeCriticalPartsScreen() AFTER All Function Definitions
-document.addEventListener("DOMContentLoaded", function () {
-    initializeCriticalPartsScreen();
-});
-
-
 // ✅ Function to Update Date & Shift
 function updateDateAndShift() {
     const now = new Date();
