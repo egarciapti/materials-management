@@ -22,3 +22,19 @@ function closeSidebar() {
     document.getElementById("sidebar").style.left = "-250px";
     document.getElementById("overlay").style.display = "none"; 
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Select all buttons inside the inspection grid
+    const buttons = document.querySelectorAll(".inspection-button");
+
+    buttons.forEach((button, index) => {
+        button.addEventListener("click", function () {
+            // Find the corresponding counter (next sibling element)
+            const counter = document.getElementById(`counter${index + 1}`);
+            if (counter) {
+                let count = parseInt(counter.innerText, 10) || 0; // Get current count
+                counter.innerText = count + 1; // Increase by 1
+            }
+        });
+    });
+});
