@@ -1,6 +1,6 @@
 @import url("../../styles.css"); /* ✅ Keep Main Screen Styles */
 
-/* ✅ Title Bar Shift & Date */
+/* ✅ Title Bar Shift, Date, and Total Counter */
 #title-info {
     display: flex;
     flex-direction: column;
@@ -13,6 +13,14 @@
     color: white;
     font-weight: bold;
 }
+
+/* ✅ Style for Total Defects */
+#totalDefects {
+    margin-top: 5px;
+    font-size: 18px;
+    color: #ffcc00;
+}
+
 
 
 #title-bar {

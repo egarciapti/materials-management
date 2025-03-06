@@ -57,6 +57,26 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    updateDateAndShift();
+    updateTotalDefects(); // ✅ Initialize total defect count
+
+    // Select all buttons inside the inspection grid
+    const buttons = document.querySelectorAll(".inspection-button");
+
+    buttons.forEach((button, index) => {
+        button.addEventListener("click", function () {
+            // Find the corresponding counter (next sibling element)
+            const counter = document.getElementById(`counter${index + 1}`);
+            if (counter) {
+                let count = parseInt(counter.innerText, 10) || 0; // Get current count
+                counter.innerText = count + 1; // Increase by 1
+                updateTotalDefects(); // ✅ Recalculate total after every click
+            }
+        });
+    });
+});
+
 // ✅ Function to Update Date & Shift
 function updateDateAndShift() {
     const now = new Date();
@@ -76,3 +96,16 @@ function updateDateAndShift() {
     document.getElementById("currentDate").innerHTML = `📅 Date: <b>${formattedDate}</b>`;
     document.getElementById("currentShift").innerHTML = `🕒 Shift: <b>${shift}</b>`;
 }
+
+// ✅ Function to Calculate and Display Total Defects
+function updateTotalDefects() {
+    let total = 0;
+    const counters = document.querySelectorAll(".counter");
+
+    counters.forEach(counter => {
+        total += parseInt(counter.innerText, 10) || 0; // Sum all counters
+    });
+
+    document.getElementById("totalDefects").innerHTML = `🔢 Total Defects: <b>${total}</b>`;
+}
+
