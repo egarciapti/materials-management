@@ -148,9 +148,9 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* ✅ 3 columns */
     grid-template-rows: repeat(6, auto); /* ✅ 6 rows */
-    gap: 10px; /* ✅ Reduced space between buttons */
-    width: 85%; /* ✅ Makes buttons smaller horizontally */
-    max-width: 1000px; /* ✅ Prevents excessive width */
+    gap: 12px; /* ✅ Slightly better spacing */
+    width: 95%; /* ✅ Increased width slightly */
+    max-width: 1200px; /* ✅ Prevents excessive width */
 }
 
 /* ✅ Button Styling */
@@ -160,15 +160,15 @@ body {
 
 .inspection-button {
     width: 100%;
-    height: 65px; /* ✅ Smaller height */
-    padding: 5px;
-    font-size: 18px; /* ✅ Slightly smaller text */
+    height: 65px; /* ✅ Keeps the good vertical size */
+    padding: 6px;
+    font-size: 18px; /* ✅ Text remains readable */
     font-weight: bold;
     text-align: center;
     background-color: #005f9e;
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
     transition: 0.3s ease-in-out;
     display: flex;
@@ -178,7 +178,7 @@ body {
 }
 
 .inspection-button span {
-    font-size: 14px; /* ✅ Slightly smaller subtext */
+    font-size: 14px; /* ✅ Keeps subtitle readable */
     font-weight: normal;
     color: #f4b400;
 }
@@ -187,19 +187,19 @@ body {
 .counter {
     font-size: 20px;
     font-weight: bold;
-    margin-top: 3px;
+    margin-top: 4px;
     background-color: white;
     padding: 4px;
     border-radius: 5px;
     display: inline-block;
-    min-width: 40px;
+    min-width: 45px;
     text-align: center;
 }
 
 /* ✅ Rework Button (Different Color, Same Size) */
 .rework {
     background-color: #ff6600;
-    height: 65px; /* ✅ Same as other buttons */
+    height: 65px; /* ✅ Keeps the same vertical size */
 }
 
 /* ✅ Responsive Design */
@@ -209,6 +209,6 @@ body {
     }
 
     .inspection-button {
-        height: 75px; /* ✅ Slightly taller for small screens */
+        height: 75px; /* ✅ Slightly taller for mobile screens */
     }
 }
