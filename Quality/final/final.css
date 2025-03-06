@@ -135,3 +135,71 @@ body {
     padding: 0;
     box-sizing: border-box;
 }
+
+/* ✅ Ensure the grid layout is 3 columns by 6 rows */
+#inspection-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px; /* Adjust spacing under the title bar */
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* ✅ 3 columns */
+    grid-template-rows: repeat(6, auto); /* ✅ 6 rows */
+    gap: 20px; /* ✅ Space between buttons */
+    width: 90%; /* ✅ Keeps buttons well distributed */
+    max-width: 1200px; /* ✅ Ensures grid is centered */
+}
+
+/* ✅ Button Styling */
+.inspection-item {
+    text-align: center;
+}
+
+.inspection-button {
+    width: 100%;
+    padding: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    background-color: #005f9e;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.inspection-button span {
+    font-size: 16px;
+    display: block;
+    font-weight: normal;
+    color: #f4b400;
+}
+
+/* ✅ Counter Styling */
+.counter {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 5px;
+    background-color: white;
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+    min-width: 40px;
+    text-align: center;
+}
+
+/* ✅ Rework Button (Different Color) */
+.rework {
+    background-color: #ff6600;
+}
+
+/* ✅ Responsive Design */
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr); /* ✅ 2 columns for smaller screens */
+    }
+}
