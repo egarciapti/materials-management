@@ -1,7 +1,3 @@
-document.addEventListener("DOMContentLoaded", function () {
-    initializeCriticalPartsScreen();
-});
-
 
 // ✅ Function to Update Date & Shift
 function updateDateAndShift() {
