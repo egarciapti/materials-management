@@ -103,3 +103,42 @@ function updateTotalDefects() {
 
     document.getElementById("totalDefects").innerHTML = `🔢 Total Defects: <b>${total}</b>`;
 }
+
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxAiBAzo6CTA_galZiUwCbzQLOvMTAcuJrknOkWXL2eH-_Px3XZi0Bd-mTH-e6y9tM1/exec";
+
+document.addEventListener("DOMContentLoaded", function () {
+    updateDateAndShift();
+    loadCounters(); // ✅ Load saved counters from LocalStorage
+    updateTotalDefects(); // ✅ Update total defects on page load
+
+    // ✅ Select all buttons inside the inspection grid (Only Once)
+    const buttons = document.querySelectorAll(".inspection-button");
+
+    buttons.forEach((button, index) => {
+        button.addEventListener("click", function () {
+            // Find the corresponding counter (next sibling element)
+            const counter = document.getElementById(`counter${index + 1}`);
+            if (counter) {
+                let count = parseInt(counter.innerText, 10) || 0; // Get current count
+                count += 1; // ✅ Increase by 1
+                counter.innerText = count; // ✅ Update UI
+                saveCounters(); // ✅ Save updated counters to LocalStorage
+                updateTotalDefects(); // ✅ Recalculate total after every click
+                sendDataToGoogleSheets(button.innerText); // ✅ Send Data to Google Sheets
+            }
+        });
+    });
+});
+
+// ✅ Function to Send Data to Google Sheets
+function sendDataToGoogleSheets(defectName) {
+    const shift = document.getElementById("currentShift").innerText.replace("🕒 Shift: ", "").trim();
+    
+    fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ defect: defectName, shift: shift })
+    }).then(() => console.log(`✅ Sent: ${defectName} | Shift: ${shift}`))
+      .catch(error => console.error("❌ Error:", error));
+}
