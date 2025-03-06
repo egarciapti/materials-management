@@ -131,11 +131,11 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ✅ Function to Send Data to Google Sheets
-function sendDataToGoogleSheets(defectName) {
+function sendDataToGoogleSheets(buttonElement) {
     const shift = document.getElementById("currentShift").innerText.replace("🕒 Shift: ", "").trim();
 
     // ✅ Extract only the first line of the button text
-    const mainDefect = defectName.split("\n")[0].trim();
+    const mainDefect = buttonElement.innerText.split("\n")[0].trim();
 
     fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
