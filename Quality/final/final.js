@@ -7,6 +7,24 @@ document.addEventListener("DOMContentLoaded", function () {
     if (menuButton) menuButton.addEventListener("click", openSidebar);
     if (overlay) overlay.addEventListener("click", closeSidebar);
     if (closeBtn) closeBtn.addEventListener("click", closeSidebar);
+
+    updateDateAndShift();
+    updateTotalDefects(); // ✅ Initialize total defect count
+
+    // ✅ Select all buttons inside the inspection grid (Only Once)
+    const buttons = document.querySelectorAll(".inspection-button");
+
+    buttons.forEach((button, index) => {
+        button.addEventListener("click", function () {
+            // Find the corresponding counter (next sibling element)
+            const counter = document.getElementById(`counter${index + 1}`);
+            if (counter) {
+                let count = parseInt(counter.innerText, 10) || 0; // Get current count
+                counter.innerText = count + 1; // ✅ Increase by 1 (Now works correctly)
+                updateTotalDefects(); // ✅ Recalculate total after every click
+            }
+        });
+    });
 });
 
 // ✅ Function to Open Sidebar
@@ -22,60 +40,6 @@ function closeSidebar() {
     document.getElementById("sidebar").style.left = "-250px";
     document.getElementById("overlay").style.display = "none"; 
 }
-
-document.addEventListener("DOMContentLoaded", function () {
-    // Select all buttons inside the inspection grid
-    const buttons = document.querySelectorAll(".inspection-button");
-
-    buttons.forEach((button, index) => {
-        button.addEventListener("click", function () {
-            // Find the corresponding counter (next sibling element)
-            const counter = document.getElementById(`counter${index + 1}`);
-            if (counter) {
-                let count = parseInt(counter.innerText, 10) || 0; // Get current count
-                counter.innerText = count + 1; // Increase by 1
-            }
-        });
-    });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    updateDateAndShift();
-
-    // Select all buttons inside the inspection grid
-    const buttons = document.querySelectorAll(".inspection-button");
-
-    buttons.forEach((button, index) => {
-        button.addEventListener("click", function () {
-            // Find the corresponding counter (next sibling element)
-            const counter = document.getElementById(`counter${index + 1}`);
-            if (counter) {
-                let count = parseInt(counter.innerText, 10) || 0; // Get current count
-                counter.innerText = count + 1; // Increase by 1
-            }
-        });
-    });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    updateDateAndShift();
-    updateTotalDefects(); // ✅ Initialize total defect count
-
-    // Select all buttons inside the inspection grid
-    const buttons = document.querySelectorAll(".inspection-button");
-
-    buttons.forEach((button, index) => {
-        button.addEventListener("click", function () {
-            // Find the corresponding counter (next sibling element)
-            const counter = document.getElementById(`counter${index + 1}`);
-            if (counter) {
-                let count = parseInt(counter.innerText, 10) || 0; // Get current count
-                counter.innerText = count + 1; // Increase by 1
-                updateTotalDefects(); // ✅ Recalculate total after every click
-            }
-        });
-    });
-});
 
 // ✅ Function to Update Date & Shift
 function updateDateAndShift() {
@@ -108,4 +72,3 @@ function updateTotalDefects() {
 
     document.getElementById("totalDefects").innerHTML = `🔢 Total Defects: <b>${total}</b>`;
 }
-
