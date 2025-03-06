@@ -38,3 +38,41 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    updateDateAndShift();
+
+    // Select all buttons inside the inspection grid
+    const buttons = document.querySelectorAll(".inspection-button");
+
+    buttons.forEach((button, index) => {
+        button.addEventListener("click", function () {
+            // Find the corresponding counter (next sibling element)
+            const counter = document.getElementById(`counter${index + 1}`);
+            if (counter) {
+                let count = parseInt(counter.innerText, 10) || 0; // Get current count
+                counter.innerText = count + 1; // Increase by 1
+            }
+        });
+    });
+});
+
+// ✅ Function to Update Date & Shift
+function updateDateAndShift() {
+    const now = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = now.toLocaleDateString("en-US", options);
+
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+    let shift = "Off Shift"; // Default to Off Shift
+
+    if ((hours === 7 && minutes >= 0) || (hours >= 8 && hours < 15) || (hours === 15 && minutes <= 30)) {
+        shift = "1st Shift";
+    } else if ((hours === 15 && minutes >= 31) || (hours >= 16 && hours < 24)) {
+        shift = "2nd Shift";
+    }
+
+    document.getElementById("currentDate").innerHTML = `📅 Date: <b>${formattedDate}</b>`;
+    document.getElementById("currentShift").innerHTML = `🕒 Shift: <b>${shift}</b>`;
+}
