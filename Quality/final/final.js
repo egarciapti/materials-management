@@ -134,8 +134,8 @@ document.addEventListener("DOMContentLoaded", function () {
 function sendDataToGoogleSheets(defectName) {
     const shift = document.getElementById("currentShift").innerText.replace("🕒 Shift: ", "").trim();
 
-    // ✅ Extract only the first line of the button text (main defect name)
-    const mainDefect = defectName.split("\n")[0].trim(); 
+    // ✅ Extract only the first line of the button text
+    const mainDefect = defectName.split("\n")[0].trim();
 
     fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
@@ -145,4 +145,5 @@ function sendDataToGoogleSheets(defectName) {
     }).then(() => console.log(`✅ Sent: ${mainDefect} | Shift: ${shift}`))
       .catch(error => console.error("❌ Error:", error));
 }
+
 
