@@ -141,7 +141,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 80px; /* ✅ Adjusted to fit better */
+    margin-top: 100px; /* ✅ Adjusted to fit better */
 }
 
 .grid-container {
