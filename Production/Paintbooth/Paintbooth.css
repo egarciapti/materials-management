@@ -113,11 +113,45 @@ body {
     font-size: 12px;
   }
   
-  /* ✅ Reduce Vertical Space of Top Sections */
-  .paint-info,
-  .env-info {
-    grid-row: span 1; /* Reduce height */
-  }
+  /* ✅ Paint Information Section */
+.paint-info {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2; /* Adjust this to modify vertical placement */
+    border: 1px solid #ccc;
+    background: white;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 50px; /* Adjust this value to change the height */
+}
+
+/* Labels and Inputs Inside the Section */
+.paint-info .form-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.paint-info label {
+    flex: 1;
+    text-align: right;
+    font-weight: bold;
+}
+
+.paint-info input {
+    flex: 1.5;
+    padding: 4px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
   
   /* ✅ Move Film Thickness and Paint Consumption Up */
   .film-thickness {
