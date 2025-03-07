@@ -1,148 +1,10 @@
-@import url("../../styles.css"); /* ✅ Keep Main Screen Styles */
-
-/* ✅ Title Bar Shift, Date, and Total Counter */
-#title-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 16px;
-    color: white;
-    font-weight: bold;
-}
-
-
-
-#title-bar {
-    margin: 0; /* ✅ Ensures no extra space */
-    padding: 40px 0; /* ✅ Same as Quality screen */
-}
-
-
-/* ✅ Left-Aligned Image */
-.title-image {
-    position: absolute;
-    left: 20px;
-    width: 100px;
-    height: auto;
-    border-radius: 5px;
-    height: 50px; /* ✅ Ensures it matches Quality screen */
-    border-radius: 5px;
-}
-
-/* ✅ Centered Title */
-#title-bar h1 {
-    flex-grow: 1;
-    text-align: center;
-    font-size: 40px;
-    color: white;
-    font-weight: bold;
-    margin: 0; /* ✅ Ensures no extra space */
-    padding: 0; /* ✅ Ensures no extra space */
-}
-
-/* ✅ Sidebar Styling */
-#sidebar {
-    position: fixed;
-    left: -250px;
-    top: 70px;
-    width: 250px;
-    height: calc(100vh - 70px);
-    background-color: #004080;
-    color: white;
-    padding-top: 20px;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
-    transition: left 0.3s ease-in-out;
-    z-index: 1100;
-}
-
-#sidebar ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-#sidebar ul li {
-    padding: 15px;
-    text-align: center;
-    border-bottom: 1px solid white;
-}
-
-#sidebar ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-    display: block;
-}
-
-#sidebar ul li a:hover {
-    background-color: #002c5a;
-}
-
-/* ✅ Close Button */
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-/* ✅ Menu Button */
-#menu-btn {
-    position: absolute;
-    top: 80px;
-    left: 20px;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 30px;
-    cursor: pointer;
-    z-index: 1100;
-}
-
-/* ✅ Overlay */
-#overlay {
-    position: fixed;
-    top: 70px;
-    left: 0;
-    width: 100%;
-    height: calc(100vh - 70px);
-    background: rgba(0, 0, 0, 0.2);
-    display: none;
-    z-index: 1050;
-}
-
-/* ✅ Quality Section */
-#quality-section {
-    text-align: center;
-    margin-top: 120px;
-    font-size: 24px;
-    color: #333;
-}
-
-#quality-section h2 {
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 /* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background: #f4f4f4;
+    overflow: hidden; /* Prevent scrolling */
   }
   
   #title-bar {
@@ -155,20 +17,20 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 15px 0;
+    padding: 10px 0;
     z-index: 1000;
   }
   
   .title-image {
     position: absolute;
     left: 20px;
-    width: 80px;
+    width: 60px;
     height: auto;
     border-radius: 5px;
   }
   
   #title-bar h1 {
-    font-size: 24px;
+    font-size: 20px;
     margin: 0;
   }
   
@@ -182,9 +44,9 @@ body {
   #sidebar {
     position: fixed;
     left: -250px;
-    top: 70px;
+    top: 60px;
     width: 250px;
-    height: calc(100vh - 70px);
+    height: calc(100vh - 60px);
     background: #004080;
     color: white;
     padding-top: 20px;
@@ -198,14 +60,14 @@ body {
   }
   
   #sidebar ul li {
-    padding: 15px;
+    padding: 10px;
     text-align: center;
   }
   
   #sidebar ul li a {
     color: white;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 16px;
   }
   
   #menu-btn {
@@ -214,7 +76,7 @@ body {
     left: 20px;
     background: none;
     border: none;
-    font-size: 30px;
+    font-size: 25px;
     color: white;
     z-index: 1100;
     cursor: pointer;
@@ -222,86 +84,77 @@ body {
   
   #overlay {
     position: fixed;
-    top: 70px;
+    top: 60px;
     left: 0;
     width: 100%;
-    height: calc(100vh - 70px);
+    height: calc(100vh - 60px);
     background: rgba(0,0,0,0.2);
     display: none;
     z-index: 1050;
   }
   
-  /* Form Styles */
+  /* Form Layout */
   form#paintBoothForm {
-    max-width: 1000px;
-    margin: 100px auto 20px;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 70px 20px 10px;
+    height: calc(100vh - 80px);
+    overflow: hidden;
   }
   
+  /* Sections */
   fieldset.section {
     border: 1px solid #ccc;
-    margin-bottom: 20px;
-    padding: 10px 20px;
+    padding: 10px;
+    background: white;
+    border-radius: 5px;
+    font-size: 12px;
   }
   
   fieldset.section legend {
-    font-size: 1.2em;
     font-weight: bold;
-    padding: 0 10px;
+    font-size: 14px;
+    padding: 0 5px;
   }
   
+  /* Fields */
   .form-row {
     display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 15px;
     align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    font-size: 12px;
+    margin-bottom: 5px;
   }
   
   .form-row label {
-    flex: 1 0 30%;
-    padding-right: 10px;
+    flex: 1;
     text-align: right;
     font-weight: bold;
   }
   
-  .form-row input,
-  .form-row textarea {
-    flex: 1 0 65%;
-    padding: 5px;
+  .form-row input {
+    flex: 1.5;
+    padding: 4px;
+    font-size: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
   }
   
-  .form-row.submit-row {
-    justify-content: center;
-  }
-  
+  /* Submit Button */
   .submit-button {
+    grid-column: span 3;
     background: #004080;
     color: white;
-    padding: 10px 20px;
+    padding: 8px;
     border: none;
-    border-radius: 5px;
-    font-size: 18px;
+    border-radius: 4px;
+    font-size: 16px;
     cursor: pointer;
-    transition: background 0.3s ease;
   }
   
   .submit-button:hover {
-    background: #003060;
-  }
-  
-  /* Subsection styles */
-  .subsection {
-    margin-top: 15px;
-  }
-  
-  .subsection h3 {
-    margin: 10px 0;
-    font-size: 1.1em;
-    color: #004080;
+    background: #002a5c;
   }
   
