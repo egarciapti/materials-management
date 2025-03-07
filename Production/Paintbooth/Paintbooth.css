@@ -137,7 +137,8 @@ fieldset.section {
 
 /* ✅ Adjusted Heights */
 .paint-info, .environment-info {
-    height: 200px;
+    height: 250px;
+    margin-top: 10px;
 }
 
 .film-thickness {
