@@ -139,6 +139,8 @@ fieldset.section {
 .paint-info, .environment-info {
     height: 250px;
     margin-top: 60px;
+    grid-column: span 2; 
+    width: 100%;
 }
 
 .film-thickness {
