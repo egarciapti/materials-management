@@ -164,10 +164,10 @@ body {
 /* ✅ Paint Information Section */
 .paint-info {
     position: absolute;
-    left: 10px; /* Moves it to the very left */
-    top: 100px; /* Adjust as needed */
-    width: 100px; /* Adjust width as needed */
-    max-width: 400px; /* Ensures it doesn't stretch too wide */
+    left: 10px; /* Moves the section to the left */
+    top: 100px; /* Adjust vertical position */
+    width: 350px; /* Set a fixed width, adjust as needed */
+    height: auto; /* Adjust height automatically based on content */
     background: white;
     border-radius: 5px;
     padding: 15px;
