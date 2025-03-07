@@ -37,74 +37,40 @@
     <!-- ✅ Transparent overlay -->
     <div id="overlay"></div>
 
-    <!-- ✅ Form Layout -->
-    <form id="paintBoothForm">
-        
-        <fieldset class="section paint-info">
-            <legend>Paint Information</legend>
-            <label>Batch Number (Electrostatic): <input type="text"></label>
-            <label>Batch Number (Touch up): <input type="text"></label>
-            <label>Viscosity (18 - 40 sec): <input type="text"></label>
-            <label>Temperature (45 - 90 °F): <input type="text"></label>
-        </fieldset>
+   <!-- ✅ Title Bar -->
+   <div id="title-bar">
+    <img src="https://lh3.googleusercontent.com/d/1xRLuEF67gw8aST0g702xuH924SsoYVeA=w300" 
+         alt="PTI Logo" class="title-image">
+    <h1>Paint Booth Monitoring</h1>
+</div>
 
-        <fieldset class="section environment-info">
-            <legend>Environment Information</legend>
-            <label>Building Temperature (°F): <input type="text"></label>
-            <label>Building Humidity (%): <input type="text"></label>
-            <label>Paint Booth Temperature (°F): <input type="text"></label>
-            <label>Paint Booth Humidity: <input type="text"></label>
-            <label>Pre-Heat Oven Temp. (°F): <input type="text"></label>
-            <label>Cure Oven Temp. (°F): <input type="text"></label>
-        </fieldset>
+<!-- ✅ Main Content Area -->
+<form id="paintBoothForm">
+    <!-- Paint Information Section -->
+    <fieldset class="paint-info">
+        <legend>Paint Information</legend>
 
-        <fieldset class="section robots-parameters">
-            <legend>Robots Parameters</legend>
-            <h4>ROBOT 1</h4>
-            <label>Fluid Air (10 - 15): <input type="text"></label>
-            <label>Atom Air: <input type="text"></label>
-            <label>Fan Air: <input type="text"></label>
-            <label>Conveyor Speed: <input type="text"></label>
+        <div class="form-row">
+            <label for="batchElectrostatic">Batch Number (Electrostatic):</label>
+            <input type="text" id="batchElectrostatic" name="batchElectrostatic">
+        </div>
 
-            <h4>ROBOT 2</h4>
-            <label>Fluid Air (12 - 15): <input type="text"></label>
-            <label>Atom Air: <input type="text"></label>
-            <label>Fan Air: <input type="text"></label>
+        <div class="form-row">
+            <label for="batchTouchUp">Batch Number (Touch Up):</label>
+            <input type="text" id="batchTouchUp" name="batchTouchUp">
+        </div>
 
-            <h4>ROBOT 3</h4>
-            <label>Bearing Air: <input type="text"></label>
-            <label>Turbine Air: <input type="text"></label>
-            <label>RPM: <input type="text"></label>
-            <label>KV (30 - 120 KV): <input type="text"></label>
-            <label>Fluid: <input type="text"></label>
-            <label>Shape: <input type="text"></label>
-        </fieldset>
+        <div class="form-row">
+            <label for="viscosity">Viscosity (18 - 40 sec):</label>
+            <input type="text" id="viscosity" name="viscosity">
+        </div>
 
-        <fieldset class="section film-thickness">
-            <legend>Film Thickness</legend>
-            <label>7:30 AM: <input type="text"></label>
-            <label>8:30 AM: <input type="text"></label>
-            <label>9:30 AM: <input type="text"></label>
-            <label>10:30 AM: <input type="text"></label>
-            <label>11:30 AM: <input type="text"></label>
-            <label>12:30 PM: <input type="text"></label>
-        </fieldset>
-
-        <fieldset class="section paint-consumption">
-            <legend>Paint Consumption</legend>
-            <label>Starting Inventory (in): <input type="text"></label>
-            <label>Ending Inventory (in): <input type="text"></label>
-            <label>Consumption (in): <input type="text"></label>
-            <label>Consumption (gal): <input type="text"></label>
-        </fieldset>
-
-        <fieldset class="section comments">
-            <legend>Comments</legend>
-            <label>Additional Comments: <textarea></textarea></label>
-        </fieldset>
-
-    </form>
-
+        <div class="form-row">
+            <label for="temperature">Temperature (45 - 90 °F):</label>
+            <input type="text" id="temperature" name="temperature">
+        </div>
+    </fieldset>
+</form>
     <script src="Paintbooth.js"></script>
 
 </body>
