@@ -188,7 +188,7 @@ body {
 
 .form-row input {
     flex: none !important;  /* Override any flex-based sizing */
-    width: 30px !important; /* Force a smaller width */
+    width: 50px !important; /* Force a smaller width */
     padding: 6px;
     font-size: 14px;
     border: 1px solid #ccc;
