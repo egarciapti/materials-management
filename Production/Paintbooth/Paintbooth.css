@@ -112,13 +112,16 @@ body {
     font-size: 12px;
   }
   
-  fieldset.section legend {
-    font-weight: bold;
-    font-size: 14px;
-    padding: 0 5px;
+  /* Move Film Thickness and Paint Consumption */
+  .film-thickness {
+    grid-column: 1 / 2; /* Moves it under Paint Information */
   }
   
-  /* Fields */
+  .paint-consumption {
+    grid-column: 2 / 3; /* Moves it under Environment Information */
+  }
+  
+  /* Labels and Inputs */
   .form-row {
     display: flex;
     align-items: center;
