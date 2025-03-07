@@ -166,7 +166,7 @@ body {
     position: absolute;
     left: 10px; /* Moves it to the very left */
     top: 100px; /* Adjust as needed */
-    width: auto; /* Adjust width as needed */
+    width: 100px; /* Adjust width as needed */
     max-width: 400px; /* Ensures it doesn't stretch too wide */
     background: white;
     border-radius: 5px;
