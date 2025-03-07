@@ -138,78 +138,96 @@ body {
     box-sizing: border-box;
 }
 
+<form id="paintBoothForm">
+    <!-- Paint Information -->
+    <fieldset>
+        <legend>Paint Information</legend>
+        <div class="field-container">
+            <label>Batch Number (Electrostatic): <input type="text"></label>
+            <label>Batch Number (Touch up): <input type="text"></label>
+            <label>Viscosity (18 - 40 sec): <input type="text"></label>
+            <label>Temperature (45 - 90 °F): <input type="text"></label>
+        </div>
+    </fieldset>
 
+    <!-- Environment Information -->
+    <fieldset>
+        <legend>Environment Information</legend>
+        <div class="field-container">
+            <label>Building Temperature (°F): <input type="text"></label>
+            <label>Building Humidity (%): <input type="text"></label>
+            <label>Paint Booth Temperature (°F): <input type="text"></label>
+            <label>Pre-Heat Oven Temp. (°F): <input type="text"></label>
+        </div>
+    </fieldset>
 
-/* Form Styles */
-form#paintBoothForm {
-    max-width: 1000px;
-    margin: 100px auto 20px;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-  
-  fieldset.section {
-    border: 1px solid #ccc;
-    margin-bottom: 20px;
-    padding: 10px 20px;
-  }
-  
-  fieldset.section legend {
-    font-size: 1.2em;
-    font-weight: bold;
-    padding: 0 10px;
-  }
-  
-  .form-row {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 15px;
-    align-items: center;
-  }
-  
-  .form-row label {
-    flex: 1 0 30%;
-    padding-right: 10px;
-    text-align: right;
-    font-weight: bold;
-  }
-  
-  .form-row input,
-  .form-row textarea {
-    flex: 1 0 65%;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .form-row.submit-row {
-    justify-content: center;
-  }
-  
-  .submit-button {
-    background: #004080;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 18px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  
-  .submit-button:hover {
-    background: #003060;
-  }
-  
-  /* Subsection styles */
-  .subsection {
-    margin-top: 15px;
-  }
-  
-  .subsection h3 {
-    margin: 10px 0;
-    font-size: 1.1em;
-    color: #004080;
-  }
+    <!-- Robots Parameters -->
+    <fieldset>
+        <legend>Robots Parameters</legend>
+        <h3>ROBOT 1</h3>
+        <div class="field-container">
+            <label>Fluid Air (10 - 15): <input type="text"></label>
+            <label>Atom Air: <input type="text"></label>
+            <label>Fan Air: <input type="text"></label>
+            <label>Conveyor Speed: <input type="text"></label>
+        </div>
+
+        <h3>ROBOT 2</h3>
+        <div class="field-container">
+            <label>Fluid Air (12 - 15): <input type="text"></label>
+            <label>Atom Air: <input type="text"></label>
+            <label>Fan Air: <input type="text"></label>
+        </div>
+
+        <h3>ROBOT 3</h3>
+        <div class="field-container">
+            <label>Bearing Air: <input type="text"></label>
+            <label>Turbine Air: <input type="text"></label>
+            <label>RPM: <input type="text"></label>
+            <label>KV (30 - 120 KV): <input type="text"></label>
+        </div>
+    </fieldset>
+
+    <!-- Film Thickness -->
+    <fieldset>
+        <legend>Film Thickness</legend>
+        <div class="film-thickness">
+            <label>7:30 AM: <input type="text"></label>
+            <label>8:30 AM: <input type="text"></label>
+            <label>9:30 AM: <input type="text"></label>
+            <label>10:30 AM: <input type="text"></label>
+            <label>11:30 AM: <input type="text"></label>
+            <label>12:30 PM: <input type="text"></label>
+            <label>1:30 PM: <input type="text"></label>
+            <label>2:30 PM: <input type="text"></label>
+        </div>
+    </fieldset>
+
+    <!-- Paint Consumption -->
+    <fieldset>
+        <legend>Paint Consumption</legend>
+        <h3>Electrostatic Tote</h3>
+        <div class="paint-consumption">
+            <label>Starting Inventory (in): <input type="text"></label>
+            <label>Ending Inventory (in): <input type="text"></label>
+            <label>Consumption (in): <input type="text"></label>
+            <label>Consumption (gal): <input type="text"></label>
+        </div>
+
+        <h3>Manual Touch Up Tote</h3>
+        <div class="paint-consumption">
+            <label>Starting Inventory (in): <input type="text"></label>
+            <label>Ending Inventory (in): <input type="text"></label>
+            <label>Consumption (in): <input type="text"></label>
+            <label>Consumption (gal): <input type="text"></label>
+        </div>
+    </fieldset>
+
+    <!-- Comments -->
+    <fieldset>
+        <legend>Comments</legend>
+        <textarea rows="4"></textarea>
+    </fieldset>
+
+    <button type="submit">Submit</button>
+</form>

@@ -1,256 +1,148 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Paint Booth - Paint Line Scanner</title>
-  <link rel="stylesheet" href="Paintbooth.css">
-</head>
-<body>
-  <!-- ✅ Title Bar with Image, Title, Date, and Shift -->
-  <div id="title-bar">
-    <img src="https://lh3.googleusercontent.com/d/1xRLuEF67gw8aST0g702xuH924SsoYVeA=w300"
-         alt="Paint Booth"
-         class="title-image">
-    <h1>Paint Booth Monitoring</h1>
-    <div id="title-info">
-      <span id="currentDate">📅 Date: Loading...</span>
-      <span id="currentShift">🕒 Shift: Loading...</span>
-    </div>
-  </div>
+/* ✅ General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
 
-  <!-- ✅ Sidebar -->
-  <div id="sidebar">
-    <button class="close-btn" onclick="closeSidebar()">✖</button>
-    <ul>
-      <li><a href="/materials-management/index.html">🏠 Home</a></li>
-      <li><a href="/materials-management/Materials/index.html">📦 Materials</a></li>
-      <li><a href="/materials-management/Production/production.html">🏭 Production</a></li>
-      <li><a href="/materials-management/Quality/quality.html">✅ Quality</a></li>
-    </ul>
-  </div>
+/* ✅ Title Bar */
+#title-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #004080;
+    padding: 20px;
+    color: white;
+}
 
-  <!-- ✅ Sidebar Toggle Button -->
-  <button id="menu-btn" onclick="openSidebar()">☰</button>
+.title-image {
+    width: 80px;
+    height: auto;
+}
 
-  <!-- ✅ Transparent Overlay for Closing the Menu -->
-  <div id="overlay"></div>
+h1 {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 28px;
+}
 
-  <!-- ✅ Paint Booth Form -->
-  <form id="paintBoothForm">
-    <!-- Paint Information Section -->
-    <fieldset class="section">
-      <legend>Paint Information</legend>
-      <div class="form-row">
-        <label for="batchElectrostatic">Batch Number (Electrostatic):</label>
-        <input type="text" id="batchElectrostatic" name="batchElectrostatic">
-      </div>
-      <div class="form-row">
-        <label for="batchTouchUp">Batch Number (Touch up):</label>
-        <input type="text" id="batchTouchUp" name="batchTouchUp">
-      </div>
-      <div class="form-row">
-        <label for="viscosity1">Viscosity (18 - 40 sec):</label>
-        <input type="text" id="viscosity1" name="viscosity1">
-        <input type="text" id="viscosity2" name="viscosity2">
-      </div>
-      <div class="form-row">
-        <label for="temp1">Temperature (45 - 90 °F):</label>
-        <input type="text" id="temp1" name="temp1">
-        <input type="text" id="temp2" name="temp2">
-      </div>
-    </fieldset>
+/* ✅ Sidebar */
+#sidebar {
+    position: fixed;
+    left: -250px;
+    top: 70px;
+    width: 250px;
+    height: 100%;
+    background-color: #004080;
+    color: white;
+    padding-top: 20px;
+    transition: left 0.3s ease-in-out;
+}
 
-    <!-- Environment Information Section -->
-    <fieldset class="section">
-      <legend>Environment Information</legend>
-      <div class="form-row">
-        <label for="buildingTemp">Building Temperature (°F):</label>
-        <input type="text" id="buildingTemp" name="buildingTemp">
-      </div>
-      <div class="form-row">
-        <label for="buildingHumidity">Building Humidity (%):</label>
-        <input type="text" id="buildingHumidity" name="buildingHumidity">
-      </div>
-      <div class="form-row">
-        <label for="boothTemp">Paint Booth Temperature (°F):</label>
-        <input type="text" id="boothTemp" name="boothTemp">
-      </div>
-      <div class="form-row">
-        <label for="boothHumidity">Paint Booth Humidity:</label>
-        <input type="text" id="boothHumidity" name="boothHumidity">
-      </div>
-      <div class="form-row">
-        <label for="preHeatOven">Pre-Heat Oven Temp. (°F):</label>
-        <input type="text" id="preHeatOven" name="preHeatOven">
-      </div>
-      <div class="form-row">
-        <label for="cureOven">Cure Oven Temp. (°F):</label>
-        <input type="text" id="cureOven" name="cureOven">
-      </div>
-    </fieldset>
+#sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
 
-    <!-- Robots Parameters Section -->
-    <fieldset class="section">
-      <legend>Robots Parameters</legend>
-      <div class="subsection">
-        <h3>ROBOT 1</h3>
-        <div class="form-row">
-          <label for="robot1FluidAir">Fluid Air (10 - 15):</label>
-          <input type="text" id="robot1FluidAir" name="robot1FluidAir">
-        </div>
-        <div class="form-row">
-          <label for="robot1AtomAir">Atom Air:</label>
-          <input type="text" id="robot1AtomAir" name="robot1AtomAir">
-        </div>
-        <div class="form-row">
-          <label for="robot1FanAir">Fan Air:</label>
-          <input type="text" id="robot1FanAir" name="robot1FanAir">
-        </div>
-        <div class="form-row">
-          <label for="conveyorSpeed">Conveyor Speed:</label>
-          <input type="text" id="conveyorSpeed" name="conveyorSpeed">
-        </div>
-      </div>
-      <div class="subsection">
-        <h3>ROBOT 2</h3>
-        <div class="form-row">
-          <label for="robot2FluidAir">Fluid Air (12 - 15):</label>
-          <input type="text" id="robot2FluidAir" name="robot2FluidAir">
-        </div>
-        <div class="form-row">
-          <label for="robot2AtomAir">Atom Air:</label>
-          <input type="text" id="robot2AtomAir" name="robot2AtomAir">
-        </div>
-        <div class="form-row">
-          <label for="robot2FanAir">Fan Air:</label>
-          <input type="text" id="robot2FanAir" name="robot2FanAir">
-        </div>
-      </div>
-      <div class="subsection">
-        <h3>ROBOT 3</h3>
-        <div class="form-row">
-          <label for="robot3BearingAir">Bearing Air:</label>
-          <input type="text" id="robot3BearingAir" name="robot3BearingAir">
-        </div>
-        <div class="form-row">
-          <label for="robot3TurbineAir">Turbine Air:</label>
-          <input type="text" id="robot3TurbineAir" name="robot3TurbineAir">
-        </div>
-        <div class="form-row">
-          <label for="robot3RPM">RPM:</label>
-          <input type="text" id="robot3RPM" name="robot3RPM">
-        </div>
-        <div class="form-row">
-          <label for="robot3KV">KV (30 - 120 KV):</label>
-          <input type="text" id="robot3KV" name="robot3KV">
-        </div>
-        <div class="form-row">
-          <label for="robot3Fluid">Fluid:</label>
-          <input type="text" id="robot3Fluid" name="robot3Fluid">
-        </div>
-        <div class="form-row">
-          <label for="robot3Shape">Shape:</label>
-          <input type="text" id="robot3Shape" name="robot3Shape">
-        </div>
-      </div>
-    </fieldset>
+#sidebar ul li {
+    padding: 15px;
+    text-align: center;
+}
 
-    <!-- Film Thickness Section -->
-    <fieldset class="section">
-      <legend>Film Thickness</legend>
-      <div class="form-row">
-        <label for="thickness730">7:30 AM:</label>
-        <input type="text" id="thickness730" name="thickness730">
-      </div>
-      <div class="form-row">
-        <label for="thickness830">8:30 AM:</label>
-        <input type="text" id="thickness830" name="thickness830">
-      </div>
-      <div class="form-row">
-        <label for="thickness930">9:30 AM:</label>
-        <input type="text" id="thickness930" name="thickness930">
-      </div>
-      <div class="form-row">
-        <label for="thickness1030">10:30 AM:</label>
-        <input type="text" id="thickness1030" name="thickness1030">
-      </div>
-      <div class="form-row">
-        <label for="thickness1130">11:30 AM:</label>
-        <input type="text" id="thickness1130" name="thickness1130">
-      </div>
-      <div class="form-row">
-        <label for="thickness1230">12:30 PM:</label>
-        <input type="text" id="thickness1230" name="thickness1230">
-      </div>
-      <div class="form-row">
-        <label for="thickness130">1:30 PM:</label>
-        <input type="text" id="thickness130" name="thickness130">
-      </div>
-      <div class="form-row">
-        <label for="thickness230">2:30 PM:</label>
-        <input type="text" id="thickness230" name="thickness230">
-      </div>
-    </fieldset>
+#sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
 
-    <!-- Paint Consumption Section -->
-    <fieldset class="section">
-      <legend>Paint Consumption</legend>
-      <div class="subsection">
-        <h3>Electrostatic Tote</h3>
-        <div class="form-row">
-          <label for="electroStart">Starting Inventory (in):</label>
-          <input type="text" id="electroStart" name="electroStart">
-        </div>
-        <div class="form-row">
-          <label for="electroEnd">Ending Inventory (in):</label>
-          <input type="text" id="electroEnd" name="electroEnd">
-        </div>
-        <div class="form-row">
-          <label for="electroConsumptionIn">Consumption (in):</label>
-          <input type="text" id="electroConsumptionIn" name="electroConsumptionIn">
-        </div>
-        <div class="form-row">
-          <label for="electroConsumptionGal">Consumption (gal):</label>
-          <input type="text" id="electroConsumptionGal" name="electroConsumptionGal">
-        </div>
-      </div>
-      <div class="subsection">
-        <h3>Manual Touch Up Tote</h3>
-        <div class="form-row">
-          <label for="manualStart">Starting Inventory (in):</label>
-          <input type="text" id="manualStart" name="manualStart">
-        </div>
-        <div class="form-row">
-          <label for="manualEnd">Ending Inventory (in):</label>
-          <input type="text" id="manualEnd" name="manualEnd">
-        </div>
-        <div class="form-row">
-          <label for="manualConsumptionIn">Consumption (in):</label>
-          <input type="text" id="manualConsumptionIn" name="manualConsumptionIn">
-        </div>
-        <div class="form-row">
-          <label for="manualConsumptionGal">Consumption (gal):</label>
-          <input type="text" id="manualConsumptionGal" name="manualConsumptionGal">
-        </div>
-      </div>
-    </fieldset>
+#sidebar ul li a:hover {
+    background-color: #002c5a;
+}
 
-    <!-- Comments Section -->
-    <fieldset class="section">
-      <legend>Comments</legend>
-      <div class="form-row">
-        <label for="comments">Additional Comments:</label>
-        <textarea id="comments" name="comments" rows="4"></textarea>
-      </div>
-    </fieldset>
+/* ✅ Form Container */
+#paintBoothForm {
+    max-width: 80%;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-    <div class="form-row submit-row">
-      <button type="submit" class="submit-button">Submit</button>
-    </div>
-  </form>
+/* ✅ Section Headers */
+fieldset {
+    border: 2px solid #004080;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
 
-  <script src="Paintbooth.js"></script>
-  <script src="../../script.js"></script>
-</body>
-</html>
+legend {
+    font-size: 18px;
+    font-weight: bold;
+    color: #004080;
+    padding: 5px 10px;
+}
+
+/* ✅ Labels & Inputs */
+label {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+/* ✅ Grid Layout */
+.field-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+/* ✅ Film Thickness Section */
+.film-thickness {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+/* ✅ Paint Consumption Section */
+.paint-consumption {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+/* ✅ Comments Section */
+textarea {
+    width: 100%;
+    height: 80px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* ✅ Submit Button */
+button {
+    background-color: #004080;
+    color: white;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #002c5a;
+}
