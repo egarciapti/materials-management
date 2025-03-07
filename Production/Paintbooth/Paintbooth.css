@@ -190,7 +190,7 @@ body {
 }
 
 .form-row input {
-    width: 100px !important; /* Adjust width of input fields */
+    width: 30px !important; /* Adjust width of input fields */
     padding: 6px;
     font-size: 14px;
     border: 1px solid #ccc;
