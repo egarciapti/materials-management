@@ -1,148 +1,133 @@
-/* ✅ General Styles */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paint Booth - Paint Line Scanner</title>
+  <link rel="stylesheet" href="Paintbooth.css">
+</head>
+<body>
+  <!-- ✅ Title Bar with Image, Title, Date, and Shift -->
+  <div id="title-bar">
+    <img src="https://lh3.googleusercontent.com/d/1xRLuEF67gw8aST0g702xuH924SsoYVeA=w300"
+         alt="Paint Booth"
+         class="title-image">
+    <h1>Paint Booth Monitoring</h1>
+    <div id="title-info">
+      <span id="currentDate">📅 Date: Loading...</span>
+      <span id="currentShift">🕒 Shift: Loading...</span>
+    </div>
+  </div>
 
-/* ✅ Title Bar */
-#title-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #004080;
-    padding: 20px;
-    color: white;
-}
+  <!-- ✅ Sidebar -->
+  <div id="sidebar">
+    <button class="close-btn" onclick="closeSidebar()">✖</button>
+    <ul>
+      <li><a href="/materials-management/index.html">🏠 Home</a></li>
+      <li><a href="/materials-management/Materials/index.html">📦 Materials</a></li>
+      <li><a href="/materials-management/Production/production.html">🏭 Production</a></li>
+      <li><a href="/materials-management/Quality/quality.html">✅ Quality</a></li>
+    </ul>
+  </div>
 
-.title-image {
-    width: 80px;
-    height: auto;
-}
+  <!-- ✅ Sidebar Toggle Button -->
+  <button id="menu-btn" onclick="openSidebar()">☰</button>
 
-h1 {
-    flex-grow: 1;
-    text-align: center;
-    font-size: 28px;
-}
+  <!-- ✅ Transparent Overlay for Closing the Menu -->
+  <div id="overlay"></div>
 
-/* ✅ Sidebar */
-#sidebar {
-    position: fixed;
-    left: -250px;
-    top: 70px;
-    width: 250px;
-    height: 100%;
-    background-color: #004080;
-    color: white;
-    padding-top: 20px;
-    transition: left 0.3s ease-in-out;
-}
+  <form id="paintBoothForm">
+    <!-- Paint Information -->
+    <fieldset>
+        <legend>Paint Information</legend>
+        <div class="field-container">
+            <label>Batch Number (Electrostatic): <input type="text"></label>
+            <label>Batch Number (Touch up): <input type="text"></label>
+            <label>Viscosity (18 - 40 sec): <input type="text"></label>
+            <label>Temperature (45 - 90 °F): <input type="text"></label>
+        </div>
+    </fieldset>
 
-#sidebar ul {
-    list-style-type: none;
-    padding: 0;
-}
+    <!-- Environment Information -->
+    <fieldset>
+        <legend>Environment Information</legend>
+        <div class="field-container">
+            <label>Building Temperature (°F): <input type="text"></label>
+            <label>Building Humidity (%): <input type="text"></label>
+            <label>Paint Booth Temperature (°F): <input type="text"></label>
+            <label>Pre-Heat Oven Temp. (°F): <input type="text"></label>
+        </div>
+    </fieldset>
 
-#sidebar ul li {
-    padding: 15px;
-    text-align: center;
-}
+    <!-- Robots Parameters -->
+    <fieldset>
+        <legend>Robots Parameters</legend>
+        <h3>ROBOT 1</h3>
+        <div class="field-container">
+            <label>Fluid Air (10 - 15): <input type="text"></label>
+            <label>Atom Air: <input type="text"></label>
+            <label>Fan Air: <input type="text"></label>
+            <label>Conveyor Speed: <input type="text"></label>
+        </div>
 
-#sidebar ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-}
+        <h3>ROBOT 2</h3>
+        <div class="field-container">
+            <label>Fluid Air (12 - 15): <input type="text"></label>
+            <label>Atom Air: <input type="text"></label>
+            <label>Fan Air: <input type="text"></label>
+        </div>
 
-#sidebar ul li a:hover {
-    background-color: #002c5a;
-}
+        <h3>ROBOT 3</h3>
+        <div class="field-container">
+            <label>Bearing Air: <input type="text"></label>
+            <label>Turbine Air: <input type="text"></label>
+            <label>RPM: <input type="text"></label>
+            <label>KV (30 - 120 KV): <input type="text"></label>
+        </div>
+    </fieldset>
 
-/* ✅ Form Container */
-#paintBoothForm {
-    max-width: 80%;
-    margin: 20px auto;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+    <!-- Film Thickness -->
+    <fieldset>
+        <legend>Film Thickness</legend>
+        <div class="film-thickness">
+            <label>7:30 AM: <input type="text"></label>
+            <label>8:30 AM: <input type="text"></label>
+            <label>9:30 AM: <input type="text"></label>
+            <label>10:30 AM: <input type="text"></label>
+            <label>11:30 AM: <input type="text"></label>
+            <label>12:30 PM: <input type="text"></label>
+            <label>1:30 PM: <input type="text"></label>
+            <label>2:30 PM: <input type="text"></label>
+        </div>
+    </fieldset>
 
-/* ✅ Section Headers */
-fieldset {
-    border: 2px solid #004080;
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-}
+    <!-- Paint Consumption -->
+    <fieldset>
+        <legend>Paint Consumption</legend>
+        <h3>Electrostatic Tote</h3>
+        <div class="paint-consumption">
+            <label>Starting Inventory (in): <input type="text"></label>
+            <label>Ending Inventory (in): <input type="text"></label>
+            <label>Consumption (in): <input type="text"></label>
+            <label>Consumption (gal): <input type="text"></label>
+        </div>
 
-legend {
-    font-size: 18px;
-    font-weight: bold;
-    color: #004080;
-    padding: 5px 10px;
-}
+        <h3>Manual Touch Up Tote</h3>
+        <div class="paint-consumption">
+            <label>Starting Inventory (in): <input type="text"></label>
+            <label>Ending Inventory (in): <input type="text"></label>
+            <label>Consumption (in): <input type="text"></label>
+            <label>Consumption (gal): <input type="text"></label>
+        </div>
+    </fieldset>
 
-/* ✅ Labels & Inputs */
-label {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 8px;
-}
+    <!-- Comments -->
+    <fieldset>
+        <legend>Comments</legend>
+        <textarea rows="4"></textarea>
+    </fieldset>
 
-input[type="text"] {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-left: 10px;
-}
-
-/* ✅ Grid Layout */
-.field-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-}
-
-/* ✅ Film Thickness Section */
-.film-thickness {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-}
-
-/* ✅ Paint Consumption Section */
-.paint-consumption {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-}
-
-/* ✅ Comments Section */
-textarea {
-    width: 100%;
-    height: 80px;
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-/* ✅ Submit Button */
-button {
-    background-color: #004080;
-    color: white;
-    padding: 10px 15px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #002c5a;
-}
+    <button type="submit">Submit</button>
+</form>
+<body>
+</html>
