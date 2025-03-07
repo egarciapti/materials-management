@@ -139,3 +139,77 @@ body {
 }
 
 
+
+/* Form Styles */
+form#paintBoothForm {
+    max-width: 1000px;
+    margin: 100px auto 20px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  fieldset.section {
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+  }
+  
+  fieldset.section legend {
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 0 10px;
+  }
+  
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+    align-items: center;
+  }
+  
+  .form-row label {
+    flex: 1 0 30%;
+    padding-right: 10px;
+    text-align: right;
+    font-weight: bold;
+  }
+  
+  .form-row input,
+  .form-row textarea {
+    flex: 1 0 65%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .form-row.submit-row {
+    justify-content: center;
+  }
+  
+  .submit-button {
+    background: #004080;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background: #003060;
+  }
+  
+  /* Subsection styles */
+  .subsection {
+    margin-top: 15px;
+  }
+  
+  .subsection h3 {
+    margin: 10px 0;
+    font-size: 1.1em;
+    color: #004080;
+  }

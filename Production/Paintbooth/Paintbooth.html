@@ -1,128 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paint Booth - Paint Line Scanner</title>
-    <link rel="stylesheet" href="Paintbooth.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paint Booth - Paint Line Scanner</title>
+  <link rel="stylesheet" href="Paintbooth.css">
 </head>
 <body>
+  <!-- ✅ Title Bar with Image, Title, Date, and Shift -->
+  <div id="title-bar">
+    <img src="https://lh3.googleusercontent.com/d/1xRLuEF67gw8aST0g702xuH924SsoYVeA=w300"
+         alt="Paint Booth"
+         class="title-image">
+    <h1>Paint Booth Monitoring</h1>
+    <div id="title-info">
+      <span id="currentDate">📅 Date: Loading...</span>
+      <span id="currentShift">🕒 Shift: Loading...</span>
+    </div>
+  </div>
 
-    <!-- ✅ Title Bar with Image, Title, Date, Shift -->
-    <div id="title-bar">
-        <img src="https://lh3.googleusercontent.com/d/1xRLuEF67gw8aST0g702xuH924SsoYVeA=w300"
-             alt="Paint Booth"
-             class="title-image">
-        <h1>Paint Booth Monitoring</h1>
-        <div id="title-info">
-            <span id="currentDate">📅 Date: Loading...</span>
-            <span id="currentShift">🕒 Shift: Loading...</span>
+  <!-- ✅ Sidebar -->
+  <div id="sidebar">
+    <button class="close-btn" onclick="closeSidebar()">✖</button>
+    <ul>
+      <li><a href="/materials-management/index.html">🏠 Home</a></li>
+      <li><a href="/materials-management/Materials/index.html">📦 Materials</a></li>
+      <li><a href="/materials-management/Production/production.html">🏭 Production</a></li>
+      <li><a href="/materials-management/Quality/quality.html">✅ Quality</a></li>
+    </ul>
+  </div>
+
+  <!-- ✅ Sidebar Toggle Button -->
+  <button id="menu-btn" onclick="openSidebar()">☰</button>
+
+  <!-- ✅ Transparent Overlay for Closing the Menu -->
+  <div id="overlay"></div>
+
+  <!-- ✅ Paint Booth Form -->
+  <form id="paintBoothForm">
+    <!-- Paint Information Section -->
+    <fieldset class="section">
+      <legend>Paint Information</legend>
+      <div class="form-row">
+        <label for="batchElectrostatic">Batch Number (Electrostatic):</label>
+        <input type="text" id="batchElectrostatic" name="batchElectrostatic">
+      </div>
+      <div class="form-row">
+        <label for="batchTouchUp">Batch Number (Touch up):</label>
+        <input type="text" id="batchTouchUp" name="batchTouchUp">
+      </div>
+      <div class="form-row">
+        <label for="viscosity1">Viscosity (18 - 40 sec):</label>
+        <input type="text" id="viscosity1" name="viscosity1">
+        <input type="text" id="viscosity2" name="viscosity2">
+      </div>
+      <div class="form-row">
+        <label for="temp1">Temperature (45 - 90 °F):</label>
+        <input type="text" id="temp1" name="temp1">
+        <input type="text" id="temp2" name="temp2">
+      </div>
+    </fieldset>
+
+    <!-- Environment Information Section -->
+    <fieldset class="section">
+      <legend>Environment Information</legend>
+      <div class="form-row">
+        <label for="buildingTemp">Building Temperature (°F):</label>
+        <input type="text" id="buildingTemp" name="buildingTemp">
+      </div>
+      <div class="form-row">
+        <label for="buildingHumidity">Building Humidity (%):</label>
+        <input type="text" id="buildingHumidity" name="buildingHumidity">
+      </div>
+      <div class="form-row">
+        <label for="boothTemp">Paint Booth Temperature (°F):</label>
+        <input type="text" id="boothTemp" name="boothTemp">
+      </div>
+      <div class="form-row">
+        <label for="boothHumidity">Paint Booth Humidity:</label>
+        <input type="text" id="boothHumidity" name="boothHumidity">
+      </div>
+      <div class="form-row">
+        <label for="preHeatOven">Pre-Heat Oven Temp. (°F):</label>
+        <input type="text" id="preHeatOven" name="preHeatOven">
+      </div>
+      <div class="form-row">
+        <label for="cureOven">Cure Oven Temp. (°F):</label>
+        <input type="text" id="cureOven" name="cureOven">
+      </div>
+    </fieldset>
+
+    <!-- Robots Parameters Section -->
+    <fieldset class="section">
+      <legend>Robots Parameters</legend>
+      <div class="subsection">
+        <h3>ROBOT 1</h3>
+        <div class="form-row">
+          <label for="robot1FluidAir">Fluid Air (10 - 15):</label>
+          <input type="text" id="robot1FluidAir" name="robot1FluidAir">
         </div>
+        <div class="form-row">
+          <label for="robot1AtomAir">Atom Air:</label>
+          <input type="text" id="robot1AtomAir" name="robot1AtomAir">
+        </div>
+        <div class="form-row">
+          <label for="robot1FanAir">Fan Air:</label>
+          <input type="text" id="robot1FanAir" name="robot1FanAir">
+        </div>
+        <div class="form-row">
+          <label for="conveyorSpeed">Conveyor Speed:</label>
+          <input type="text" id="conveyorSpeed" name="conveyorSpeed">
+        </div>
+      </div>
+      <div class="subsection">
+        <h3>ROBOT 2</h3>
+        <div class="form-row">
+          <label for="robot2FluidAir">Fluid Air (12 - 15):</label>
+          <input type="text" id="robot2FluidAir" name="robot2FluidAir">
+        </div>
+        <div class="form-row">
+          <label for="robot2AtomAir">Atom Air:</label>
+          <input type="text" id="robot2AtomAir" name="robot2AtomAir">
+        </div>
+        <div class="form-row">
+          <label for="robot2FanAir">Fan Air:</label>
+          <input type="text" id="robot2FanAir" name="robot2FanAir">
+        </div>
+      </div>
+      <div class="subsection">
+        <h3>ROBOT 3</h3>
+        <div class="form-row">
+          <label for="robot3BearingAir">Bearing Air:</label>
+          <input type="text" id="robot3BearingAir" name="robot3BearingAir">
+        </div>
+        <div class="form-row">
+          <label for="robot3TurbineAir">Turbine Air:</label>
+          <input type="text" id="robot3TurbineAir" name="robot3TurbineAir">
+        </div>
+        <div class="form-row">
+          <label for="robot3RPM">RPM:</label>
+          <input type="text" id="robot3RPM" name="robot3RPM">
+        </div>
+        <div class="form-row">
+          <label for="robot3KV">KV (30 - 120 KV):</label>
+          <input type="text" id="robot3KV" name="robot3KV">
+        </div>
+        <div class="form-row">
+          <label for="robot3Fluid">Fluid:</label>
+          <input type="text" id="robot3Fluid" name="robot3Fluid">
+        </div>
+        <div class="form-row">
+          <label for="robot3Shape">Shape:</label>
+          <input type="text" id="robot3Shape" name="robot3Shape">
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- Film Thickness Section -->
+    <fieldset class="section">
+      <legend>Film Thickness</legend>
+      <div class="form-row">
+        <label for="thickness730">7:30 AM:</label>
+        <input type="text" id="thickness730" name="thickness730">
+      </div>
+      <div class="form-row">
+        <label for="thickness830">8:30 AM:</label>
+        <input type="text" id="thickness830" name="thickness830">
+      </div>
+      <div class="form-row">
+        <label for="thickness930">9:30 AM:</label>
+        <input type="text" id="thickness930" name="thickness930">
+      </div>
+      <div class="form-row">
+        <label for="thickness1030">10:30 AM:</label>
+        <input type="text" id="thickness1030" name="thickness1030">
+      </div>
+      <div class="form-row">
+        <label for="thickness1130">11:30 AM:</label>
+        <input type="text" id="thickness1130" name="thickness1130">
+      </div>
+      <div class="form-row">
+        <label for="thickness1230">12:30 PM:</label>
+        <input type="text" id="thickness1230" name="thickness1230">
+      </div>
+      <div class="form-row">
+        <label for="thickness130">1:30 PM:</label>
+        <input type="text" id="thickness130" name="thickness130">
+      </div>
+      <div class="form-row">
+        <label for="thickness230">2:30 PM:</label>
+        <input type="text" id="thickness230" name="thickness230">
+      </div>
+    </fieldset>
+
+    <!-- Paint Consumption Section -->
+    <fieldset class="section">
+      <legend>Paint Consumption</legend>
+      <div class="subsection">
+        <h3>Electrostatic Tote</h3>
+        <div class="form-row">
+          <label for="electroStart">Starting Inventory (in):</label>
+          <input type="text" id="electroStart" name="electroStart">
+        </div>
+        <div class="form-row">
+          <label for="electroEnd">Ending Inventory (in):</label>
+          <input type="text" id="electroEnd" name="electroEnd">
+        </div>
+        <div class="form-row">
+          <label for="electroConsumptionIn">Consumption (in):</label>
+          <input type="text" id="electroConsumptionIn" name="electroConsumptionIn">
+        </div>
+        <div class="form-row">
+          <label for="electroConsumptionGal">Consumption (gal):</label>
+          <input type="text" id="electroConsumptionGal" name="electroConsumptionGal">
+        </div>
+      </div>
+      <div class="subsection">
+        <h3>Manual Touch Up Tote</h3>
+        <div class="form-row">
+          <label for="manualStart">Starting Inventory (in):</label>
+          <input type="text" id="manualStart" name="manualStart">
+        </div>
+        <div class="form-row">
+          <label for="manualEnd">Ending Inventory (in):</label>
+          <input type="text" id="manualEnd" name="manualEnd">
+        </div>
+        <div class="form-row">
+          <label for="manualConsumptionIn">Consumption (in):</label>
+          <input type="text" id="manualConsumptionIn" name="manualConsumptionIn">
+        </div>
+        <div class="form-row">
+          <label for="manualConsumptionGal">Consumption (gal):</label>
+          <input type="text" id="manualConsumptionGal" name="manualConsumptionGal">
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- Comments Section -->
+    <fieldset class="section">
+      <legend>Comments</legend>
+      <div class="form-row">
+        <label for="comments">Additional Comments:</label>
+        <textarea id="comments" name="comments" rows="4"></textarea>
+      </div>
+    </fieldset>
+
+    <div class="form-row submit-row">
+      <button type="submit" class="submit-button">Submit</button>
     </div>
+  </form>
 
-    <!-- ✅ Sidebar -->
-    <div id="sidebar">
-        <button class="close-btn" onclick="closeSidebar()">✖</button>
-        <ul>
-            <li><a href="/materials-management/index.html">🏠 Home</a></li>
-            <li><a href="/materials-management/Materials/index.html">📦 Materials</a></li>
-            <li><a href="/materials-management/Production/production.html">🏭 Production</a></li>
-            <li><a href="/materials-management/Quality/quality.html">✅ Quality</a></li>
-        </ul>
-    </div>
-
-    <!-- ✅ Sidebar Toggle Button -->
-    <button id="menu-btn" onclick="openSidebar()">☰</button>
-
-    <!-- ✅ Transparent overlay for closing the menu -->
-    <div id="overlay"></div>
-
-    <!-- ✅ Paint Booth Form -->
-    <form id="paintBoothForm">
-        <!-- Paint Information -->
-        <fieldset>
-            <legend>Paint Information</legend>
-            <label>Batch Number (Electrostatic): <input type="text" name="batchElectrostatic"></label>
-            <label>Batch Number (Touch up): <input type="text" name="batchTouchUp"></label>
-            <label>Viscosity (18 - 40 sec): <input type="text" name="viscosity1"></label>
-            <label>Viscosity (18 - 40 sec): <input type="text" name="viscosity2"></label>
-            <label>Temperature (45 - 90 °F): <input type="text" name="temp1"></label>
-            <label>Temperature (45 - 90 °F): <input type="text" name="temp2"></label>
-        </fieldset>
-
-        <!-- Environment Information -->
-        <fieldset>
-            <legend>Environment Information</legend>
-            <label>Building Temperature (°F): <input type="text" name="buildingTemp"></label>
-            <label>Building Humidity (%): <input type="text" name="buildingHumidity"></label>
-            <label>Paint Booth Temperature (°F): <input type="text" name="boothTemp"></label>
-            <label>Paint Booth Humidity: <input type="text" name="boothHumidity"></label>
-            <label>Pre-Heat Oven Temp. (°F): <input type="text" name="preHeatOven"></label>
-            <label>Cure Oven Temp. (°F): <input type="text" name="cureOven"></label>
-        </fieldset>
-
-        <!-- Robots Parameters -->
-        <fieldset>
-            <legend>Robots Parameters</legend>
-            <h3>ROBOT 1</h3>
-            <label>Fluid Air (10 - 15): <input type="text" name="robot1FluidAir"></label>
-            <label>Atom Air: <input type="text" name="robot1AtomAir"></label>
-            <label>Fan Air: <input type="text" name="robot1FanAir"></label>
-            <label>Conveyor Speed: <input type="text" name="conveyorSpeed"></label>
-
-            <h3>ROBOT 2</h3>
-            <label>Fluid Air (12 - 15): <input type="text" name="robot2FluidAir"></label>
-            <label>Atom Air: <input type="text" name="robot2AtomAir"></label>
-            <label>Fan Air: <input type="text" name="robot2FanAir"></label>
-
-            <h3>ROBOT 3</h3>
-            <label>Bearing Air: <input type="text" name="robot3BearingAir"></label>
-            <label>Turbine Air: <input type="text" name="robot3TurbineAir"></label>
-            <label>RPM: <input type="text" name="robot3RPM"></label>
-            <label>KV (30 - 120 KV): <input type="text" name="robot3KV"></label>
-            <label>Fluid: <input type="text" name="robot3Fluid"></label>
-            <label>Shape: <input type="text" name="robot3Shape"></label>
-        </fieldset>
-
-        <!-- Film Thickness -->
-        <fieldset>
-            <legend>Film Thickness</legend>
-            <label>7:30 AM: <input type="text" name="thickness730"></label>
-            <label>8:30 AM: <input type="text" name="thickness830"></label>
-            <label>9:30 AM: <input type="text" name="thickness930"></label>
-            <label>10:30 AM: <input type="text" name="thickness1030"></label>
-            <label>11:30 AM: <input type="text" name="thickness1130"></label>
-            <label>12:30 PM: <input type="text" name="thickness1230"></label>
-            <label>1:30 PM: <input type="text" name="thickness130"></label>
-            <label>2:30 PM: <input type="text" name="thickness230"></label>
-        </fieldset>
-
-        <!-- Paint Consumption -->
-        <fieldset>
-            <legend>Paint Consumption</legend>
-            <h3>Electrostatic Tote</h3>
-            <label>Starting Inventory (in): <input type="text" name="electroStart"></label>
-            <label>Ending Inventory (in): <input type="text" name="electroEnd"></label>
-            <label>Consumption (in): <input type="text" name="electroConsumptionIn"></label>
-            <label>Consumption (gal): <input type="text" name="electroConsumptionGal"></label>
-
-            <h3>Manual Touch Up Tote</h3>
-            <label>Starting Inventory (in): <input type="text" name="manualStart"></label>
-            <label>Ending Inventory (in): <input type="text" name="manualEnd"></label>
-            <label>Consumption (in): <input type="text" name="manualConsumptionIn"></label>
-            <label>Consumption (gal): <input type="text" name="manualConsumptionGal"></label>
-        </fieldset>
-
-        <!-- Comments -->
-        <fieldset>
-            <legend>Comments</legend>
-            <textarea name="comments" rows="4"></textarea>
-        </fieldset>
-
-        <button type="submit">Submit</button>
-    </form>
-
-    <script src="Paintbooth.js"></script>
-    <script src="../../script.js"></script> 
+  <script src="Paintbooth.js"></script>
+  <script src="../../script.js"></script>
 </body>
 </html>
