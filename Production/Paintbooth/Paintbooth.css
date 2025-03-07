@@ -187,10 +187,11 @@ body {
 }
 
 .form-row input {
-    flex: 1.5;
-    padding: 6px ;
+    flex: none !important;  /* Override any flex-based sizing */
+    width: 30px !important; /* Force a smaller width */
+    padding: 6px;
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 30px;
 }
+
