@@ -140,7 +140,7 @@ fieldset.section {
     height: 250px;
     margin-top: 60px;
     grid-column: span 2; 
-    width: 100%;
+    width: 48%;
 }
 
 .film-thickness {
