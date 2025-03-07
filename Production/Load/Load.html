@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quality - Paint Line Scanner</title>
-    <link rel="stylesheet" href="quality.css">
+    <title>Production - Paint Line Scanner</title>
+    <link rel="stylesheet" href="Load.css">
 </head>
 <body>
 
     <!-- ✅ Title Bar with Image and Centered Title -->
     <div id="title-bar">
         <img src="https://lh3.googleusercontent.com/d/1xRLuEF67gw8aST0g702xuH924SsoYVeA=w300"
-             alt="Quality Inspection"
+             alt="Production Facility"
              class="title-image">
         <h1>Roseville Production Building I</h1>
     </div>
@@ -19,29 +20,35 @@
     <div id="sidebar">
         <button class="close-btn" onclick="closeSidebar()">✖</button>
         <ul>
+            <!-- Home link (adjusted) -->
             <li><a href="/materials-management/index.html">🏠 Home</a></li>
+        
+            <!-- Link to Materials -->
             <li><a href="/materials-management/Materials/index.html">📦 Materials</a></li>
-            <li><a href="/materials-management/Production/production.html">🏭 Production</a></li>
+        
+            <!-- Correct link to the Production Screen -->
+            <li><a href="../production.html">🏭 Production</a></li>
         </ul>
     </div>
     
+    
+
     <!-- ✅ Sidebar Toggle Button -->
     <button id="menu-btn" onclick="openSidebar()">☰</button>
 
     <!-- ✅ Transparent overlay for closing the menu -->
     <div id="overlay"></div>
 
-    <!-- ✅ Quality Inspection Section -->
-    <div id="quality-section">
-        <h2>Quality Inspection Area</h2>
-        <p>Welcome to the Quality Inspection section. This page will be used to monitor and manage quality control processes.</p>
+    <!-- ✅ Platform Selection Screen -->
+    <div id="platform-selection">
+        <h2>Select the platform:</h2>
+        <button id="platform1Button" class="menu-button">🛠 Platform 1</button>
+        <button id="platform2Button" class="menu-button">🛠 Platform 2</button>
 
-        <!-- ✅ Final Inspection Button -->
-        <!-- ✅ Corrected Final Inspection Button -->
-<button onclick="window.location.href='final/final.html'" class="menu-button">🔍 Final Inspection</button>
+        <!-- ✅ Corrected "Charts" Button with the Right Path -->
+        <button id="chartsButton" class="menu-button charts-button">📊 Charts</button>
     </div>
 
     <script src="Load.js"></script>
-    <script src="../script.js"></script> 
 </body>
 </html>
