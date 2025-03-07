@@ -93,10 +93,11 @@ body {
     z-index: 1050;
   }
   
-  /* Form Layout */
+  /* Main Layout Grid */
   form#paintBoothForm {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 0.5fr 0.5fr 1fr 1fr;
     gap: 10px;
     padding: 70px 20px 10px;
     height: calc(100vh - 80px);
@@ -112,13 +113,27 @@ body {
     font-size: 12px;
   }
   
-  /* Move Film Thickness and Paint Consumption */
+  /* ✅ Reduce Vertical Space of Top Sections */
+  .paint-info,
+  .env-info {
+    grid-row: span 1; /* Reduce height */
+  }
+  
+  /* ✅ Move Film Thickness and Paint Consumption Up */
   .film-thickness {
-    grid-column: 1 / 2; /* Moves it under Paint Information */
+    grid-column: 1 / 2;
+    grid-row: 2 / 3; /* Moves under Paint Information */
   }
   
   .paint-consumption {
-    grid-column: 2 / 3; /* Moves it under Environment Information */
+    grid-column: 2 / 3;
+    grid-row: 2 / 3; /* Moves under Environment Information */
+  }
+  
+  /* ✅ Robots Parameters Stays */
+  .robots-parameters {
+    grid-column: 3 / 4;
+    grid-row: 1 / 3; /* Stretches to maintain alignment */
   }
   
   /* Labels and Inputs */
