@@ -143,6 +143,13 @@ fieldset.section {
     width: 48%;
 }
 
+.environment-info {
+    height: 250px;
+    margin-top: 60px;
+    grid-column: span 1; 
+    width: 100%;
+}
+
 .film-thickness {
     grid-column: 1 / 2;
     grid-row: 2 / 3;
