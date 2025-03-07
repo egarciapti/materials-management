@@ -138,12 +138,13 @@ fieldset.section {
 /* ✅ Adjusted Heights */
 .paint-info, .environment-info {
     height: 250px;
-    margin-top: 10px;
+    margin-top: 30px;
 }
 
 .film-thickness {
     grid-column: 1 / 2;
     grid-row: 2 / 3;
+    margin-top: 30px;
 }
 
 .paint-consumption {
