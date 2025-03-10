@@ -109,7 +109,7 @@ function validateC12() {
     }
 }
 
-// ✅ Function to Auto Submit & Reset for Next Scan
+// ✅ Function to Auto Submit & Save to Google Sheets
 function autoSubmit() {
     let C11 = document.getElementById("C11");  // Part Number Input
     let C12 = document.getElementById("C12");  // Quantity Input
@@ -133,7 +133,9 @@ function autoSubmit() {
         quantity = Math.floor(parseFloat(quantity)).toString();
     }
 
-    let timestamp = new Date().toLocaleString();
+    let timestamp = new Date().toLocaleTimeString();
+    let date = new Date().toLocaleDateString();
+    
     let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${timestamp}`;
 
     // ✅ Update Last Scan Info
@@ -143,7 +145,32 @@ function autoSubmit() {
     scanMessage.innerHTML = `✅ Scan Saved!`;
     scanMessage.className = "success";
 
-    // ✅ Clear Input Fields
+    // ✅ Send Data to Google Sheets
+    let data = {
+        timestamp: timestamp,
+        date: date,
+        partNumber: partNumber,
+        quantity: quantity
+    };
+
+    fetch("https://script.google.com/macros/s/AKfycbxJ3pnGRr403uRUn7TzXtAk6jDG-g8AXMk62e30eNTR5qY-ZHy1vmtT4ovlpStTATQEuA/exec", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.status === "success") {
+            console.log("✅ Scan saved to Google Sheets successfully!");
+        } else {
+            console.error("❌ Failed to save scan data.");
+        }
+    })
+    .catch(error => console.error("❌ Error:", error));
+
+    // ✅ Clear Input Fields & Reset for Next Scan
     C11.value = "";
     C12.value = "";
     document.getElementById("D11").innerText = "";
@@ -155,3 +182,4 @@ function autoSubmit() {
         C11.focus();
     }, 100);
 }
+
