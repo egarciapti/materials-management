@@ -60,11 +60,12 @@ function sendCriticalPartsToSheets() {
         body: JSON.stringify({ action: "updateQuantities", parts: parts })
     })
     .then(() => {
-        console.log("✅ Critical Parts Sent to Google Sheets");
+        console.log("✅ Critical Parts Quantities Updated in Google Sheets");
         alert("✅ Critical Parts Updated in Google Sheets!");
     })
     .catch(error => console.error("❌ Error:", error));
 }
+
 
 
 
