@@ -132,24 +132,12 @@ function autoSubmit() {
         quantity = Math.floor(parseFloat(quantity)).toString();
     }
 
-    // ✅ Get the current time and date in EST (New York Time)
+    // ✅ Get full timestamp with Date & Time
     let now = new Date();
-    
-    let estTimestamp = new Date(now.toLocaleString("en-US", { timeZone: "America/New_York" }));
-    let estTimeFormatted = estTimestamp.toLocaleTimeString("en-US", { 
-        hour: "2-digit", 
-        minute: "2-digit", 
-        second: "2-digit", 
-        hour12: false 
-    });
+    let fullTimestamp = now.toLocaleString("en-US", { timeZone: "America/New_York" }); // ✅ Full timestamp
+    let dateOnly = now.toLocaleDateString("en-US", { timeZone: "America/New_York" });  // ✅ Date only
 
-    let estDateFormatted = estTimestamp.toLocaleDateString("en-US", { 
-        year: "numeric", 
-        month: "2-digit", 
-        day: "2-digit"
-    });
-
-    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${estDateFormatted} ${estTimeFormatted}`;
+    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${fullTimestamp}`;
 
     // ✅ Update Last Scan Info
     lastScanInfo.innerHTML = scanText;
@@ -158,14 +146,14 @@ function autoSubmit() {
     scanMessage.innerHTML = `✅ Scan Saved!`;
     scanMessage.className = "success";
 
-    // ✅ Send Data to Google Sheets with Correct Timestamp & Date
+    // ✅ Send Data to Google Sheets
     fetch("https://script.google.com/macros/s/AKfycbxa3dTulm69846WIMs_HrcwgAWNFQHbIDHCXpIqvEYz-U8hVxl6lu5ZxX5Y5qU9KmRo2A/exec", {
         method: "POST",
         mode: "no-cors",  // ✅ Bypass CORS
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            timestamp: `${estDateFormatted} ${estTimeFormatted}`,  // ✅ Send correctly formatted timestamp
-            date: estDateFormatted,  // ✅ Send separate date field
+            timestamp: fullTimestamp,  // ✅ Full timestamp
+            date: dateOnly,            // ✅ Separate date
             partNumber: partNumber,
             quantity: quantity
         })
@@ -188,6 +176,7 @@ function autoSubmit() {
         C11.focus();
     }, 100);
 }
+
 
 
 // ✅ Function to Update Critical Parts in Critical_Prod.html
