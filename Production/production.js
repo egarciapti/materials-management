@@ -56,8 +56,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ✅ New Event Listener for Critical Parts Button
     document.getElementById("criticalPartsButton").addEventListener("click", () => {
-        window.location.href = "Critical/critical.html"; // ✅ Adjust the path if needed
+        window.location.href = "Critical_Prod/Critical_Prod.html"; // ✅ Corrected path
     });
+    
 
     document.getElementById("backToMain").addEventListener("click", () => {
         window.location.href = "../index.html";

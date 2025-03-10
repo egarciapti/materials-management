@@ -132,7 +132,7 @@ h2 {
     background-color: #00796B; /* Darker teal on hover */
 }
 
-/* ✅ Style for Critical Parts Button */
+/* ✅ Style for Critical Parts Button (Same as Other Buttons) */
 .critical-button {
     background-color: #d9534f; /* Red color to indicate urgency */
     font-weight: bold;
@@ -143,6 +143,8 @@ h2 {
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
+    display: inline-block; /* Ensure it aligns with other buttons */
+    text-align: center;
 }
 
 /* ✅ Change Button Color on Hover */
@@ -150,3 +152,4 @@ h2 {
     background-color: #c9302c;
     transform: scale(1.05);
 }
+
