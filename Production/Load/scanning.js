@@ -134,15 +134,12 @@ function autoSubmit() {
 
     // ✅ Get the current time in America/New_York
     let now = new Date();
-    let estTimestamp = new Intl.DateTimeFormat("en-US", {
+    let estTimeOnly = new Intl.DateTimeFormat("en-US", {
         timeZone: "America/New_York",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
         hour: "2-digit",
         minute: "2-digit",
         second: "2-digit",
-        hour12: false // ✅ Ensure 24-hour format
+        hour12: false
     }).format(now).replace(",", "");
 
     // ✅ Extract Only the Date (MM/DD/YYYY)
@@ -153,7 +150,7 @@ function autoSubmit() {
         day: "2-digit"
     }).format(now);
 
-    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${estTimestamp}`;
+    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | ⏰ ${estTimeOnly} | 📅 ${estDateOnly}`;
 
     // ✅ Update Last Scan Info
     lastScanInfo.innerHTML = scanText;
@@ -162,19 +159,19 @@ function autoSubmit() {
     scanMessage.innerHTML = `✅ Scan Saved!`;
     scanMessage.className = "success";
 
-    // ✅ Send Data to Google Sheets with Correct Timestamp & Date
+    // ✅ Send Data to Google Sheets ("Load" Tab)
     fetch("https://script.google.com/macros/s/AKfycbxa3dTulm69846WIMs_HrcwgAWNFQHbIDHCXpIqvEYz-U8hVxl6lu5ZxX5Y5qU9KmRo2A/exec", {
         method: "POST",
         mode: "no-cors",  // ✅ Bypass CORS
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            timestamp: estTimestamp,  // ✅ Full timestamp (Date & Time)
-            date: estDateOnly,        // ✅ Only Date (MM/DD/YYYY)
+            time: estTimeOnly,  // ✅ Only Time (HH:MM:SS)
+            date: estDateOnly,  // ✅ Only Date (MM/DD/YYYY)
             partNumber: partNumber,
             quantity: quantity
         })
     })
-    .then(() => console.log("✅ Scan saved to Google Sheets successfully!"))
+    .then(() => console.log("✅ Scan saved to Google Sheets successfully in 'Load'!"))
     .catch(error => console.error("❌ Error:", error));
 
     // ✅ Reduce Quantity in Critical_Prod.html
