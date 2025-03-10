@@ -132,28 +132,12 @@ function autoSubmit() {
         quantity = Math.floor(parseFloat(quantity)).toString();
     }
 
-    // ✅ Get the current time in America/New_York
+    // ✅ Get full timestamp with Date & Time
     let now = new Date();
-    let estTimestamp = new Intl.DateTimeFormat("en-US", {
-        timeZone: "America/New_York",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false // ✅ Ensure 24-hour format
-    }).format(now).replace(",", "");
+    let fullTimestamp = now.toLocaleString("en-US", { timeZone: "America/New_York" }); // ✅ Full timestamp
+    let dateOnly = now.toLocaleDateString("en-US", { timeZone: "America/New_York" });  // ✅ Date only
 
-    // ✅ Extract Only the Date (MM/DD/YYYY)
-    let estDateOnly = new Intl.DateTimeFormat("en-US", {
-        timeZone: "America/New_York",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit"
-    }).format(now);
-
-    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${estTimestamp}`;
+    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${fullTimestamp}`;
 
     // ✅ Update Last Scan Info
     lastScanInfo.innerHTML = scanText;
@@ -162,19 +146,20 @@ function autoSubmit() {
     scanMessage.innerHTML = `✅ Scan Saved!`;
     scanMessage.className = "success";
 
-    // ✅ Send Data to Google Sheets with Correct Timestamp & Date
+    // ✅ Send Data to Google Sheets (Both "Load" & "Load Critical")
     fetch("https://script.google.com/macros/s/AKfycbxJ3pnGRr403uRUn7TzXtAk6jDG-g8AXMk62e30eNTR5qY-ZHy1vmtT4ovlpStTATQEuA/exec", {
         method: "POST",
         mode: "no-cors",  // ✅ Bypass CORS
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            timestamp: estTimestamp,  // ✅ Full timestamp (Date & Time)
-            date: estDateOnly,        // ✅ Only Date (MM/DD/YYYY)
+            timestamp: fullTimestamp,  // ✅ Full timestamp
+            date: dateOnly,            // ✅ Separate date
             partNumber: partNumber,
-            quantity: quantity
+            quantity: quantity,
+            action: "saveBoth"  // ✅ New action to handle both tabs
         })
     })
-    .then(() => console.log("✅ Scan saved to Google Sheets successfully!"))
+    .then(() => console.log("✅ Scan saved to Google Sheets successfully in both 'Load' and 'Load Critical'!"))
     .catch(error => console.error("❌ Error:", error));
 
     // ✅ Reduce Quantity in Critical_Prod.html
@@ -192,6 +177,7 @@ function autoSubmit() {
         C11.focus();
     }, 100);
 }
+
 
 
 
