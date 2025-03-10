@@ -175,12 +175,18 @@ function autoSubmit() {
 
     fetch("https://script.google.com/macros/s/AKfycbxa3dTulm69846WIMs_HrcwgAWNFQHbIDHCXpIqvEYz-U8hVxl6lu5ZxX5Y5qU9KmRo2A/exec", {
         method: "POST",
-        mode: "no-cors",  // ✅ Keep "no-cors" for CORS bypass
+        mode: "no-cors",  // ✅ Bypass CORS
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data) // ✅ Send the correct data
+        body: JSON.stringify({
+            timestamp: new Date().toLocaleTimeString(),
+            date: new Date().toLocaleDateString(),
+            partNumber: document.getElementById("C11").value.trim(),
+            quantity: document.getElementById("C12").value.trim()
+        })
     })
     .then(() => console.log("✅ Scan saved to Google Sheets successfully!"))
-    .catch(error => console.error("❌ Error sending data:", error));
+    .catch(error => console.error("❌ Error:", error));
+    
 
     // ✅ Clear Input Fields & Reset for Next Scan
     C11.value = "";
