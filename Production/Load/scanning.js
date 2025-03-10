@@ -109,6 +109,7 @@ function validateC12() {
     }
 }
 
+// ✅ Function to Auto Submit & Save to Google Sheets
 function autoSubmit() {
     let C11 = document.getElementById("C11");  // Part Number Input
     let C12 = document.getElementById("C12");  // Quantity Input
@@ -132,27 +133,10 @@ function autoSubmit() {
         quantity = Math.floor(parseFloat(quantity)).toString();
     }
 
-    // ✅ Get the current time in America/New_York
-    let now = new Date();
-    let estTimestamp = new Intl.DateTimeFormat("en-US", {
-        timeZone: "America/New_York",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false // ✅ Ensure 24-hour format
-    }).format(now).replace(",", "");
-
-    let estDateOnly = new Intl.DateTimeFormat("en-US", {
-        timeZone: "America/New_York",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit"
-    }).format(now);
-
-    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${estTimestamp}`;
+    let timestamp = new Date().toLocaleTimeString();
+    let date = new Date().toLocaleDateString();
+    
+    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${timestamp}`;
 
     // ✅ Update Last Scan Info
     lastScanInfo.innerHTML = scanText;
@@ -161,31 +145,30 @@ function autoSubmit() {
     scanMessage.innerHTML = `✅ Scan Saved!`;
     scanMessage.className = "success";
 
-    // ✅ Log before sending the request
-    console.log(`🚀 Sending data:`, {
-        timestamp: estTimestamp,
-        date: estDateOnly,
+    // ✅ Send Data to Google Sheets
+    let data = {
+        timestamp: timestamp,
+        date: date,
         partNumber: partNumber,
         quantity: quantity
-    });
+    };
 
-    // ✅ Send Data to Google Sheets with Correct Timestamp
-    fetch("https://script.google.com/macros/s/AKfycbxa3dTulm69846WIMs_HrcwgAWNFQHbIDHCXpIqvEYz-U8hVxl6lu5ZxX5Y5qU9KmRo2A/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbxJ3pnGRr403uRUn7TzXtAk6jDG-g8AXMk62e30eNTR5qY-ZHy1vmtT4ovlpStTATQEuA/exec", {
         method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            timestamp: estTimestamp,
-            date: estDateOnly,
-            partNumber: partNumber,
-            quantity: quantity
-        })
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
     })
-    .then(() => console.log("✅ Scan saved to Google Sheets successfully!"))
+    .then(response => response.json())
+    .then(result => {
+        if (result.status === "success") {
+            console.log("✅ Scan saved to Google Sheets successfully!");
+        } else {
+            console.error("❌ Failed to save scan data.");
+        }
+    })
     .catch(error => console.error("❌ Error:", error));
-
-    // ✅ Reduce Quantity in Critical_Prod.html
-    updateCriticalParts(partNumber);
 
     // ✅ Clear Input Fields & Reset for Next Scan
     C11.value = "";
@@ -199,6 +182,7 @@ function autoSubmit() {
         C11.focus();
     }, 100);
 }
+
 
 
 
