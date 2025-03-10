@@ -133,10 +133,28 @@ function autoSubmit() {
         quantity = Math.floor(parseFloat(quantity)).toString();
     }
 
-    let timestamp = new Date().toLocaleTimeString();
-    let date = new Date().toLocaleDateString();
+    // ✅ Get the current time in America/New_York
+    let now = new Date();
     
-    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${timestamp}`;
+    let estTimestamp = new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/New_York",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false // ✅ Ensure 24-hour format
+    }).format(now).replace(",", "");
+
+    let estDateOnly = new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/New_York",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+    }).format(now);
+
+    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${estTimestamp}`;
 
     // ✅ Update Last Scan Info
     lastScanInfo.innerHTML = scanText;
@@ -147,26 +165,22 @@ function autoSubmit() {
 
     // ✅ Send Data to Google Sheets
     let data = {
-        timestamp: timestamp,
-        date: date,
+        timestamp: estTimestamp,
+        date: estDateOnly,
         partNumber: partNumber,
         quantity: quantity
     };
 
+    console.log("🚀 Sending data:", data); // ✅ Debug: Log data before sending
+
     fetch("https://script.google.com/macros/s/AKfycbxa3dTulm69846WIMs_HrcwgAWNFQHbIDHCXpIqvEYz-U8hVxl6lu5ZxX5Y5qU9KmRo2A/exec", {
         method: "POST",
-        mode: "no-cors",  // ✅ Bypass CORS
+        mode: "no-cors",  // ✅ Keep "no-cors" for CORS bypass
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            timestamp: new Date().toLocaleTimeString(),
-            date: new Date().toLocaleDateString(),
-            partNumber: document.getElementById("C11").value.trim(),
-            quantity: document.getElementById("C12").value.trim()
-        })
+        body: JSON.stringify(data) // ✅ Send the correct data
     })
     .then(() => console.log("✅ Scan saved to Google Sheets successfully!"))
-    .catch(error => console.error("❌ Error:", error));
-    
+    .catch(error => console.error("❌ Error sending data:", error));
 
     // ✅ Clear Input Fields & Reset for Next Scan
     C11.value = "";
@@ -175,11 +189,11 @@ function autoSubmit() {
     document.getElementById("D12").innerText = "";
     C12.disabled = true;
 
-    // ✅ Ensure Cursor Resets to Part Number Field
     setTimeout(() => {
         C11.focus();
     }, 100);
 }
+
 
 
 
