@@ -67,6 +67,7 @@ function sendCriticalPartsToSheets() {
 }
 
 
+
 // ✅ Function to Save Data to localStorage
 function saveCriticalPartsToStorage() {
     let partsData = {};
