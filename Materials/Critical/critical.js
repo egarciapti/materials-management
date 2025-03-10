@@ -60,8 +60,15 @@ function saveCriticalPartsToStorage() {
         }
     });
 
+    let existingData = localStorage.getItem("criticalPartsData");
+    if (existingData) {
+        existingData = JSON.parse(existingData);
+        partsData = { ...existingData, ...partsData }; // ✅ Merge new & old data
+    }
+
     localStorage.setItem("criticalPartsData", JSON.stringify(partsData));
-    console.log("📂 Critical Parts Data Saved:", partsData);
+    console.log("📂 Critical Parts Data Updated:", partsData);
 }
+
 
 

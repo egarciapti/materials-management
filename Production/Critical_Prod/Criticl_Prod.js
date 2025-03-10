@@ -49,15 +49,15 @@ function updateDateAndShift() {
     document.getElementById("currentShift").innerHTML = `🕒 Shift: <b>${shift}</b>`;
 }
 
-// ✅ Load Data from localStorage and Populate Fields
+// ✅ Load and Save Data on Page Load
 document.addEventListener("DOMContentLoaded", function () {
-    loadCriticalPartsFromStorage();
+    loadCriticalPartsFromStorage(); // ✅ Load existing or submitted data
+    setupInputListeners(); // ✅ Save changes when inputs are updated
 });
 
-// ✅ Function to Load Data into Input Fields
+// ✅ Function to Load Data from localStorage into Inputs
 function loadCriticalPartsFromStorage() {
     let storedData = localStorage.getItem("criticalPartsData");
-
     if (storedData) {
         let partsData = JSON.parse(storedData);
         console.log("📂 Loading Critical Parts Data:", partsData);
@@ -65,12 +65,32 @@ function loadCriticalPartsFromStorage() {
         document.querySelectorAll(".quantity-input").forEach(input => {
             let partNumber = input.dataset.partNumber;
             if (partsData[partNumber]) {
-                input.value = partsData[partNumber]; // ✅ Fill input with stored quantity
+                input.value = partsData[partNumber]; // ✅ Set stored value
             }
         });
-
-        // ✅ Clear localStorage after loading to prevent accidental overwrites
-        localStorage.removeItem("criticalPartsData");
     }
 }
 
+// ✅ Function to Save Input Changes to localStorage
+function setupInputListeners() {
+    document.querySelectorAll(".quantity-input").forEach(input => {
+        input.addEventListener("input", function () {
+            saveCriticalPartsToStorage(); // ✅ Save data when changed
+        });
+    });
+}
+
+// ✅ Function to Store Data in localStorage
+function saveCriticalPartsToStorage() {
+    let partsData = {};
+    document.querySelectorAll(".quantity-input").forEach(input => {
+        let partNumber = input.dataset.partNumber;
+        let quantity = input.value.trim();
+        if (quantity !== "" && parseInt(quantity) > 0) {
+            partsData[partNumber] = quantity; // ✅ Save only non-empty values
+        }
+    });
+
+    localStorage.setItem("criticalPartsData", JSON.stringify(partsData));
+    console.log("💾 Critical Parts Data Saved:", partsData);
+}
