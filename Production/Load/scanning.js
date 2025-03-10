@@ -134,7 +134,8 @@ function autoSubmit() {
 
     // ✅ Get full timestamp with Date & Time
     let now = new Date();
-    let fullTimestamp = now.toLocaleString("en-US", { timeZone: "America/New_York" }); // Adjust timezone if needed
+    let fullTimestamp = now.toLocaleString("en-US", { timeZone: "America/New_York" }); // ✅ Full timestamp
+    let dateOnly = now.toLocaleDateString("en-US", { timeZone: "America/New_York" });  // ✅ Date only
 
     let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${fullTimestamp}`;
 
@@ -151,7 +152,8 @@ function autoSubmit() {
         mode: "no-cors",  // ✅ Bypass CORS
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            timestamp: fullTimestamp,  // ✅ Now sending full timestamp
+            timestamp: fullTimestamp,  // ✅ Full timestamp
+            date: dateOnly,            // ✅ Separate date
             partNumber: partNumber,
             quantity: quantity
         })
@@ -174,6 +176,7 @@ function autoSubmit() {
         C11.focus();
     }, 100);
 }
+
 
 
 // ✅ Function to Update Critical Parts in Critical_Prod.html
