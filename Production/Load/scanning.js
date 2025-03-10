@@ -155,20 +155,18 @@ function autoSubmit() {
 
     fetch("https://script.google.com/macros/s/AKfycbxJ3pnGRr403uRUn7TzXtAk6jDG-g8AXMk62e30eNTR5qY-ZHy1vmtT4ovlpStTATQEuA/exec", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
+        mode: "no-cors",  // ✅ Bypass CORS
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            timestamp: new Date().toLocaleTimeString(),
+            date: new Date().toLocaleDateString(),
+            partNumber: document.getElementById("C11").value.trim(),
+            quantity: document.getElementById("C12").value.trim()
+        })
     })
-    .then(response => response.json())
-    .then(result => {
-        if (result.status === "success") {
-            console.log("✅ Scan saved to Google Sheets successfully!");
-        } else {
-            console.error("❌ Failed to save scan data.");
-        }
-    })
+    .then(() => console.log("✅ Scan saved to Google Sheets successfully!"))
     .catch(error => console.error("❌ Error:", error));
+    
 
     // ✅ Clear Input Fields & Reset for Next Scan
     C11.value = "";
