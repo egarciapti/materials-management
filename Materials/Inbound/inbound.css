@@ -397,3 +397,29 @@
     z-index: 1100;
 }
 
+/* ✅ Position Save Button Below Title Bar, on the Right Side */
+#save-button-container {
+    position: absolute;
+    right: 20px;  /* Align to the right side */
+    top: 110px;   /* Same height as the "New Truck" button */
+}
+
+/* ✅ Style the Save Button */
+#saveToGoogleSheets {
+    padding: 12px 25px;
+    font-size: 18px;
+    background: #28a745; /* Green button */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+}
+
+/* ✅ Change Button Color on Hover */
+#saveToGoogleSheets:hover {
+    background: #218838;
+    transform: scale(1.05);
+}
