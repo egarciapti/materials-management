@@ -132,12 +132,27 @@ function autoSubmit() {
         quantity = Math.floor(parseFloat(quantity)).toString();
     }
 
-    // ✅ Get full timestamp with Date & Time
+    // ✅ Get the current time in America/New_York
     let now = new Date();
-    let fullTimestamp = now.toLocaleString("en-US", { timeZone: "America/New_York" }); // ✅ Full timestamp
-    let dateOnly = now.toLocaleDateString("en-US", { timeZone: "America/New_York" });  // ✅ Date only
+    let estTimestamp = new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/New_York",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false // ✅ Ensure 24-hour format
+    }).format(now).replace(",", "");
 
-    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${fullTimestamp}`;
+    let estDateOnly = new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/New_York",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+    }).format(now);
+
+    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${estTimestamp}`;
 
     // ✅ Update Last Scan Info
     lastScanInfo.innerHTML = scanText;
@@ -146,14 +161,22 @@ function autoSubmit() {
     scanMessage.innerHTML = `✅ Scan Saved!`;
     scanMessage.className = "success";
 
-    // ✅ Send Data to Google Sheets
+    // ✅ Log before sending the request
+    console.log(`🚀 Sending data:`, {
+        timestamp: estTimestamp,
+        date: estDateOnly,
+        partNumber: partNumber,
+        quantity: quantity
+    });
+
+    // ✅ Send Data to Google Sheets with Correct Timestamp
     fetch("https://script.google.com/macros/s/AKfycbxa3dTulm69846WIMs_HrcwgAWNFQHbIDHCXpIqvEYz-U8hVxl6lu5ZxX5Y5qU9KmRo2A/exec", {
         method: "POST",
-        mode: "no-cors",  // ✅ Bypass CORS
+        mode: "no-cors",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            timestamp: fullTimestamp,  // ✅ Full timestamp
-            date: dateOnly,            // ✅ Separate date
+            timestamp: estTimestamp,
+            date: estDateOnly,
             partNumber: partNumber,
             quantity: quantity
         })
@@ -176,6 +199,7 @@ function autoSubmit() {
         C11.focus();
     }, 100);
 }
+
 
 
 
