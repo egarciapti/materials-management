@@ -354,3 +354,51 @@ function resetData() {
     }
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+    initializeInboundScreen();
+
+    // ✅ Attach event listener to the "Save to Google Sheets" button
+    let saveButton = document.getElementById("saveToGoogleSheets");
+    if (saveButton) {
+        saveButton.addEventListener("click", function () {
+            sendInboundDataToGoogleSheets();
+        });
+    }
+});
+
+// ✅ Function to Send Inbound Data to Google Sheets
+function sendInboundDataToGoogleSheets() {
+    let table = document.getElementById("scannedPalletsTable").querySelector("tbody");
+    let rows = table.getElementsByTagName("tr");
+    let data = [];
+
+    if (rows.length === 0) {
+        alert("⚠️ No scanned pallets to save!");
+        return;
+    }
+
+    for (let i = 0; i < rows.length; i++) {
+        let cells = rows[i].cells;
+        data.push({
+            timestamp: cells[5].innerText,  // Timestamp Column
+            date: new Date().toLocaleDateString(),
+            partNumber: cells[1].innerText, // Part Number Column
+            huNumber: cells[2].innerText,   // HU Number Column
+            serialNumber: cells[3].innerText, // Serial Number Column
+            quantity: cells[4].innerText   // Quantity Column
+        });
+    }
+
+    fetch("https://script.google.com/macros/s/AKfycby0JbdjVZsXDEQiQh9beEz2odQdToW53iI1lDW9fsa1AxhlUFqxreMs59i8Dxic5fHUwg/exec", {
+        method: "POST",
+        mode: "no-cors",  // ✅ Bypass CORS
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ inboundData: data })
+    })
+    
+    .then(() => {
+        console.log("✅ Inbound data saved successfully!");
+        alert("✅ Inbound data has been sent to Google Sheets!");
+    })
+    .catch(error => console.error("❌ Error:", error));
+}
