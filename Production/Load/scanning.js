@@ -39,7 +39,8 @@ function initializeScanningScreen() {
 // ✅ Function to Update Date & Shift
 function updateDateAndShift() {
     const now = new Date();
-    const formattedDate = now.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' });
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = now.toLocaleDateString("en-US", options);
 
     let hours = now.getHours();
     let shift = (hours >= 7 && hours < 15) ? "1st Shift"
@@ -131,14 +132,10 @@ function autoSubmit() {
         quantity = Math.floor(parseFloat(quantity)).toString();
     }
 
-    // ✅ Get full timestamp with Date & Time (ISO format)
+    // ✅ Get full timestamp with Date & Time
     let now = new Date();
-    let fullTimestamp = now.toISOString().replace("T", " ").substring(0, 19);  // ✅ Correct Format: "YYYY-MM-DD HH:MM:SS"
-    
-    // ✅ Extract Date Only (MM/DD/YYYY)
-    let dateOnly = new Intl.DateTimeFormat("en-US", {  
-        year: "numeric", month: "2-digit", day: "2-digit"
-    }).format(now);
+    let fullTimestamp = now.toLocaleString("en-US", { timeZone: "America/New_York" }); // ✅ Full timestamp
+    let dateOnly = now.toLocaleDateString("en-US", { timeZone: "America/New_York" });  // ✅ Date only
 
     let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${fullTimestamp}`;
 
@@ -155,8 +152,8 @@ function autoSubmit() {
         mode: "no-cors",  // ✅ Bypass CORS
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            timestamp: fullTimestamp,  // ✅ Correct Timestamp Format
-            date: dateOnly,            // ✅ Separate date (MM/DD/YYYY)
+            timestamp: fullTimestamp,  // ✅ Full timestamp
+            date: dateOnly,            // ✅ Separate date
             partNumber: partNumber,
             quantity: quantity
         })
@@ -179,3 +176,28 @@ function autoSubmit() {
         C11.focus();
     }, 100);
 }
+
+
+
+// ✅ Function to Update Critical Parts in Critical_Prod.html
+function updateCriticalParts(partNumber) {
+    console.log(`🔄 Reducing quantity for part: ${partNumber}`);
+
+    // ✅ Get stored critical part data
+    let criticalParts = JSON.parse(localStorage.getItem("criticalPartsData")) || {};
+
+    if (criticalParts[partNumber] && criticalParts[partNumber] > 0) {
+        criticalParts[partNumber] -= 1; // ✅ Decrease by 1
+    } else {
+        console.warn(`⚠️ Part ${partNumber} not found or already at 0.`);
+        return;
+    }
+
+    // ✅ Save back to localStorage
+    localStorage.setItem("criticalPartsData", JSON.stringify(criticalParts));
+
+    // ✅ Notify Critical_Prod.html about the change
+    window.dispatchEvent(new CustomEvent("criticalPartsUpdated"));
+}
+
+
