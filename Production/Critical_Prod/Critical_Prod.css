@@ -118,7 +118,82 @@
 }
 
 
+/* ✅ Ensure Even Distribution of Sections */
+.critical-row {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    margin-top: 180px;
+}
 
+/* ✅ Section Styling */
+.critical-section {
+    flex: 1;
+    background-color: #eef5ff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    min-width: 250px;
+    max-width: 320px; /* Prevents stretching */
+    margin-top: -40px;
+    height: 71vh; /* Fixed height based on viewport */
+}
+
+/* ✅ Section Styling */
+.critical-section-P703-and-Arcelor {
+    flex: 1;
+    background-color: #eef5ff;
+    border-radius: 10px;
+    padding: px;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    min-width: 250px;
+    max-width: 320px; /* Prevents stretching */
+    margin-top: -40px;
+    height: 50vh; /* Fixed height based on viewport */
+}
+/* ✅ JL/JT Tubes & Driveshafts (Two-Column Layout) */
+.parts-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0px 60px; /* First value (20px) = Vertical space, Second value (60px) = Horizontal space */
+
+    justify-content: center;
+}
+
+/* ✅ P703 Tubes & Arcelor Mittal Tubes (One-Column Layout) */
+.parts-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 5px;
+    justify-content: center;
+}
+
+/* ✅ Individual Part Entry */
+.parts-list label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 3px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* ✅ Quantity Input Fields */
+.quantity-input {
+    width: 40px;
+    padding: 4px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
 
 
 
