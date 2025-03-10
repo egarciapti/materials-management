@@ -131,3 +131,22 @@ h2 {
 .charts-button:hover {
     background-color: #00796B; /* Darker teal on hover */
 }
+
+/* ✅ Style for Critical Parts Button */
+.critical-button {
+    background-color: #d9534f; /* Red color to indicate urgency */
+    font-weight: bold;
+    color: white;
+    padding: 12px 25px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+/* ✅ Change Button Color on Hover */
+.critical-button:hover {
+    background-color: #c9302c;
+    transform: scale(1.05);
+}
