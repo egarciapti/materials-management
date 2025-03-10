@@ -132,12 +132,20 @@ function autoSubmit() {
         quantity = Math.floor(parseFloat(quantity)).toString();
     }
 
-    // ✅ Use new Date() object and send it as an ISO string
+    // ✅ Get the current time in America/New_York
     let now = new Date();
-    let timestamp = now.toISOString(); // ✅ ISO format (Google Sheets recognizes this as a Date/Time)
-    let dateOnly = now.toISOString().split("T")[0]; // ✅ Extract only the date (YYYY-MM-DD)
+    let estTimestamp = new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/New_York",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false // ✅ Ensure 24-hour format
+    }).format(now).replace(",", "");
 
-    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${timestamp}`;
+    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${estTimestamp}`;
 
     // ✅ Update Last Scan Info
     lastScanInfo.innerHTML = scanText;
@@ -146,14 +154,13 @@ function autoSubmit() {
     scanMessage.innerHTML = `✅ Scan Saved!`;
     scanMessage.className = "success";
 
-    // ✅ Send Data to Google Sheets
+    // ✅ Send Data to Google Sheets with Correct Timestamp
     fetch("https://script.google.com/macros/s/AKfycbxJ3pnGRr403uRUn7TzXtAk6jDG-g8AXMk62e30eNTR5qY-ZHy1vmtT4ovlpStTATQEuA/exec", {
         method: "POST",
         mode: "no-cors",  // ✅ Bypass CORS
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            timestamp: timestamp,  // ✅ Full timestamp in ISO format
-            date: dateOnly,        // ✅ Date only in YYYY-MM-DD format
+            timestamp: estTimestamp,  // ✅ Send correct EST timestamp
             partNumber: partNumber,
             quantity: quantity
         })
@@ -176,8 +183,6 @@ function autoSubmit() {
         C11.focus();
     }, 100);
 }
-
-
 
 
 // ✅ Function to Update Critical Parts in Critical_Prod.html
