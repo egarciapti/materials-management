@@ -388,7 +388,7 @@ function sendInboundDataToGoogleSheets() {
             quantity: cells[4].innerText   // Quantity Column
         });
     }
-c
+
     fetch("https://script.google.com/macros/s/AKfycbxa3dTulm69846WIMs_HrcwgAWNFQHbIDHCXpIqvEYz-U8hVxl6lu5ZxX5Y5qU9KmRo2A/exec", {
         method: "POST",
         mode: "no-cors",  // ✅ Bypass CORS
