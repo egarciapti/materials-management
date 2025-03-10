@@ -132,10 +132,11 @@ function autoSubmit() {
         quantity = Math.floor(parseFloat(quantity)).toString();
     }
 
-    let timestamp = new Date().toLocaleTimeString();
-    let date = new Date().toLocaleDateString();
-    
-    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${timestamp}`;
+    // ✅ Get full timestamp with Date & Time
+    let now = new Date();
+    let fullTimestamp = now.toLocaleString("en-US", { timeZone: "America/New_York" }); // Adjust timezone if needed
+
+    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${fullTimestamp}`;
 
     // ✅ Update Last Scan Info
     lastScanInfo.innerHTML = scanText;
@@ -150,8 +151,7 @@ function autoSubmit() {
         mode: "no-cors",  // ✅ Bypass CORS
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            timestamp: timestamp,
-            date: date,
+            timestamp: fullTimestamp,  // ✅ Now sending full timestamp
             partNumber: partNumber,
             quantity: quantity
         })
@@ -174,6 +174,7 @@ function autoSubmit() {
         C11.focus();
     }, 100);
 }
+
 
 // ✅ Function to Update Critical Parts in Critical_Prod.html
 function updateCriticalParts(partNumber) {
