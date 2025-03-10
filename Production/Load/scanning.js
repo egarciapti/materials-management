@@ -162,8 +162,8 @@ function autoSubmit() {
     scanMessage.innerHTML = `✅ Scan Saved!`;
     scanMessage.className = "success";
 
-    // ✅ Send Data to Google Sheets with action to save in both "Load" & "Load Critical"
-    fetch("https://script.google.com/macros/s/AKfycbxa3dTulm69846WIMs_HrcwgAWNFQHbIDHCXpIqvEYz-U8hVxl6lu5ZxX5Y5qU9KmRo2A/exec", {
+    // ✅ Send Data to Google Sheets with Correct Timestamp & Date
+    fetch("https://script.google.com/macros/s/AKfycbxJ3pnGRr403uRUn7TzXtAk6jDG-g8AXMk62e30eNTR5qY-ZHy1vmtT4ovlpStTATQEuA/exec", {
         method: "POST",
         mode: "no-cors",  // ✅ Bypass CORS
         headers: { "Content-Type": "application/json" },
@@ -171,11 +171,10 @@ function autoSubmit() {
             timestamp: estTimestamp,  // ✅ Full timestamp (Date & Time)
             date: estDateOnly,        // ✅ Only Date (MM/DD/YYYY)
             partNumber: partNumber,
-            quantity: quantity,
-            action: "saveBoth"  // ✅ Action to save in both tabs
+            quantity: quantity
         })
     })
-    .then(() => console.log("✅ Scan saved to Google Sheets successfully in both 'Load' and 'Load Critical'!"))
+    .then(() => console.log("✅ Scan saved to Google Sheets successfully!"))
     .catch(error => console.error("❌ Error:", error));
 
     // ✅ Reduce Quantity in Critical_Prod.html
@@ -193,7 +192,6 @@ function autoSubmit() {
         C11.focus();
     }, 100);
 }
-
 
 
 
