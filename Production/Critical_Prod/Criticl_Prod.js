@@ -29,25 +29,60 @@ function closeSidebar() {
     document.getElementById("overlay").style.display = "none"; 
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+    updateDateAndShift();
+    loadCriticalParts(); // ✅ Load initial values
+
+    let menuButton = document.getElementById("menu-btn");
+    let overlay = document.getElementById("overlay");
+    let closeBtn = document.querySelector(".close-btn");
+
+    if (menuButton) menuButton.addEventListener("click", openSidebar);
+    if (overlay) overlay.addEventListener("click", closeSidebar);
+    if (closeBtn) closeBtn.addEventListener("click", closeSidebar);
+
+    // ✅ Listen for updates from scanning.js
+    window.addEventListener("criticalPartsUpdated", loadCriticalParts);
+});
+
+// ✅ Load Critical Parts Quantities
+function loadCriticalParts() {
+    let criticalParts = JSON.parse(localStorage.getItem("criticalPartsData")) || {};
+
+    document.querySelectorAll(".quantity-input").forEach(input => {
+        let partNumber = input.dataset.partNumber;
+        if (criticalParts[partNumber] !== undefined) {
+            input.value = criticalParts[partNumber]; // ✅ Set updated quantity
+        }
+    });
+}
+
+// ✅ Function to Open Sidebar
+function openSidebar() {
+    document.getElementById("sidebar").style.left = "0";
+    document.getElementById("overlay").style.display = "block"; 
+}
+
+// ✅ Function to Close Sidebar
+function closeSidebar() {
+    document.getElementById("sidebar").style.left = "-250px";
+    document.getElementById("overlay").style.display = "none"; 
+}
+
 // ✅ Function to Update Date & Shift
 function updateDateAndShift() {
     const now = new Date();
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    const formattedDate = now.toLocaleDateString("en-US", options);
+    const formattedDate = now.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' });
 
     let hours = now.getHours();
-    let minutes = now.getMinutes();
-    let shift = "Off Shift"; // Default to Off Shift
+    let shift = (hours >= 7 && hours < 15) ? "1st Shift"
+        : (hours >= 15 && hours < 23) ? "2nd Shift"
+        : "Off Shift";
 
-    if ((hours === 7 && minutes >= 0) || (hours >= 8 && hours < 15) || (hours === 15 && minutes <= 30)) {
-        shift = "1st Shift";
-    } else if ((hours === 15 && minutes >= 31) || (hours >= 16 && hours < 24)) {
-        shift = "2nd Shift";
-    }
-
-    document.getElementById("currentDate").innerHTML = `📅 Date: <b>${formattedDate}</b>`;
-    document.getElementById("currentShift").innerHTML = `🕒 Shift: <b>${shift}</b>`;
+    document.getElementById("currentDate").innerText = `📅 ${formattedDate}`;
+    document.getElementById("currentShift").innerText = `🕒 ${shift}`;
 }
+
 
 // ✅ Load and Save Data on Page Load
 document.addEventListener("DOMContentLoaded", function () {
