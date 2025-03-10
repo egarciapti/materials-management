@@ -42,10 +42,26 @@ document.addEventListener("DOMContentLoaded", function () {
     const submitButton = document.getElementById("submit-btn");
     if (submitButton) {
         submitButton.addEventListener("click", function () {
+            saveCriticalPartsToStorage(); // ✅ Save data before navigating
             alert("✅ Parts submitted to production!");
-            // 🔹 Add Firebase logic here if needed
+            window.location.href = "../Production/Critical_Prod/Critical_Prod.html"; // ✅ Navigate to Production Screen
         });
     }
 });
+
+// ✅ Function to Save Data to localStorage
+function saveCriticalPartsToStorage() {
+    let partsData = {};
+    document.querySelectorAll(".quantity-input").forEach(input => {
+        let partNumber = input.dataset.partNumber;
+        let quantity = input.value.trim();
+        if (quantity !== "" && parseInt(quantity) > 0) {
+            partsData[partNumber] = quantity; // ✅ Save only non-empty values
+        }
+    });
+
+    localStorage.setItem("criticalPartsData", JSON.stringify(partsData));
+    console.log("📂 Critical Parts Data Saved:", partsData);
+}
 
 

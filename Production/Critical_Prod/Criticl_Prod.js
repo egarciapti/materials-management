@@ -49,3 +49,28 @@ function updateDateAndShift() {
     document.getElementById("currentShift").innerHTML = `🕒 Shift: <b>${shift}</b>`;
 }
 
+// ✅ Load Data from localStorage and Populate Fields
+document.addEventListener("DOMContentLoaded", function () {
+    loadCriticalPartsFromStorage();
+});
+
+// ✅ Function to Load Data into Input Fields
+function loadCriticalPartsFromStorage() {
+    let storedData = localStorage.getItem("criticalPartsData");
+
+    if (storedData) {
+        let partsData = JSON.parse(storedData);
+        console.log("📂 Loading Critical Parts Data:", partsData);
+
+        document.querySelectorAll(".quantity-input").forEach(input => {
+            let partNumber = input.dataset.partNumber;
+            if (partsData[partNumber]) {
+                input.value = partsData[partNumber]; // ✅ Fill input with stored quantity
+            }
+        });
+
+        // ✅ Clear localStorage after loading to prevent accidental overwrites
+        localStorage.removeItem("criticalPartsData");
+    }
+}
+
