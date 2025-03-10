@@ -1,6 +1,3 @@
-// ✅ Google Apps Script Deployment URL
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxa3dTulm69846WIMs_HrcwgAWNFQHbIDHCXpIqvEYz-U8hVxl6lu5ZxX5Y5qU9KmRo2A/exec";
-
 // ✅ Ensure Sidebar Works
 document.addEventListener("DOMContentLoaded", function () {
     initializeScanningScreen();
@@ -16,12 +13,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // ✅ Function to Open Sidebar
 function openSidebar() {
+    console.log("📂 Opening Sidebar"); 
     document.getElementById("sidebar").style.left = "0";
     document.getElementById("overlay").style.display = "block"; 
 }
 
 // ✅ Function to Close Sidebar
 function closeSidebar() {
+    console.log("📂 Closing Sidebar"); 
     document.getElementById("sidebar").style.left = "-250px";
     document.getElementById("overlay").style.display = "none"; 
 }
@@ -40,15 +39,16 @@ function initializeScanningScreen() {
 // ✅ Function to Update Date & Shift
 function updateDateAndShift() {
     const now = new Date();
-    const formattedDate = now.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' });
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = now.toLocaleDateString("en-US", options);
 
     let hours = now.getHours();
     let shift = (hours >= 7 && hours < 15) ? "1st Shift"
         : (hours >= 15 && hours < 23) ? "2nd Shift"
         : "Off Shift";
 
-    document.getElementById("currentDate").innerText = `📅 ${formattedDate}`;
-    document.getElementById("currentShift").innerText = `🕒 ${shift}`;
+    document.getElementById("currentDate").innerHTML = `📅 Date: <b>${formattedDate}</b>`;
+    document.getElementById("currentShift").innerHTML = `🕒 Shift: <b>${shift}</b>`;
 }
 
 // ✅ Function to Load Selected Platform
@@ -59,6 +59,7 @@ function loadSelectedPlatform() {
 
 // ✅ Function to Handle Back Button Navigation
 function goBackToPlatformSelection() {
+    console.log("Navigating back to platform selection...");
     window.location.href = "../index.html";
 }
 
@@ -108,7 +109,6 @@ function validateC12() {
     }
 }
 
-// ✅ Function to Submit Scan Data and Update Google Sheets
 function autoSubmit() {
     let C11 = document.getElementById("C11");  // Part Number Input
     let C12 = document.getElementById("C12");  // Quantity Input
@@ -134,7 +134,7 @@ function autoSubmit() {
 
     let timestamp = new Date().toLocaleTimeString();
     let date = new Date().toLocaleDateString();
-
+    
     let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${timestamp}`;
 
     // ✅ Update Last Scan Info
@@ -145,12 +145,11 @@ function autoSubmit() {
     scanMessage.className = "success";
 
     // ✅ Send Data to Google Sheets
-    fetch(GOOGLE_SCRIPT_URL, {
+    fetch("https://script.google.com/macros/s/AKfycbxJ3pnGRr403uRUn7TzXtAk6jDG-g8AXMk62e30eNTR5qY-ZHy1vmtT4ovlpStTATQEuA/exec", {
         method: "POST",
         mode: "no-cors",  // ✅ Bypass CORS
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            action: "scanPallet",
             timestamp: timestamp,
             date: date,
             partNumber: partNumber,
@@ -161,7 +160,7 @@ function autoSubmit() {
     .catch(error => console.error("❌ Error:", error));
 
     // ✅ Reduce Quantity in Critical_Prod.html
-    updateCriticalParts(partNumber, quantity);
+    updateCriticalParts(partNumber);
 
     // ✅ Clear Input Fields & Reset for Next Scan
     C11.value = "";
@@ -176,23 +175,25 @@ function autoSubmit() {
     }, 100);
 }
 
-// ✅ Function to Update Critical Parts in Google Sheets
-function updateCriticalParts(partNumber, quantity) {
-    console.log(`🔄 Reducing quantity for part: ${partNumber} by ${quantity}`);
+// ✅ Function to Update Critical Parts in Critical_Prod.html
+function updateCriticalParts(partNumber) {
+    console.log(`🔄 Reducing quantity for part: ${partNumber}`);
 
-    fetch(GOOGLE_SCRIPT_URL, {
-        method: "POST",
-        mode: "no-cors",  // ✅ Prevent CORS issues
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            action: "updateCriticalPartsAfterScan",
-            partNumber: partNumber,
-            quantity: quantity
-        })
-    })
-    .then(() => console.log(`✅ Critical Parts Updated: ${partNumber} -${quantity}`))
-    .catch(error => console.error("❌ Error updating critical parts:", error));
+    // ✅ Get stored critical part data
+    let criticalParts = JSON.parse(localStorage.getItem("criticalPartsData")) || {};
+
+    if (criticalParts[partNumber] && criticalParts[partNumber] > 0) {
+        criticalParts[partNumber] -= 1; // ✅ Decrease by 1
+    } else {
+        console.warn(`⚠️ Part ${partNumber} not found or already at 0.`);
+        return;
+    }
+
+    // ✅ Save back to localStorage
+    localStorage.setItem("criticalPartsData", JSON.stringify(criticalParts));
 
     // ✅ Notify Critical_Prod.html about the change
     window.dispatchEvent(new CustomEvent("criticalPartsUpdated"));
 }
+
+
