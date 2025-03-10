@@ -145,6 +145,14 @@ function autoSubmit() {
         hour12: false // ✅ Ensure 24-hour format
     }).format(now).replace(",", "");
 
+    // ✅ Extract Only the Date (MM/DD/YYYY)
+    let estDateOnly = new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/New_York",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+    }).format(now);
+
     let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${estTimestamp}`;
 
     // ✅ Update Last Scan Info
@@ -154,13 +162,14 @@ function autoSubmit() {
     scanMessage.innerHTML = `✅ Scan Saved!`;
     scanMessage.className = "success";
 
-    // ✅ Send Data to Google Sheets with Correct Timestamp
+    // ✅ Send Data to Google Sheets with Correct Timestamp & Date
     fetch("https://script.google.com/macros/s/AKfycbxJ3pnGRr403uRUn7TzXtAk6jDG-g8AXMk62e30eNTR5qY-ZHy1vmtT4ovlpStTATQEuA/exec", {
         method: "POST",
         mode: "no-cors",  // ✅ Bypass CORS
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            timestamp: estTimestamp,  // ✅ Send correct EST timestamp
+            timestamp: estTimestamp,  // ✅ Full timestamp (Date & Time)
+            date: estDateOnly,        // ✅ Only Date (MM/DD/YYYY)
             partNumber: partNumber,
             quantity: quantity
         })
@@ -183,6 +192,7 @@ function autoSubmit() {
         C11.focus();
     }, 100);
 }
+
 
 
 // ✅ Function to Update Critical Parts in Critical_Prod.html
