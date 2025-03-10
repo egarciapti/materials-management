@@ -388,8 +388,8 @@ function sendInboundDataToGoogleSheets() {
             quantity: cells[4].innerText   // Quantity Column
         });
     }
-
-    fetch("https://script.google.com/macros/s/AKfycby0JbdjVZsXDEQiQh9beEz2odQdToW53iI1lDW9fsa1AxhlUFqxreMs59i8Dxic5fHUwg/exec", {
+c
+    fetch("https://script.google.com/macros/s/AKfycbxa3dTulm69846WIMs_HrcwgAWNFQHbIDHCXpIqvEYz-U8hVxl6lu5ZxX5Y5qU9KmRo2A/exec", {
         method: "POST",
         mode: "no-cors",  // ✅ Bypass CORS
         headers: { "Content-Type": "application/json" },
