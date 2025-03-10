@@ -162,7 +162,7 @@ function autoSubmit() {
     scanMessage.innerHTML = `✅ Scan Saved!`;
     scanMessage.className = "success";
 
-    // ✅ Send Data to Google Sheets ("Load" & "Load Critical")
+    // ✅ Send Data to Google Sheets with Correct Timestamp & Date
     fetch("https://script.google.com/macros/s/AKfycbxa3dTulm69846WIMs_HrcwgAWNFQHbIDHCXpIqvEYz-U8hVxl6lu5ZxX5Y5qU9KmRo2A/exec", {
         method: "POST",
         mode: "no-cors",  // ✅ Bypass CORS
@@ -174,7 +174,7 @@ function autoSubmit() {
             quantity: quantity
         })
     })
-    .then(() => console.log("✅ Scan saved to Google Sheets successfully in both 'Load' and 'Load Critical'!"))
+    .then(() => console.log("✅ Scan saved to Google Sheets successfully!"))
     .catch(error => console.error("❌ Error:", error));
 
     // ✅ Reduce Quantity in Critical_Prod.html
@@ -192,7 +192,6 @@ function autoSubmit() {
         C11.focus();
     }, 100);
 }
-
 
 
 
