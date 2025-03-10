@@ -132,20 +132,24 @@ function autoSubmit() {
         quantity = Math.floor(parseFloat(quantity)).toString();
     }
 
-    // ✅ Get the current time in America/New_York
+    // ✅ Get the current time and date in EST (New York Time)
     let now = new Date();
-    let estTimestamp = new Intl.DateTimeFormat("en-US", {
-        timeZone: "America/New_York",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false // ✅ Ensure 24-hour format
-    }).format(now).replace(",", "");
+    
+    let estTimestamp = new Date(now.toLocaleString("en-US", { timeZone: "America/New_York" }));
+    let estTimeFormatted = estTimestamp.toLocaleTimeString("en-US", { 
+        hour: "2-digit", 
+        minute: "2-digit", 
+        second: "2-digit", 
+        hour12: false 
+    });
 
-    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${estTimestamp}`;
+    let estDateFormatted = estTimestamp.toLocaleDateString("en-US", { 
+        year: "numeric", 
+        month: "2-digit", 
+        day: "2-digit"
+    });
+
+    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${estDateFormatted} ${estTimeFormatted}`;
 
     // ✅ Update Last Scan Info
     lastScanInfo.innerHTML = scanText;
@@ -154,13 +158,14 @@ function autoSubmit() {
     scanMessage.innerHTML = `✅ Scan Saved!`;
     scanMessage.className = "success";
 
-    // ✅ Send Data to Google Sheets with Correct Timestamp
+    // ✅ Send Data to Google Sheets with Correct Timestamp & Date
     fetch("https://script.google.com/macros/s/AKfycbxa3dTulm69846WIMs_HrcwgAWNFQHbIDHCXpIqvEYz-U8hVxl6lu5ZxX5Y5qU9KmRo2A/exec", {
         method: "POST",
         mode: "no-cors",  // ✅ Bypass CORS
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            timestamp: estTimestamp,  // ✅ Send correct EST timestamp
+            timestamp: `${estDateFormatted} ${estTimeFormatted}`,  // ✅ Send correctly formatted timestamp
+            date: estDateFormatted,  // ✅ Send separate date field
             partNumber: partNumber,
             quantity: quantity
         })
