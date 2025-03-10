@@ -11,26 +11,24 @@ document.addEventListener("DOMContentLoaded", function () {
     updateDateAndShift();
     loadCounters(); // ✅ Load saved counters from LocalStorage
     updateTotalDefects(); // ✅ Update total defects on page load
-    setupButtonClickEvents(); // ✅ Ensure buttons are only set up ONCE
-});
 
-// ✅ Function to Setup Button Click Events (Prevents Duplicate Listeners)
-function setupButtonClickEvents() {
+    // ✅ Select all buttons inside the inspection grid (Only Once)
     const buttons = document.querySelectorAll(".inspection-button");
 
     buttons.forEach((button, index) => {
         button.addEventListener("click", function () {
+            // Find the corresponding counter (next sibling element)
             const counter = document.getElementById(`counter${index + 1}`);
             if (counter) {
-                let count = parseInt(counter.innerText, 10) || 0;
-                counter.innerText = count + 1; // ✅ Increase by 1
+                let count = parseInt(counter.innerText, 10) || 0; // Get current count
+                count += 1; // ✅ Increase by 1
+                counter.innerText = count; // ✅ Update UI
                 saveCounters(); // ✅ Save updated counters to LocalStorage
-                updateTotalDefects(); // ✅ Recalculate total
-                sendDataToGoogleSheets(button); // ✅ Log defect to Google Sheets
+                updateTotalDefects(); // ✅ Recalculate total after every click
             }
         });
     });
-}
+});
 
 // ✅ Function to Save Counters to LocalStorage
 function saveCounters() {
@@ -38,10 +36,10 @@ function saveCounters() {
     const counters = document.querySelectorAll(".counter");
 
     counters.forEach((counter, index) => {
-        counterValues[`counter${index + 1}`] = counter.innerText;
+        counterValues[`counter${index + 1}`] = counter.innerText; // ✅ Store each counter value
     });
 
-    localStorage.setItem("finalInspectionCounters", JSON.stringify(counterValues));
+    localStorage.setItem("finalInspectionCounters", JSON.stringify(counterValues)); // ✅ Save as JSON
 }
 
 // ✅ Function to Load Counters from LocalStorage
@@ -49,12 +47,12 @@ function loadCounters() {
     let savedCounters = localStorage.getItem("finalInspectionCounters");
 
     if (savedCounters) {
-        savedCounters = JSON.parse(savedCounters);
+        savedCounters = JSON.parse(savedCounters); // ✅ Convert back to object
 
         Object.keys(savedCounters).forEach(key => {
             let counterElement = document.getElementById(key);
             if (counterElement) {
-                counterElement.innerText = savedCounters[key];
+                counterElement.innerText = savedCounters[key]; // ✅ Restore value
             }
         });
     }
@@ -100,17 +98,42 @@ function updateTotalDefects() {
     const counters = document.querySelectorAll(".counter");
 
     counters.forEach(counter => {
-        total += parseInt(counter.innerText, 10) || 0;
+        total += parseInt(counter.innerText, 10) || 0; // ✅ Sum all counters
     });
 
     document.getElementById("totalDefects").innerHTML = `🔢 Total Defects: <b>${total}</b>`;
 }
 
-// ✅ Send Data to Google Sheets
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxAiBAzo6CTA_galZiUwCbzQLOvMTAcuJrknOkWXL2eH-_Px3XZi0Bd-mTH-e6y9tM1/exec";
 
+document.addEventListener("DOMContentLoaded", function () {
+    updateDateAndShift();
+    loadCounters();
+    updateTotalDefects();
+
+    // ✅ Select all buttons inside the inspection grid
+    const buttons = document.querySelectorAll(".inspection-button");
+
+    buttons.forEach((button, index) => {
+        button.addEventListener("click", function () {
+            const counter = document.getElementById(`counter${index + 1}`);
+            if (counter) {
+                let count = parseInt(counter.innerText, 10) || 0;
+                counter.innerText = count + 1;
+                saveCounters();
+                updateTotalDefects();
+                sendDataToGoogleSheets(button); // ✅ Pass the button element
+            }
+        });
+    });
+});
+
+
+// ✅ Function to Send Data to Google Sheets
 function sendDataToGoogleSheets(buttonElement) {
     const shift = document.getElementById("currentShift").innerText.replace("🕒 Shift: ", "").trim();
+
+    // ✅ Extract only the first line of the button text
     const mainDefect = buttonElement.innerText.split("\n")[0].trim();
 
     fetch(GOOGLE_SCRIPT_URL, {
@@ -121,3 +144,5 @@ function sendDataToGoogleSheets(buttonElement) {
     }).then(() => console.log(`✅ Sent: ${mainDefect} | Shift: ${shift}`))
       .catch(error => console.error("❌ Error:", error));
 }
+
+
