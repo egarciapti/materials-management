@@ -37,17 +37,35 @@ document.addEventListener("DOMContentLoaded", function () {
     if (closeBtn) closeBtn.addEventListener("click", closeSidebar);
 });
 
-// ✅ Handle Submit Button Click
 document.addEventListener("DOMContentLoaded", function () {
-    const submitButton = document.getElementById("submit-btn");
-    if (submitButton) {
-        submitButton.addEventListener("click", function () {
-            saveCriticalPartsToStorage(); // ✅ Save data before navigating
-            alert("✅ Parts submitted to production!");
-            window.location.href = "../Production/Critical_Prod/Critical_Prod.html"; // ✅ Navigate to Production Screen
-        });
-    }
+    document.getElementById("submit-btn").addEventListener("click", sendCriticalPartsToSheets);
 });
+
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxa3dTulm69846WIMs_HrcwgAWNFQHbIDHCXpIqvEYz-U8hVxl6lu5ZxX5Y5qU9KmRo2A/exec"; // ✅ Your Deployment URL
+
+function sendCriticalPartsToSheets() {
+    let parts = [];
+
+    document.querySelectorAll(".quantity-input").forEach(input => {
+        let partNumber = input.dataset.partNumber;
+        let quantity = parseInt(input.value) || 0;
+
+        parts.push({ partNumber, quantity });
+    });
+
+    fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",  // ✅ Bypass CORS restrictions
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "updateQuantities", parts: parts })
+    })
+    .then(() => {
+        console.log("✅ Critical Parts Sent to Google Sheets");
+        alert("✅ Critical Parts Updated in Google Sheets!");
+    })
+    .catch(error => console.error("❌ Error:", error));
+}
+
 
 // ✅ Function to Save Data to localStorage
 function saveCriticalPartsToStorage() {
