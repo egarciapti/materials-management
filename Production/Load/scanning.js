@@ -132,12 +132,12 @@ function autoSubmit() {
         quantity = Math.floor(parseFloat(quantity)).toString();
     }
 
-    // ✅ Get full timestamp with Date & Time
+    // ✅ Use new Date() object and send it as an ISO string
     let now = new Date();
-    let fullTimestamp = now.toLocaleString("en-US", { timeZone: "America/New_York" }); // ✅ Full timestamp
-    let dateOnly = now.toLocaleDateString("en-US", { timeZone: "America/New_York" });  // ✅ Date only
+    let timestamp = now.toISOString(); // ✅ ISO format (Google Sheets recognizes this as a Date/Time)
+    let dateOnly = now.toISOString().split("T")[0]; // ✅ Extract only the date (YYYY-MM-DD)
 
-    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${fullTimestamp}`;
+    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${timestamp}`;
 
     // ✅ Update Last Scan Info
     lastScanInfo.innerHTML = scanText;
@@ -152,8 +152,8 @@ function autoSubmit() {
         mode: "no-cors",  // ✅ Bypass CORS
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            timestamp: fullTimestamp,  // ✅ Full timestamp
-            date: dateOnly,            // ✅ Separate date
+            timestamp: timestamp,  // ✅ Full timestamp in ISO format
+            date: dateOnly,        // ✅ Date only in YYYY-MM-DD format
             partNumber: partNumber,
             quantity: quantity
         })
@@ -176,6 +176,7 @@ function autoSubmit() {
         C11.focus();
     }, 100);
 }
+
 
 
 
