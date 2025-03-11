@@ -157,3 +157,29 @@ function sendDataToGoogleSheets(buttonElement) {
     }).then(() => console.log(`✅ Sent: ${mainDefect} | Shift: ${shift}`))
       .catch(error => console.error("❌ Error:", error));
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    let screenshotButton = document.getElementById("sendScreenshotEmail");
+    if (screenshotButton) {
+        screenshotButton.addEventListener("click", captureAndSendScreenshot);
+    }
+});
+
+function captureAndSendScreenshot() {
+    html2canvas(document.body).then(canvas => {
+        let imageData = canvas.toDataURL("image/png"); // Convert to base64
+
+        // Send image data to Google Apps Script
+        fetch("https://script.google.com/macros/s/AKfycbzyKU038D9_tmNViHImPYMgw__IzA0iCHcdtIH5KciZLOXQ21ZoAB4_5bnyVgHfGsZFiQ/exec", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ image: imageData })
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log("📤 Screenshot Sent:", data);
+            alert("✅ Screenshot sent via email!");
+        })
+        .catch(error => console.error("❌ Error:", error));
+    });
+}
