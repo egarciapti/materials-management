@@ -42,7 +42,7 @@ function updateDateAndShift() {
 }
 
 // ✅ Google Apps Script Deployment URL
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxp0t7Ev05cRhr5g2MWrFAW6rQAs9ebdlX9jKfLSg31jCxZ3G_X6zOnG0pDSZnhyA86/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_URL/exec";
 
 // ✅ Function to Load Critical Parts Quantities from Google Sheets
 function loadCriticalPartsFromGoogleSheets() {
@@ -65,7 +65,10 @@ function loadCriticalPartsFromGoogleSheets() {
 // ✅ Load Data on Page Load
 document.addEventListener("DOMContentLoaded", function () {
     loadCriticalPartsFromGoogleSheets();
+});
 
-    // ✅ Auto-Refresh Every 30 Seconds
-    setInterval(loadCriticalPartsFromGoogleSheets, 30000); // Adjust time as needed (milliseconds)
+// ✅ Listen for Scans from `scanning.js` and Refresh Data
+window.addEventListener("partScanned", function () {
+    console.log("🔄 Part scanned! Refreshing Critical Parts Data...");
+    loadCriticalPartsFromGoogleSheets();
 });

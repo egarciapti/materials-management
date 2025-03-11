@@ -177,7 +177,12 @@ function autoSubmit() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
     })
-    .then(() => console.log("✅ Scan saved to Google Sheets successfully!"))
+    .then(() => {
+        console.log("✅ Scan saved to Google Sheets successfully!");
+
+        // ✅ Dispatch Event to `Critical_Prod.js` to Refresh Data
+        window.dispatchEvent(new CustomEvent("partScanned", { detail: { partNumber, quantity } }));
+    })
     .catch(error => console.error("❌ Error:", error));
 
     // ✅ Clear Input Fields & Reset for Next Scan
@@ -191,3 +196,4 @@ function autoSubmit() {
         C11.focus();
     }, 100);
 }
+
