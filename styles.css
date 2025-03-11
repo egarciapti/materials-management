@@ -11,7 +11,6 @@ body {
     align-items: center;
 }
 
-/* ✅ Full-Width Title Bar with Gradient */
 /* ✅ Full-Width Title Bar with Solid Color */
 #title-bar {
     position: absolute;
@@ -65,6 +64,15 @@ body {
 .menu-button:hover {
     background: #004080; /* Darker blue on hover */
     transform: scale(1.05); /* Slight zoom effect */
+}
+
+/* ✅ Dashboard Button Style (Same as Other Buttons) */
+.dashboard-button {
+    background: #009688; /* Teal color to differentiate */
+}
+
+.dashboard-button:hover {
+    background: #00796B; /* Darker teal on hover */
 }
 
 /* ✅ Responsive Design for Smaller Screens */
