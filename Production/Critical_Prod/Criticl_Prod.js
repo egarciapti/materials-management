@@ -1,6 +1,3 @@
-// ✅ Google Apps Script Deployment URL
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxa3dTulm69846WIMs_HrcwgAWNFQHbIDHCXpIqvEYz-U8hVxl6lu5ZxX5Y5qU9KmRo2A/exec";
-
 // ✅ Ensure Sidebar Works
 document.addEventListener("DOMContentLoaded", function () {
     let menuButton = document.getElementById("menu-btn");
@@ -44,69 +41,29 @@ function updateDateAndShift() {
     document.getElementById("currentShift").innerText = `🕒 ${shift}`;
 }
 
-// ✅ Function to Load Critical Parts from Google Sheets
+// ✅ Google Apps Script Deployment URL
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxp0t7Ev05cRhr5g2MWrFAW6rQAs9ebdlX9jKfLSg31jCxZ3G_X6zOnG0pDSZnhyA86/exec";
+
+// ✅ Function to Load Critical Parts Quantities from Google Sheets
 function loadCriticalPartsFromGoogleSheets() {
-    fetch(`${GOOGLE_SCRIPT_URL}?action=getCriticalParts`)
+    fetch(GOOGLE_SCRIPT_URL)
         .then(response => response.json())
         .then(data => {
             console.log("📥 Loaded Critical Parts:", data);
             document.querySelectorAll(".quantity-input").forEach(input => {
                 let partNumber = input.dataset.partNumber;
                 if (data[partNumber] !== undefined) {
-                    input.value = data[partNumber]; // ✅ Set updated quantity
+                    input.value = data[partNumber]; // ✅ Set actual quantity
+                } else {
+                    input.value = 0; // ✅ Default value if part number not found
                 }
             });
         })
         .catch(error => console.error("❌ Error loading critical parts:", error));
 }
 
-// ✅ Function to Save Updated Quantities to Google Sheets
-function saveCriticalPartsToGoogleSheets() {
-    let partsData = {};
-    document.querySelectorAll(".quantity-input").forEach(input => {
-        let partNumber = input.dataset.partNumber;
-        let quantity = input.value.trim();
-        if (quantity !== "") {
-            partsData[partNumber] = quantity; // ✅ Save all values, even if 0
-        }
-    });
-
-    fetch(GOOGLE_SCRIPT_URL, {
-        method: "POST",
-        mode: "no-cors",  // ✅ Avoid CORS issues
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            action: "updateCriticalParts",
-            data: partsData
-        })
-    })
-    .then(() => console.log("✅ Critical Parts Data Saved to Google Sheets!"))
-    .catch(error => console.error("❌ Error saving to Google Sheets:", error));
-}
-
-// ✅ Function to Decrease Quantity when a Pallet is Scanned in scanning.html
-function updateCriticalPartsAfterScan(partNumber, scannedQuantity) {
-    let input = document.querySelector(`.quantity-input[data-part-number="${partNumber}"]`);
-    if (input) {
-        let currentQuantity = parseInt(input.value) || 0;
-        let newQuantity = Math.max(0, currentQuantity - scannedQuantity); // ✅ Ensure it doesn’t go below 0
-        input.value = newQuantity;
-        saveCriticalPartsToGoogleSheets(); // ✅ Save the new quantity to Google Sheets
-    }
-}
-
-// ✅ Listen for Scans from scanning.js
-window.addEventListener("partScanned", function (event) {
-    let { partNumber, quantity } = event.detail;
-    console.log(`🔄 Updating Critical Parts: ${partNumber} -${quantity}`);
-    updateCriticalPartsAfterScan(partNumber, parseInt(quantity));
-});
-
-// ✅ Listen for Input Changes and Save Automatically
+// ✅ Load Data on Page Load
 document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".quantity-input").forEach(input => {
-        input.addEventListener("input", function () {
-            saveCriticalPartsToGoogleSheets();
-        });
-    });
+    loadCriticalPartsFromGoogleSheets();
 });
+
