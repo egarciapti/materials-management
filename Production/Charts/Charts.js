@@ -79,49 +79,84 @@ async function fetchFilteredData() {
 
     console.log("🔎 Fetching data for Date:", selectedDate, "| Shift:", selectedShift);
 
-    const url = "https://script.google.com/macros/s/AKfycbxKS6xL2QwuiCv5Ehq9MnhPaSxu9NAw2i0rGjSTV509BKWExOwyRvo5oZWFKERhzvA/exec"; // 🔴 Replace with your Google Apps Script URL
+    const url = "YOUR_DEPLOYMENT_URL_HERE"; // 🔴 Replace with your Google Apps Script URL
 
     try {
         const response = await fetch(url);
-        const data = await response.json();
+        const rawData = await response.json();
 
-        console.log("✅ API Response:", data);
+        console.log("✅ API Response:", rawData);
+
+        if (!Array.isArray(rawData) || rawData.length === 0) {
+            console.error("❌ No valid data received!");
+            return { totalParts: {}, hourlyParts: {} };
+        }
+
+        // ✅ Convert selectedDate to match the API format (YYYY-MM-DD)
+        const formattedDate = new Date(selectedDate).toISOString().split('T')[0];
 
         // ✅ Filter Data by Selected Date
-        const filteredData = data.filter(entry => entry.date === selectedDate);
+        const filteredData = rawData.filter(entry => entry.Date === formattedDate);
 
-        // ✅ Process Data for Charts
+        if (filteredData.length === 0) {
+            console.warn(`⚠️ No data found for the selected date: ${formattedDate}`);
+            return { totalParts: {}, hourlyParts: {} };
+        }
+
+        console.log("📋 Filtered Data:", filteredData);
+
+        // ✅ Define Shift Time Ranges
+        const shiftRanges = {
+            "1st Shift": ["07", "08", "09", "10", "11", "12", "13", "14"],
+            "2nd Shift": ["15", "16", "17", "18", "19", "20", "21", "22"]
+        };
+
+        // ✅ Filter Data by Selected Shift
+        const shiftHours = shiftRanges[selectedShift] || [];
+        const shiftFilteredData = filteredData.filter(entry => 
+            shiftHours.includes(entry.Time.split(":")[0])
+        );
+
+        if (shiftFilteredData.length === 0) {
+            console.warn(`⚠️ No data found for the selected shift: ${selectedShift}`);
+            return { totalParts: {}, hourlyParts: {} };
+        }
+
+        console.log("⏳ Shift Filtered Data:", shiftFilteredData);
+
+        // ✅ Aggregate Data
         const totalParts = {};
         const hourlyParts = {};
 
-        filteredData.forEach(entry => {
-            let hour = entry.time.split(":")[0] + ":00"; // Extract hour from time
+        shiftFilteredData.forEach(entry => {
+            let hour = entry.Time.split(":")[0] + ":00"; // Extract hour (e.g., "07:00")
 
             // ✅ Aggregate Total Parts by Part Number
-            if (totalParts[entry.partNumber]) {
-                totalParts[entry.partNumber] += parseInt(entry.quantity);
+            if (totalParts[entry["Part Number"]]) {
+                totalParts[entry["Part Number"]] += parseInt(entry.Quantity);
             } else {
-                totalParts[entry.partNumber] = parseInt(entry.quantity);
+                totalParts[entry["Part Number"]] = parseInt(entry.Quantity);
             }
 
             // ✅ Aggregate Parts by Hour
             if (hourlyParts[hour]) {
-                hourlyParts[hour] += parseInt(entry.quantity);
+                hourlyParts[hour] += parseInt(entry.Quantity);
             } else {
-                hourlyParts[hour] = parseInt(entry.quantity);
+                hourlyParts[hour] = parseInt(entry.Quantity);
             }
         });
 
         console.log("🔍 Total Parts Data:", totalParts);
         console.log("🔍 Hourly Parts Data:", hourlyParts);
 
-        updateScannedPartsChart(totalParts);
-        updateHourlyScannedPartsChart(hourlyParts);
+        return { totalParts, hourlyParts };
 
     } catch (error) {
         console.error("❌ Error fetching API data:", error);
+        return { totalParts: {}, hourlyParts: {} };
     }
 }
+
 
 
 // ✅ Function to Update Charts When Date or Shift Changes
@@ -131,15 +166,16 @@ async function updateCharts() {
     // ✅ Fetch the latest data from API
     const data = await fetchFilteredData();
 
-    if (!data) {
-        console.error("❌ No data received, charts won't update.");
+    if (!data || Object.keys(data.totalParts).length === 0 || Object.keys(data.hourlyParts).length === 0) {
+        console.error("❌ No valid data received, charts won't update.");
         return;
     }
 
-    // ✅ Update charts with new data
+    console.log("📊 Updating Charts with:", data);
     updateScannedPartsChart(data.totalParts);
     updateHourlyScannedPartsChart(data.hourlyParts);
 }
+
 
 // ✅ Function to Destroy Existing Chart Before Redrawing
 function destroyChart(chart) {
