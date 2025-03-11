@@ -424,18 +424,19 @@
     transform: scale(1.05);
 }
 
-/* ✅ Position the BOL input above the Scanning section */
+/* ✅ Position the BOL input above the scanning section and align it with counters */
 #bol-container {
-    width: 100%;
-    max-width: 500px; /* Adjust width to align with Scan Pallet */
-    margin: 10px auto; /* Center alignment */
+    position: absolute;
+    top: 110px; /* Align with counters */
+    left: 20px; /* Align with scan pallet */
+    width: 350px; /* Adjust width */
     padding: 10px;
     background: white;
     border: 2px solid #ccc;
     border-radius: 8px;
     display: flex;
     align-items: center;
-    justify-content: center; /* Center elements horizontally */
+    justify-content: flex-start;
 }
 
 /* ✅ Style the BOL input label */
@@ -448,10 +449,11 @@
 
 /* ✅ Style the BOL input field */
 #bolNumber {
-    width: 60%;
+    width: 200px;
     padding: 8px;
     font-size: 16px;
     border: 1px solid #aaa;
     border-radius: 4px;
     text-align: center;
 }
+
