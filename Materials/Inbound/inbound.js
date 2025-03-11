@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // ✅ Function to Reset the Scanning Process
 function resetInboundProcess() {
     let tableBody = document.getElementById("scannedPalletsTable").querySelector("tbody");
-    
+
     // ✅ Clear all scanned rows
     tableBody.innerHTML = "";
 
@@ -31,12 +31,19 @@ function resetInboundProcess() {
     document.getElementById("serialNumber").value = "";
     document.getElementById("quantity").value = "";
 
+    // ✅ Reset the BOL field
+    let bolField = document.getElementById("bolNumber");
+    if (bolField) {
+        bolField.value = "";  // ✅ Ensure BOL field is cleared
+    }
+
     // ✅ Reset row numbering logic
     updateRowNumbers();
 
     // ✅ Set focus back to part number field for new batch
     document.getElementById("partNumber").focus();
 }
+
 
 // ✅ Ensure Row Numbers Start from 1 After Reset
 function updateRowNumbers() {
@@ -347,55 +354,18 @@ function resetData() {
     let confirmReset = confirm("⚠️ Are you sure you want to reset the current scanned pallets? This action cannot be undone?");
     
     if (confirmReset) {
-        // ✅ Clear the scanned pallets table
-        let tableBody = document.getElementById("scannedPalletsTable").querySelector("tbody");
-        if (tableBody) {
-            tableBody.innerHTML = "";
-        }
-
-        // ✅ Reset counters
-        updateCounters();
-        
-        // ✅ Clear stored data
-        localStorage.removeItem("scannedPalletsData");
-
-        // ✅ Reset the BOL field
-        let bolField = document.getElementById("bolNumber");
-        if (bolField) {
-            bolField.value = "";  // ✅ Ensure BOL field is cleared
-        }
-
-        // ✅ Reset input fields for scanning
-        let partNumberField = document.getElementById("partNumber");
-        if (partNumberField) {
-            partNumberField.value = "";
-            partNumberField.focus();  // ✅ Refocus for next scan
-        }
-
-        let huNumberField = document.getElementById("huNumber");
-        if (huNumberField) huNumberField.value = "";
-
-        let serialNumberField = document.getElementById("serialNumber");
-        if (serialNumberField) serialNumberField.value = "";
-
-        let quantityField = document.getElementById("quantity");
-        if (quantityField) quantityField.value = "";
+        resetInboundProcess();  // ✅ Now this ensures BOL is also cleared
+        localStorage.removeItem("scannedPalletsData"); // ✅ Clear stored data
     }
 }
-
-
 
 document.addEventListener("DOMContentLoaded", function () {
     initializeInboundScreen();
 
-    // ✅ Ensure the button exists before adding an event listener
     let newTruckButton = document.getElementById("newTruckButton");
     if (newTruckButton) {
         newTruckButton.addEventListener("click", function () {
-            let confirmation = confirm("⚠️ Warning: This will reset all scanned pallets and counters. Do you want to continue?");
-            if (confirmation) {
-                resetInboundProcess();
-            }
+            resetData(); // ✅ Calls resetData(), which now clears everything
         });
     }
 
@@ -406,6 +376,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
 
 // ✅ Function to Send Inbound Data to Google Sheets
 function sendInboundDataToGoogleSheets() {
