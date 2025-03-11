@@ -1,4 +1,3 @@
-
 // ✅ Function to Update Date & Shift
 function updateDateAndShift() {
     const now = new Date();
@@ -45,12 +44,17 @@ const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxa3dTulm6984
 
 function sendCriticalPartsToSheets() {
     let parts = [];
+    let now = new Date();
+    
+    // ✅ Format Time and Date properly
+    let formattedTime = now.toLocaleTimeString("en-US", { hour12: false });
+    let formattedDate = now.toLocaleDateString("en-US");
 
     document.querySelectorAll(".quantity-input").forEach(input => {
         let partNumber = input.dataset.partNumber;
         let quantity = parseInt(input.value) || 0;
 
-        parts.push({ partNumber, quantity });
+        parts.push({ time: formattedTime, date: formattedDate, partNumber, quantity });
     });
 
     fetch(GOOGLE_SCRIPT_URL, {
@@ -65,9 +69,6 @@ function sendCriticalPartsToSheets() {
     })
     .catch(error => console.error("❌ Error:", error));
 }
-
-
-
 
 // ✅ Function to Save Data to localStorage
 function saveCriticalPartsToStorage() {
@@ -89,6 +90,3 @@ function saveCriticalPartsToStorage() {
     localStorage.setItem("criticalPartsData", JSON.stringify(partsData));
     console.log("📂 Critical Parts Data Updated:", partsData);
 }
-
-
-
