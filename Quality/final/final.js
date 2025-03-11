@@ -12,19 +12,18 @@ document.addEventListener("DOMContentLoaded", function () {
     loadCounters(); // ✅ Load saved counters from LocalStorage
     updateTotalDefects(); // ✅ Update total defects on page load
 
-    // ✅ Select all buttons inside the inspection grid (Only Once)
+    // ✅ Select all buttons inside the inspection grid
     const buttons = document.querySelectorAll(".inspection-button");
 
     buttons.forEach((button, index) => {
         button.addEventListener("click", function () {
-            // Find the corresponding counter (next sibling element)
             const counter = document.getElementById(`counter${index + 1}`);
             if (counter) {
-                let count = parseInt(counter.innerText, 10) || 0; // Get current count
-                count += 1; // ✅ Increase by 1
-                counter.innerText = count; // ✅ Update UI
-                saveCounters(); // ✅ Save updated counters to LocalStorage
-                updateTotalDefects(); // ✅ Recalculate total after every click
+                let count = parseInt(counter.innerText, 10) || 0;
+                counter.innerText = count + 1;
+                saveCounters();
+                updateTotalDefects();
+                sendDataToGoogleSheets(button); // ✅ Pass the button element
             }
         });
     });
@@ -36,10 +35,10 @@ function saveCounters() {
     const counters = document.querySelectorAll(".counter");
 
     counters.forEach((counter, index) => {
-        counterValues[`counter${index + 1}`] = counter.innerText; // ✅ Store each counter value
+        counterValues[`counter${index + 1}`] = counter.innerText;
     });
 
-    localStorage.setItem("finalInspectionCounters", JSON.stringify(counterValues)); // ✅ Save as JSON
+    localStorage.setItem("finalInspectionCounters", JSON.stringify(counterValues));
 }
 
 // ✅ Function to Load Counters from LocalStorage
@@ -47,40 +46,45 @@ function loadCounters() {
     let savedCounters = localStorage.getItem("finalInspectionCounters");
 
     if (savedCounters) {
-        savedCounters = JSON.parse(savedCounters); // ✅ Convert back to object
-
+        savedCounters = JSON.parse(savedCounters);
         Object.keys(savedCounters).forEach(key => {
             let counterElement = document.getElementById(key);
             if (counterElement) {
-                counterElement.innerText = savedCounters[key]; // ✅ Restore value
+                counterElement.innerText = savedCounters[key];
             }
         });
     }
 }
 
+// ✅ Function to Reset Counters
+function resetCounters() {
+    const counters = document.querySelectorAll(".counter");
+    counters.forEach(counter => counter.innerText = "0");
+
+    saveCounters();
+    updateTotalDefects();
+}
+
 // ✅ Function to Open Sidebar
 function openSidebar() {
-    console.log("📂 Opening Sidebar"); 
     document.getElementById("sidebar").style.left = "0";
     document.getElementById("overlay").style.display = "block"; 
 }
 
 // ✅ Function to Close Sidebar
 function closeSidebar() {
-    console.log("📂 Closing Sidebar"); 
     document.getElementById("sidebar").style.left = "-250px";
     document.getElementById("overlay").style.display = "none"; 
 }
 
-// ✅ Function to Update Date & Shift
+// ✅ Function to Update Date & Shift and Reset Counters on Shift Change
 function updateDateAndShift() {
     const now = new Date();
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    const formattedDate = now.toLocaleDateString("en-US", options);
+    const formattedDate = now.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' });
 
     let hours = now.getHours();
     let minutes = now.getMinutes();
-    let shift = "Off Shift"; // Default to Off Shift
+    let shift = "Off Shift";
 
     if ((hours === 7 && minutes >= 0) || (hours >= 8 && hours < 15) || (hours === 15 && minutes <= 30)) {
         shift = "1st Shift";
@@ -90,6 +94,15 @@ function updateDateAndShift() {
 
     document.getElementById("currentDate").innerHTML = `📅 Date: <b>${formattedDate}</b>`;
     document.getElementById("currentShift").innerHTML = `🕒 Shift: <b>${shift}</b>`;
+
+    // ✅ Check if shift has changed
+    let lastShift = localStorage.getItem("lastShift");
+
+    if (lastShift !== shift) {
+        console.log("🔄 Shift changed! Resetting counters...");
+        resetCounters(); // ✅ Reset counters on shift change
+        localStorage.setItem("lastShift", shift); // ✅ Save new shift
+    }
 }
 
 // ✅ Function to Calculate and Display Total Defects
@@ -98,12 +111,13 @@ function updateTotalDefects() {
     const counters = document.querySelectorAll(".counter");
 
     counters.forEach(counter => {
-        total += parseInt(counter.innerText, 10) || 0; // ✅ Sum all counters
+        total += parseInt(counter.innerText, 10) || 0;
     });
 
     document.getElementById("totalDefects").innerHTML = `🔢 Total Defects: <b>${total}</b>`;
 }
 
+// ✅ Google Apps Script Deployment URL
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxAiBAzo6CTA_galZiUwCbzQLOvMTAcuJrknOkWXL2eH-_Px3XZi0Bd-mTH-e6y9tM1/exec";
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -122,12 +136,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 counter.innerText = count + 1;
                 saveCounters();
                 updateTotalDefects();
-                sendDataToGoogleSheets(button); // ✅ Pass the button element
+                sendDataToGoogleSheets(button);
             }
         });
     });
 });
-
 
 // ✅ Function to Send Data to Google Sheets
 function sendDataToGoogleSheets(buttonElement) {
@@ -144,5 +157,3 @@ function sendDataToGoogleSheets(buttonElement) {
     }).then(() => console.log(`✅ Sent: ${mainDefect} | Shift: ${shift}`))
       .catch(error => console.error("❌ Error:", error));
 }
-
-
