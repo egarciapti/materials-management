@@ -73,7 +73,7 @@ async function fetchFilteredData() {
 
     console.log("🔎 Fetching data for Date:", selectedDate, "| Shift:", selectedShift);
 
-    const url = `https://script.google.com/macros/s/AKfycbwBWcpHc8GILRYcIoF9czoyOUtGYtra4Ni1fmCIlDHJ_na1UEJtez4C4rDBAaZ0pICZ/exec?date=${encodeURIComponent(selectedDate)}`;
+    const url = `https://script.google.com/macros/s/AKfycbxKS6xL2QwuiCv5Ehq9MnhPaSxu9NAw2i0rGjSTV509BKWExOwyRvo5oZWFKERhzvA/exec?date=${encodeURIComponent(selectedDate)}`;
 
     try {
         const response = await fetch(url);
