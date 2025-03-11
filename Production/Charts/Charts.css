@@ -1,36 +1,33 @@
-/* ✅ General Page Layout */
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #e6e6e6;
-    margin: 0;
-    height: 100vh;
+@import url("../../styles.css"); /* ✅ Keep Main Screen Styles */
+
+/* ✅ Title Bar Shift, Date, and Total Counter */
+#title-info {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    align-items: flex-end;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
 }
 
-/* ✅ Fixed Title Bar at the Top */
 #title-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Keep the title centered */
-    background-color: #004080; /* Same as Main Screen */
-    padding: 13px 0; /* Same height */
-    position: fixed; /* Fix to top */
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000; /* Ensure it stays on top */
+    margin: 0; /* ✅ Ensures no extra space */
+    padding: 40px 0; /* ✅ Same as Quality screen */
 }
 
-/* ✅ Bigger Image, Still Aligned to the Left */
+
+/* ✅ Left-Aligned Image */
 .title-image {
     position: absolute;
-    left: 20px; /* Keep image on the left */
-    width: 150px; /* Increase size */
+    left: 20px;
+    width: 100px;
     height: auto;
+    border-radius: 5px;
+    height: 50px; /* ✅ Ensures it matches Quality screen */
     border-radius: 5px;
 }
 
@@ -38,37 +35,20 @@ body {
 #title-bar h1 {
     flex-grow: 1;
     text-align: center;
-    font-size: 40px; /* Same font size */
+    font-size: 40px;
     color: white;
     font-weight: bold;
-}
-
-/* ✅ Keep Date & Shift in the Top-Right Corner Over the Title Bar */
-#dashboard-info {
-    position: absolute;
-    top: 0px; /* Adjust positioning */
-    right: 20px;
-    z-index: 1000; /* ✅ Ensures it's above the title bar */
-    text-align: right;
-    font-size: 18px;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 5px;
-}
-
-
-#dashboard-info h2 {
-    font-size: 24px;
-    color: #ffffff;
+    margin: 0; /* ✅ Ensures no extra space */
+    padding: 0; /* ✅ Ensures no extra space */
 }
 
 /* ✅ Sidebar Styling */
 #sidebar {
     position: fixed;
-    left: -250px; /* Hidden initially */
-    top: 125px; /* Start below the title bar */
+    left: -250px;
+    top: 70px;
     width: 250px;
-    height: calc(100vh - 70px); /* Cover below the title bar */
+    height: calc(100vh - 70px);
     background-color: #004080;
     color: white;
     padding-top: 20px;
@@ -99,11 +79,23 @@ body {
     background-color: #002c5a;
 }
 
-/* ✅ Sidebar Toggle Button */
+/* ✅ Close Button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* ✅ Menu Button */
 #menu-btn {
     position: absolute;
-    top: 80px; /* Adjust the spacing to position it under the logo */
-    left: 20px; /* Keep it aligned to the left */
+    top: 80px;
+    left: 20px;
     background: none;
     border: none;
     color: white;
@@ -112,33 +104,46 @@ body {
     z-index: 1100;
 }
 
-#menu-btn:hover {
-    background: #004080;
-}
-
-/* ✅ Close Button */
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-}
-
-/* ✅ Overlay for Closing Sidebar */
+/* ✅ Overlay */
 #overlay {
-    display: none;
     position: fixed;
-    top: 0;
+    top: 70px;
     left: 0;
     width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 900;
+    height: calc(100vh - 70px);
+    background: rgba(0, 0, 0, 0.2);
+    display: none;
+    z-index: 1050;
 }
+
+/* ✅ General Page Layout */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #e6e6e6;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+/* ✅ Keep Date & Shift in the Top-Right Corner Over the Title Bar */
+#dashboard-info {
+    position: absolute;
+    top: 0px; /* Adjust positioning */
+    right: 20px;
+    z-index: 1000; /* ✅ Ensures it's above the title bar */
+    text-align: right;
+    font-size: 18px;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
 
 /* ✅ Responsive Design */
 @media (max-width: 768px) {
