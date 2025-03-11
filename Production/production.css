@@ -38,7 +38,6 @@
     flex-direction: column;
     align-items: center;
     margin-top: 120px;
-    gap: 20px; /* ✅ This ensures uniform spacing between all buttons */
 }
 
 /* ✅ Ensure Proper Button Spacing */
@@ -51,6 +50,7 @@
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     text-align: center;
+    margin-bottom: 20px; /* ✅ Forces equal spacing between all buttons */
 }
 
 /* ✅ Sidebar Styling */
