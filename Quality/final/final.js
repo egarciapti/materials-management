@@ -150,7 +150,7 @@ function sendDataToGoogleSheets(buttonElement) {
     }).then(() => console.log(`✅ Sent to Data Sheet: ${mainDefect} | Shift: ${shift}`))
       .catch(error => console.error("❌ Error sending to Data Sheet:", error));
 
-    // ✅ Send Data to "Pivot" Sheet (WITHOUT CALLING A MISSING FUNCTION)
+    // ✅ Send Data to "Pivot" Sheet
     fetch(PIVOT_SHEET_URL, {
         method: "POST",
         mode: "no-cors",
@@ -158,4 +158,16 @@ function sendDataToGoogleSheets(buttonElement) {
         body: payload
     }).then(() => console.log(`✅ Sent to Pivot Sheet: ${mainDefect} | Shift: ${shift}`))
       .catch(error => console.error("❌ Error sending to Pivot Sheet:", error));
+}
+
+// ✅ Function to Handle Button Click
+function handleButtonClick(button, index) {
+    const counter = document.getElementById(`counter${index}`);
+    if (counter) {
+        let count = parseInt(counter.innerText, 10) || 0;
+        counter.innerText = count + 1;
+        saveCounters();
+        updateTotalDefects();
+        sendDataToGoogleSheets(button);  // ✅ Save to both "Data" and "Pivot" tabs
+    }
 }
