@@ -29,7 +29,7 @@ function closeSidebar() {
 
 // ✅ Load Chart.js Properly Before Initializing
 const script = document.createElement("script");
-script.src = "https://cdn.jsdelivr.net/npm/chart.js";
+script.src = "https://cdn.jsdelivr.net/npm/charts.js";
 script.onload = initializeDashboardScreen;
 document.head.appendChild(script);
 
@@ -79,34 +79,50 @@ async function fetchFilteredData() {
 
     console.log("🔎 Fetching data for Date:", selectedDate, "| Shift:", selectedShift);
 
-    const url = `https://script.google.com/macros/s/AKfycbwBWcpHc8GILRYcIoF9czoyOUtGYtra4Ni1fmCIlDHJ_na1UEJtez4C4rDBAaZ0pICZ/exec?date=${encodeURIComponent(selectedDate)}&shift=${encodeURIComponent(selectedShift)}`;
+    const url = "https://script.google.com/macros/s/AKfycbxKS6xL2QwuiCv5Ehq9MnhPaSxu9NAw2i0rGjSTV509BKWExOwyRvo5oZWFKERhzvA/exec"; // 🔴 Replace with your Google Apps Script URL
 
     try {
         const response = await fetch(url);
         const data = await response.json();
 
         console.log("✅ API Response:", data);
-        console.log("🔍 Total Parts Data:", data.totalParts);
-        console.log("🔍 Hourly Parts Data:", data.hourlyParts);
 
-        if (!data.totalParts || Object.keys(data.totalParts).length === 0) {
-            console.warn("⚠️ No total parts data found. The chart will not update.");
-        }
+        // ✅ Filter Data by Selected Date
+        const filteredData = data.filter(entry => entry.date === selectedDate);
 
-        if (!data.hourlyParts || Object.keys(data.hourlyParts).length === 0) {
-            console.warn("⚠️ No hourly parts data found. The chart will not update.");
-        }
+        // ✅ Process Data for Charts
+        const totalParts = {};
+        const hourlyParts = {};
 
-        console.log("📊 Updating Charts...");
-        updateScannedPartsChart(data.totalParts);
-        updateHourlyScannedPartsChart(data.hourlyParts);
+        filteredData.forEach(entry => {
+            let hour = entry.time.split(":")[0] + ":00"; // Extract hour from time
 
-        return data; // ✅ Return data for debugging
+            // ✅ Aggregate Total Parts by Part Number
+            if (totalParts[entry.partNumber]) {
+                totalParts[entry.partNumber] += parseInt(entry.quantity);
+            } else {
+                totalParts[entry.partNumber] = parseInt(entry.quantity);
+            }
+
+            // ✅ Aggregate Parts by Hour
+            if (hourlyParts[hour]) {
+                hourlyParts[hour] += parseInt(entry.quantity);
+            } else {
+                hourlyParts[hour] = parseInt(entry.quantity);
+            }
+        });
+
+        console.log("🔍 Total Parts Data:", totalParts);
+        console.log("🔍 Hourly Parts Data:", hourlyParts);
+
+        updateScannedPartsChart(totalParts);
+        updateHourlyScannedPartsChart(hourlyParts);
+
     } catch (error) {
         console.error("❌ Error fetching API data:", error);
-        return null;
     }
 }
+
 
 // ✅ Function to Update Charts When Date or Shift Changes
 async function updateCharts() {
@@ -203,6 +219,7 @@ function updateScannedPartsChart(data) {
     scannedPartsChart.update();
 }
 
+
 // ✅ Function to Update Hourly Scanned Parts Chart
 function updateHourlyScannedPartsChart(data) {
     if (!hourlyScannedPartsChart) {
@@ -214,6 +231,7 @@ function updateHourlyScannedPartsChart(data) {
     hourlyScannedPartsChart.data.datasets[0].data = Object.values(data);
     hourlyScannedPartsChart.update();
 }
+
 
 // ✅ Ensure the Date Picker Initializes with Today's Date
 document.addEventListener("DOMContentLoaded", function () {
