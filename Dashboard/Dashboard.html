@@ -6,22 +6,21 @@
     <title>Final Inspection - Paint Line Scanner</title>
     <link rel="stylesheet" href="Dashboard.css">
 </head>
-<body>
+<body onload="initializeDashboard()">
 
     <!-- ✅ Title Bar with Image, Title, Date, Shift, and Total Defects -->
-<div id="title-bar">
-    <img src="https://lh3.googleusercontent.com/d/1xRLuEF67gw8aST0g702xuH924SsoYVeA=w300"
-         alt="Final Inspection"
-         class="title-image">
-    <h1>Final Inspection Area</h1>
-    <div id="title-info">
-        <span id="currentDate">📅 Date: Loading...</span>
-        <span id="currentShift">🕒 Shift: Loading...</span>
+    <div id="title-bar">
+        <img src="https://lh3.googleusercontent.com/d/1xRLuEF67gw8aST0g702xuH924SsoYVeA=w300"
+             alt="Final Inspection"
+             class="title-image">
+        <h1>Final Inspection Area</h1>
+        <div id="title-info">
+            <span id="currentDate">📅 Date: Loading...</span>
+            <span id="currentShift">🕒 Shift: Loading...</span>
+        </div>
     </div>
-</div>
 
-
-
+    <!-- ✅ Sidebar Navigation -->
     <div id="sidebar">
         <button class="close-btn" onclick="closeSidebar()">✖</button>
         <ul>
@@ -31,14 +30,15 @@
             <li><a href="/materials-management/Quality/quality.html">✅ Quality</a></li> 
         </ul>
     </div>
-    
+
     <!-- ✅ Sidebar Toggle Button -->
     <button id="menu-btn" onclick="openSidebar()">☰</button>
 
     <!-- ✅ Transparent overlay for closing the menu -->
-    <div id="overlay"></div>
+    <div id="overlay" onclick="closeSidebar()"></div>
 
-    <script src="Dashboard/Dashboard.js"></script>
+    <!-- ✅ JavaScript -->
+    <script src="Dashboard.js"></script>
     <script src="../script.js"></script> 
 </body>
 </html>
