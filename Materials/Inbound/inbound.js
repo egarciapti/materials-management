@@ -344,23 +344,45 @@ function deleteRow(button) {
 
 // ✅ Add Function to Clear Data on "New Truck"
 function resetData() {
-    let confirmReset = confirm("⚠️ Are you sure you want to reset the current scanned pallets? This action cannot be undone.");
+    let confirmReset = confirm("⚠️ Are you sure you want to reset the current scanned pallets? This action cannot be undone?");
     
     if (confirmReset) {
-        document.getElementById("scannedPalletsTable").querySelector("tbody").innerHTML = "";
+        // ✅ Clear the scanned pallets table
+        let tableBody = document.getElementById("scannedPalletsTable").querySelector("tbody");
+        if (tableBody) {
+            tableBody.innerHTML = "";
+        }
+
+        // ✅ Reset counters
         updateCounters();
-        localStorage.removeItem("scannedPalletsData"); // ✅ Clear stored data
+        
+        // ✅ Clear stored data
+        localStorage.removeItem("scannedPalletsData");
 
         // ✅ Reset the BOL field
         let bolField = document.getElementById("bolNumber");
         if (bolField) {
-            bolField.value = "";
+            bolField.value = "";  // ✅ Ensure BOL field is cleared
         }
 
-        // ✅ Set focus back to Part Number for new scans
-        document.getElementById("partNumber").focus();
+        // ✅ Reset input fields for scanning
+        let partNumberField = document.getElementById("partNumber");
+        if (partNumberField) {
+            partNumberField.value = "";
+            partNumberField.focus();  // ✅ Refocus for next scan
+        }
+
+        let huNumberField = document.getElementById("huNumber");
+        if (huNumberField) huNumberField.value = "";
+
+        let serialNumberField = document.getElementById("serialNumber");
+        if (serialNumberField) serialNumberField.value = "";
+
+        let quantityField = document.getElementById("quantity");
+        if (quantityField) quantityField.value = "";
     }
 }
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
