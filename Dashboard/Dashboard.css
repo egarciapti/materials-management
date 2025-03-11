@@ -1,18 +1,25 @@
 @import url("../styles.css"); /* ✅ Keep Main Screen Styles */
 
-/* ✅ Title Bar */
+/* ✅ Title Bar Stays at the Top */
 #title-bar {
-    margin: 0; 
-    padding: 40px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+    position: fixed; /* Keeps it at the top of the screen */
+    top: 0;
+    left: 0;
+    width: 100%;
     background-color: #004080;
     color: white;
     text-align: center;
+    padding: 20px 0;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Ensures it's above other elements */
 }
+
+/* ✅ Push Content Below Title Bar */
+body {
+    padding-top: 80px; /* Adjust to match title-bar height */
+}
+
+
 
 #title-bar h1 {
     font-size: 40px;
