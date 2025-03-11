@@ -148,7 +148,7 @@ function sendDataToGoogleSheets(buttonElement) {
 // ✅ Function to Send Data to "Pivot" Sheet
 function sendDataToPivotSheet(buttonElement) {
     const shift = document.getElementById("currentShift").innerText.replace("🕒 Shift: ", "").trim();
-    const defect = buttonElement.innerText.split("\n")[0].trim(); // ✅ Extract main defect name
+    const defect = buttonElement.innerText.split("\n")[0].replace(/\//g, "").trim(); // ✅ Remove trailing slashes
 
     fetch(PIVOT_SHEET_URL, {
         method: "POST",
