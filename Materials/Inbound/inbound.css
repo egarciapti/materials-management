@@ -423,3 +423,32 @@
     background: #218838;
     transform: scale(1.05);
 }
+
+/* ✅ Ensure the BOL input field is positioned above "Scan Pallet" */
+#bol-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 10px auto; /* Center it */
+    padding: 10px;
+    background: #f9f9f9;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* ✅ Style the BOL input label */
+#bol-container label {
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* ✅ Style the BOL input field */
+#bolNumber {
+    width: 60%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    text-align: center;
+}
