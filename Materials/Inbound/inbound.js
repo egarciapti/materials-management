@@ -389,15 +389,19 @@ function sendInboundDataToGoogleSheets() {
         return;
     }
 
+    // ✅ Get the value from the BOL field (Inbound)
+    let inboundValue = document.getElementById("bolNumber").value.trim(); 
+
     for (let i = 0; i < rows.length; i++) {
         let cells = rows[i].cells;
         data.push({
-            timestamp: cells[5].innerText,  // ✅ Time
-            date: new Date().toLocaleDateString(), // ✅ Date
-            partNumber: cells[1].innerText, // ✅ Part Number
-            huNumber: cells[2].innerText,   // ✅ HU Number
-            serialNumber: cells[3].innerText, // ✅ Serial Number
-            quantity: cells[4].innerText   // ✅ Quantity
+            time: cells[5].innerText,  // ✅ Time (Column A)
+            date: new Date().toLocaleDateString(), // ✅ Date (Column B)
+            inbound: inboundValue, // ✅ Inbound (Column C) - BOL Field
+            partNumber: cells[1].innerText, // ✅ Part Number (Column D)
+            huNumber: cells[2].innerText,   // ✅ HU Number (Column E)
+            serialNumber: cells[3].innerText, // ✅ Serial Number (Column F)
+            quantity: cells[4].innerText   // ✅ Quantity (Column G)
         });
     }
 
