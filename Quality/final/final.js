@@ -11,23 +11,32 @@ document.addEventListener("DOMContentLoaded", function () {
     updateDateAndShift();
     loadCounters(); // ✅ Load saved counters from LocalStorage
     updateTotalDefects(); // ✅ Update total defects on page load
+    attachButtonListeners(); // ✅ Attach button event listeners
+});
 
-    // ✅ Select all buttons inside the inspection grid
+// ✅ Function to Attach Event Listeners to Buttons (Prevents Duplicate Event Attachments)
+function attachButtonListeners() {
     const buttons = document.querySelectorAll(".inspection-button");
 
     buttons.forEach((button, index) => {
+        button.removeEventListener("click", handleButtonClick); // Prevent duplicate listeners
         button.addEventListener("click", function () {
-            const counter = document.getElementById(`counter${index + 1}`);
-            if (counter) {
-                let count = parseInt(counter.innerText, 10) || 0;
-                counter.innerText = count + 1;
-                saveCounters();
-                updateTotalDefects();
-                sendDataToGoogleSheets(button); // ✅ Pass the button element
-            }
+            handleButtonClick(button, index + 1);
         });
     });
-});
+}
+
+// ✅ Function to Handle Button Click
+function handleButtonClick(button, index) {
+    const counter = document.getElementById(`counter${index}`);
+    if (counter) {
+        let count = parseInt(counter.innerText, 10) || 0;
+        counter.innerText = count + 1;
+        saveCounters();
+        updateTotalDefects();
+        sendDataToGoogleSheets(button);
+    }
+}
 
 // ✅ Function to Save Counters to LocalStorage
 function saveCounters() {
@@ -120,28 +129,6 @@ function updateTotalDefects() {
 // ✅ Google Apps Script Deployment URL
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxAiBAzo6CTA_galZiUwCbzQLOvMTAcuJrknOkWXL2eH-_Px3XZi0Bd-mTH-e6y9tM1/exec";
 
-document.addEventListener("DOMContentLoaded", function () {
-    updateDateAndShift();
-    loadCounters();
-    updateTotalDefects();
-
-    // ✅ Select all buttons inside the inspection grid
-    const buttons = document.querySelectorAll(".inspection-button");
-
-    buttons.forEach((button, index) => {
-        button.addEventListener("click", function () {
-            const counter = document.getElementById(`counter${index + 1}`);
-            if (counter) {
-                let count = parseInt(counter.innerText, 10) || 0;
-                counter.innerText = count + 1;
-                saveCounters();
-                updateTotalDefects();
-                sendDataToGoogleSheets(button);
-            }
-        });
-    });
-});
-
 // ✅ Function to Send Data to Google Sheets
 function sendDataToGoogleSheets(buttonElement) {
     const shift = document.getElementById("currentShift").innerText.replace("🕒 Shift: ", "").trim();
@@ -158,6 +145,7 @@ function sendDataToGoogleSheets(buttonElement) {
       .catch(error => console.error("❌ Error:", error));
 }
 
+// ✅ Screenshot Button Event Listener
 document.addEventListener("DOMContentLoaded", function () {
     let screenshotButton = document.getElementById("sendScreenshotEmail");
     if (screenshotButton) {
@@ -165,6 +153,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+// ✅ Function to Capture Screenshot and Send via Email
 function captureAndSendScreenshot() {
     html2canvas(document.body).then(canvas => {
         let imageData = canvas.toDataURL("image/png"); // Convert to base64
@@ -182,4 +171,3 @@ function captureAndSendScreenshot() {
         .catch(error => console.error("❌ Error:", error));
     });
 }
-
