@@ -150,7 +150,7 @@ function sendDataToGoogleSheets(buttonElement) {
     }).then(() => console.log(`✅ Sent to Data Sheet: ${mainDefect} | Shift: ${shift}`))
       .catch(error => console.error("❌ Error sending to Data Sheet:", error));
 
-    // ✅ Send Data to "Pivot" Sheet
+    // ✅ Send Data to "Pivot" Sheet (WITHOUT CALLING A MISSING FUNCTION)
     fetch(PIVOT_SHEET_URL, {
         method: "POST",
         mode: "no-cors",
