@@ -74,12 +74,12 @@ function updateDateAndShift() {
 
 // ✅ Function to Fetch Data Based on Selected Date & Shift
 async function fetchFilteredData() {
-    const selectedDate = document.getElementById("datePicker").value;
+    const selectedDate = document.getElementById("datePicker").value; // User-selected date
     const selectedShift = document.getElementById("shiftPicker").value;
 
     console.log("🔎 Fetching data for Date:", selectedDate, "| Shift:", selectedShift);
 
-    const url = "https://script.google.com/macros/s/AKfycbxKS6xL2QwuiCv5Ehq9MnhPaSxu9NAw2i0rGjSTV509BKWExOwyRvo5oZWFKERhzvA/exec"; // 🔴 Replace with your Google Apps Script URL
+    const url = "https://script.google.com/macros/s/AKfycbxKS6xL2QwuiCv5Ehq9MnhPaSxu9NAw2i0rGjSTV509BKWExOwyRvo5oZWFKERhzvA/exec"; // 🔴 Replace with your API URL
 
     try {
         const response = await fetch(url);
@@ -92,14 +92,21 @@ async function fetchFilteredData() {
             return { totalParts: {}, hourlyParts: {} };
         }
 
-        // ✅ Convert selectedDate to match the API format (YYYY-MM-DD)
-        const formattedDate = new Date(selectedDate).toISOString().split('T')[0];
+        // ✅ Convert `selectedDate` to YYYY-MM-DD format
+        const formattedSelectedDate = new Date(selectedDate).toISOString().split("T")[0];
 
-        // ✅ Filter Data by Selected Date
-        const filteredData = rawData.filter(entry => entry.Date === formattedDate);
+        console.log("🔄 Formatted Selected Date:", formattedSelectedDate);
+
+        // ✅ Normalize and Filter Data by Date
+        const filteredData = rawData.filter(entry => {
+            // Extract only YYYY-MM-DD part from API response
+            let entryDate = new Date(entry.date).toISOString().split("T")[0];
+
+            return entryDate === formattedSelectedDate;
+        });
 
         if (filteredData.length === 0) {
-            console.warn(`⚠️ No data found for the selected date: ${formattedDate}`);
+            console.warn(`⚠️ No data found for the selected date: ${formattedSelectedDate}`);
             return { totalParts: {}, hourlyParts: {} };
         }
 
@@ -111,53 +118,48 @@ async function fetchFilteredData() {
             "2nd Shift": ["15", "16", "17", "18", "19", "20", "21", "22"]
         };
 
-        // ✅ Filter Data by Selected Shift
+        // ✅ Filter Data by Shift
         const shiftHours = shiftRanges[selectedShift] || [];
-        const shiftFilteredData = filteredData.filter(entry => 
-            shiftHours.includes(entry.Time.split(":")[0])
-        );
+        const shiftFilteredData = filteredData.filter(entry => {
+            let hour = new Date(entry.time).getUTCHours().toString().padStart(2, "0"); // Extract hour
+            return shiftHours.includes(hour);
+        });
 
         if (shiftFilteredData.length === 0) {
             console.warn(`⚠️ No data found for the selected shift: ${selectedShift}`);
             return { totalParts: {}, hourlyParts: {} };
         }
 
-        console.log("⏳ Shift Filtered Data:", shiftFilteredData);
+        console.log("📋 Shift Filtered Data:", shiftFilteredData);
 
-        // ✅ Aggregate Data
+        // ✅ Process Data for Charts
         const totalParts = {};
         const hourlyParts = {};
 
         shiftFilteredData.forEach(entry => {
-            let hour = entry.Time.split(":")[0] + ":00"; // Extract hour (e.g., "07:00")
-
-            // ✅ Aggregate Total Parts by Part Number
-            if (totalParts[entry["Part Number"]]) {
-                totalParts[entry["Part Number"]] += parseInt(entry.Quantity);
-            } else {
-                totalParts[entry["Part Number"]] = parseInt(entry.Quantity);
+            // Count total scanned parts per Part Number
+            if (!totalParts[entry.partNumber]) {
+                totalParts[entry.partNumber] = 0;
             }
+            totalParts[entry.partNumber] += entry.quantity;
 
-            // ✅ Aggregate Parts by Hour
-            if (hourlyParts[hour]) {
-                hourlyParts[hour] += parseInt(entry.Quantity);
-            } else {
-                hourlyParts[hour] = parseInt(entry.Quantity);
+            // Count parts scanned per hour
+            let hour = new Date(entry.time).getUTCHours().toString().padStart(2, "0") + ":00";
+            if (!hourlyParts[hour]) {
+                hourlyParts[hour] = 0;
             }
+            hourlyParts[hour] += entry.quantity;
         });
 
-        console.log("🔍 Total Parts Data:", totalParts);
-        console.log("🔍 Hourly Parts Data:", hourlyParts);
+        console.log("🔹 Total Parts:", totalParts);
+        console.log("🔹 Hourly Parts:", hourlyParts);
 
         return { totalParts, hourlyParts };
-
     } catch (error) {
         console.error("❌ Error fetching API data:", error);
         return { totalParts: {}, hourlyParts: {} };
     }
 }
-
-
 
 // ✅ Function to Update Charts When Date or Shift Changes
 async function updateCharts() {
