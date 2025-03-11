@@ -14,12 +14,10 @@
     font-weight: bold;
 }
 
-
 #title-bar {
-    margin: 0; /* ✅ Ensures no extra space */
-    padding: 40px 0; /* ✅ Same as Quality screen */
+    margin: 0;
+    padding: 40px 0;
 }
-
 
 /* ✅ Left-Aligned Image */
 .title-image {
@@ -28,8 +26,7 @@
     width: 100px;
     height: auto;
     border-radius: 5px;
-    height: 50px; /* ✅ Ensures it matches Quality screen */
-    border-radius: 5px;
+    height: 50px;
 }
 
 /* ✅ Centered Title */
@@ -39,8 +36,8 @@
     font-size: 40px;
     color: white;
     font-weight: bold;
-    margin: 0; /* ✅ Ensures no extra space */
-    padding: 0; /* ✅ Ensures no extra space */
+    margin: 0;
+    padding: 0;
 }
 
 /* ✅ Sidebar Styling */
@@ -117,58 +114,55 @@
     z-index: 1050;
 }
 
-
-/* ✅ Ensure Even Distribution of Sections */
+/* ✅ Make Sections Wider and Use Full Screen */
 .critical-row {
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    justify-content: space-between; /* ✅ Ensures even spacing */
     gap: 20px;
     padding: 20px;
     margin-top: 180px;
+    flex-wrap: wrap;
 }
 
-/* ✅ Section Styling */
+/* ✅ Adjust Section Width for Better Layout */
 .critical-section {
-    flex: 1;
+    flex: 1; /* ✅ Allows sections to expand evenly */
     background-color: #eef5ff;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
     text-align: center;
-    min-width: 250px;
-    max-width: 320px; /* Prevents stretching */
-    margin-top: -40px;
-    height: 71vh; /* Fixed height based on viewport */
+    min-width: 280px;
+    max-width: 450px; /* ✅ Wider sections */
+    height: 75vh;
 }
 
-/* ✅ Section Styling */
+/* ✅ Adjust P703 & Arcelor Sections */
 .critical-section-P703-and-Arcelor {
     flex: 1;
     background-color: #eef5ff;
     border-radius: 10px;
-    padding: px;
+    padding: 20px;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
     text-align: center;
-    min-width: 250px;
-    max-width: 320px; /* Prevents stretching */
-    margin-top: -40px;
-    height: 50vh; /* Fixed height based on viewport */
+    min-width: 280px;
+    max-width: 450px;
+    height: 55vh;
 }
+
 /* ✅ JL/JT Tubes & Driveshafts (Two-Column Layout) */
 .parts-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 0px 60px; /* First value (20px) = Vertical space, Second value (60px) = Horizontal space */
-
+    gap: 10px 30px; /* ✅ More space between columns */
     justify-content: center;
 }
 
 /* ✅ P703 Tubes & Arcelor Mittal Tubes (One-Column Layout) */
-.parts-list {
+.parts-list-single {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 5px;
+    gap: 8px;
     justify-content: center;
 }
 
@@ -178,7 +172,7 @@
     justify-content: space-between;
     align-items: center;
     background-color: white;
-    padding: 3px;
+    padding: 5px 10px;
     border-radius: 5px;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
     font-size: 18px;
@@ -187,14 +181,10 @@
 
 /* ✅ Quantity Input Fields */
 .quantity-input {
-    width: 40px;
-    padding: 4px;
+    width: 50px;
+    padding: 6px;
     font-size: 18px;
     border: 1px solid #ccc;
     border-radius: 5px;
     text-align: center;
 }
-
-
-
-
