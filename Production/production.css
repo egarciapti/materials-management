@@ -141,9 +141,9 @@ h2 {
     margin-top: 120px;
 }
 
-/* ✅ Ensure all buttons have consistent spacing */
+/* ✅ Ensure proper spacing between all buttons */
 #platform-selection button {
-    width: 250px; /* Keep buttons uniform in size */
+    width: 250px; /* Keep buttons uniform */
     padding: 15px;
     font-size: 22px;
     font-weight: bold;
@@ -151,7 +151,14 @@ h2 {
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     text-align: center;
+    margin-bottom: 20px; /* ✅ Adds space between buttons */
 }
+
+/* ✅ Prevent the last button from having extra margin */
+#platform-selection button:last-child {
+    margin-bottom: 0;
+}
+
 
 
 /* ✅ Style for Critical Parts Button */
