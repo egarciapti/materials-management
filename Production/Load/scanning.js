@@ -111,8 +111,8 @@ function validateC12() {
 
 // ✅ Function to Auto Submit & Save to Google Sheets
 function autoSubmit() {
-    let C11 = document.getElementById("C11");
-    let C12 = document.getElementById("C12");
+    let C11 = document.getElementById("C11");  // Part Number Input
+    let C12 = document.getElementById("C12");  // Quantity Input
     let scanMessage = document.getElementById("scanMessage");
     let lastScanInfo = document.getElementById("lastScanInfo");
 
@@ -129,13 +129,29 @@ function autoSubmit() {
         return;
     }
 
-    // ✅ Get the current timestamp and date
-    let now = new Date();
-    
-    let estTimestamp = now.toLocaleString("en-US", { timeZone: "America/New_York" });
-    let estDateOnly = now.toLocaleDateString("en-US", { timeZone: "America/New_York" });
+    if (quantity.includes(".")) {
+        quantity = Math.floor(parseFloat(quantity)).toString();
+    }
 
-    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${estTimestamp}`;
+    // ✅ Get Current Timestamp in the Correct Format (Eastern Time)
+    let now = new Date();
+
+    let estTime = new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/New_York",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false // ✅ 24-hour format
+    }).format(now);
+
+    let estDate = new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/New_York",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+    }).format(now);
+
+    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${estTime} | 📅 ${estDate}`;
 
     // ✅ Update Last Scan Info
     lastScanInfo.innerHTML = scanText;
@@ -146,8 +162,9 @@ function autoSubmit() {
 
     // ✅ Send Data to Google Sheets
     let data = {
-        timestamp: estTimestamp,
-        date: estDateOnly,
+        timestamp: now.toISOString(),  // ✅ Send as ISO string for proper parsing
+        time: estTime,  // ✅ Formatted Time
+        date: estDate,  // ✅ Formatted Date
         partNumber: partNumber,
         quantity: quantity
     };
@@ -156,19 +173,12 @@ function autoSubmit() {
 
     fetch("https://script.google.com/macros/s/AKfycby0prpxOWmQKUGkmSnBTAAom-NiNkShOWbbKJdW6uhRbYYI6Yq7vD0xZHk27egYcIv3Eg/exec", {
         method: "POST",
-        mode: "no-cors",  // ✅ Keep this to avoid CORS issues
+        mode: "no-cors",  // ✅ Bypass CORS
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            timestamp: new Date().toLocaleTimeString(),
-            date: new Date().toLocaleDateString(),
-            partNumber: document.getElementById("C11").value.trim(),
-            quantity: document.getElementById("C12").value.trim()
-        })
+        body: JSON.stringify(data)
     })
     .then(() => console.log("✅ Scan saved to Google Sheets successfully!"))
     .catch(error => console.error("❌ Error:", error));
-    
-
 
     // ✅ Clear Input Fields & Reset for Next Scan
     C11.value = "";
