@@ -43,12 +43,20 @@ function updateDateAndShift() {
     const formattedDate = now.toLocaleDateString("en-US", options);
 
     let hours = now.getHours();
-    let shift = (hours >= 7 && hours < 15) ? "1st Shift"
-        : (hours >= 15 && hours < 23) ? "2nd Shift"
-        : "Off Shift";
+    let shift = determineShiftFromTime(hours);
 
     document.getElementById("currentDate").innerHTML = `📅 Date: <b>${formattedDate}</b>`;
     document.getElementById("currentShift").innerHTML = `🕒 Shift: <b>${shift}</b>`;
+}
+
+// ✅ Function to Determine Shift Based on Time
+function determineShiftFromTime(hour) {
+    if ((hour >= 7 && hour < 15) || (hour === 15 && new Date().getMinutes() <= 30)) {
+        return "1st Shift";
+    } else if (hour > 15 || hour < 7) {
+        return "2nd Shift";
+    }
+    return "Off Shift";
 }
 
 // ✅ Function to Load Selected Platform
@@ -151,7 +159,9 @@ function autoSubmit() {
         day: "2-digit"
     }).format(now);
 
-    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${estTime} | 📅 ${estDate}`;
+    let shift = determineShiftFromTime(now.getHours());
+
+    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${estTime} | 📅 ${estDate} | 🏭 ${shift}`;
 
     // ✅ Update Last Scan Info
     lastScanInfo.innerHTML = scanText;
@@ -165,23 +175,21 @@ function autoSubmit() {
         timestamp: now.toISOString(),  // ✅ Send as ISO string for proper parsing
         time: estTime,  // ✅ Formatted Time
         date: estDate,  // ✅ Formatted Date
+        shift: shift,   // ✅ Shift
         partNumber: partNumber,
         quantity: quantity
     };
 
     console.log("🚀 Sending data:", data);
 
-    fetch("https://script.google.com/macros/s/AKfycby0prpxOWmQKUGkmSnBTAAom-NiNkShOWbbKJdW6uhRbYYI6Yq7vD0xZHk27egYcIv3Eg/exec", {
+    fetch("https://script.google.com/macros/s/AKfycby0prpxOWmQKUGkmSnBTAAom-NiNkShOWbbKJdW6uhRbYYI6Yq7vD0xZHk27egYcIv3Eg/exec?timestamp=" + new Date().getTime(), {
         method: "POST",
-        mode: "no-cors",  // ✅ Bypass CORS
+        mode: "no-cors",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
     })
     .then(() => {
         console.log("✅ Scan saved to Google Sheets successfully!");
-
-        // ✅ Dispatch Event to `Critical_Prod.js` to Refresh Data
-        window.dispatchEvent(new CustomEvent("partScanned", { detail: { partNumber, quantity } }));
     })
     .catch(error => console.error("❌ Error:", error));
 
@@ -196,4 +204,3 @@ function autoSubmit() {
         C11.focus();
     }, 100);
 }
-
