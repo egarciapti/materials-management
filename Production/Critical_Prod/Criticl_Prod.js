@@ -12,7 +12,10 @@ document.addEventListener("DOMContentLoaded", function () {
     loadCriticalPartsFromGoogleSheets(); // ✅ Load initial values from Google Sheets
 
     // ✅ Listen for updates from scanning.js
-    window.addEventListener("criticalPartsUpdated", loadCriticalPartsFromGoogleSheets);
+    window.addEventListener("partScanned", function (event) {
+        console.log("🔄 Part scanned, refreshing Critical Parts Data...");
+        loadCriticalPartsFromGoogleSheets();
+    });
 });
 
 // ✅ Function to Open Sidebar
@@ -46,10 +49,12 @@ const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxp0t7Ev05cRh
 
 // ✅ Function to Load Critical Parts Quantities from Google Sheets
 function loadCriticalPartsFromGoogleSheets() {
-    fetch(GOOGLE_SCRIPT_URL)
+    fetch(GOOGLE_SCRIPT_URL + "?timestamp=" + new Date().getTime()) // ✅ Force fresh data
         .then(response => response.json())
         .then(data => {
             console.log("📥 Loaded Critical Parts:", data);
+
+            // ✅ Update input fields for each part number
             document.querySelectorAll(".quantity-input").forEach(input => {
                 let partNumber = input.dataset.partNumber;
                 if (data[partNumber] !== undefined) {
@@ -64,11 +69,5 @@ function loadCriticalPartsFromGoogleSheets() {
 
 // ✅ Load Data on Page Load
 document.addEventListener("DOMContentLoaded", function () {
-    loadCriticalPartsFromGoogleSheets();
-});
-
-// ✅ Listen for Scans from `scanning.js` and Refresh Data
-window.addEventListener("partScanned", function () {
-    console.log("🔄 Part scanned! Refreshing Critical Parts Data...");
     loadCriticalPartsFromGoogleSheets();
 });
