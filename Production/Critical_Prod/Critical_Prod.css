@@ -1,6 +1,12 @@
 @import url("../../styles.css"); /* ✅ Keep Main Screen Styles */
 
-/* ✅ Title Bar Shift, Date, and Total Counter */
+/* ✅ Title Bar */
+#title-bar {
+    margin: 0;
+    padding: 40px 0;
+}
+
+/* ✅ Title Info (Date & Shift) */
 #title-info {
     display: flex;
     flex-direction: column;
@@ -14,32 +20,6 @@
     font-weight: bold;
 }
 
-#title-bar {
-    margin: 0;
-    padding: 40px 0;
-}
-
-/* ✅ Left-Aligned Image */
-.title-image {
-    position: absolute;
-    left: 20px;
-    width: 100px;
-    height: auto;
-    border-radius: 5px;
-    height: 50px;
-}
-
-/* ✅ Centered Title */
-#title-bar h1 {
-    flex-grow: 1;
-    text-align: center;
-    font-size: 40px;
-    color: white;
-    font-weight: bold;
-    margin: 0;
-    padding: 0;
-}
-
 /* ✅ Sidebar Styling */
 #sidebar {
     position: fixed;
@@ -50,95 +30,21 @@
     background-color: #004080;
     color: white;
     padding-top: 20px;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
     transition: left 0.3s ease-in-out;
-    z-index: 1100;
 }
 
-#sidebar ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-#sidebar ul li {
-    padding: 15px;
-    text-align: center;
-    border-bottom: 1px solid white;
-}
-
-#sidebar ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-    display: block;
-}
-
-#sidebar ul li a:hover {
-    background-color: #002c5a;
-}
-
-/* ✅ Close Button */
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-/* ✅ Menu Button */
-#menu-btn {
-    position: absolute;
-    top: 80px;
-    left: 20px;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 30px;
-    cursor: pointer;
-    z-index: 1100;
-}
-
-/* ✅ Overlay */
-#overlay {
-    position: fixed;
-    top: 70px;
-    left: 0;
-    width: 100%;
-    height: calc(100vh - 70px);
-    background: rgba(0, 0, 0, 0.2);
-    display: none;
-    z-index: 1050;
-}
-
-/* ✅ Make Sections Wider and Use Full Screen */
+/* ✅ Sections Use Full Width */
 .critical-row {
     display: flex;
-    justify-content: space-between; /* ✅ Ensures even spacing */
+    justify-content: space-between;
     gap: 20px;
     padding: 20px;
     margin-top: 180px;
     flex-wrap: wrap;
 }
 
-/* ✅ Adjust Section Width for Better Layout */
-.critical-section {
-    flex: 1; /* ✅ Allows sections to expand evenly */
-    background-color: #eef5ff;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    min-width: 280px;
-    max-width: 450px; /* ✅ Wider sections */
-    height: 75vh;
-}
-
-/* ✅ Adjust P703 & Arcelor Sections */
-.critical-section-P703-and-Arcelor {
+/* ✅ Ensures Each Section Uses Maximum Space */
+.critical-section, .critical-section-P703-and-Arcelor {
     flex: 1;
     background-color: #eef5ff;
     border-radius: 10px;
@@ -147,39 +53,32 @@
     text-align: center;
     min-width: 280px;
     max-width: 450px;
-    height: 55vh;
+    height: 75vh;
 }
 
-/* ✅ JL/JT Tubes & Driveshafts (Two-Column Layout) */
-.parts-list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px 30px; /* ✅ More space between columns */
-    justify-content: center;
-}
-
-/* ✅ P703 Tubes & Arcelor Mittal Tubes (One-Column Layout) */
+/* ✅ Makes Sure All Parts Are Stacked in One Column */
 .parts-list-single {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 8px;
-    justify-content: center;
+    align-items: center;
 }
 
-/* ✅ Individual Part Entry */
-.parts-list label {
+/* ✅ Style for Part Labels */
+.parts-list-single label {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: white;
-    padding: 5px 10px;
+    padding: 6px 10px;
     border-radius: 5px;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
     font-size: 18px;
     font-weight: bold;
+    width: 90%;
 }
 
-/* ✅ Quantity Input Fields */
+/* ✅ Ensures Quantity Inputs Are Aligned */
 .quantity-input {
     width: 50px;
     padding: 6px;

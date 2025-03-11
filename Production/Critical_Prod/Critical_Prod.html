@@ -8,19 +8,17 @@
 </head>
 <body>
 
-    <!-- ✅ Title Bar with Image, Title, Date, Shift, and Total Defects -->
-<div id="title-bar">
-    <img src="https://lh3.googleusercontent.com/d/1xRLuEF67gw8aST0g702xuH924SsoYVeA=w300"
-         alt="Final Inspection"
-         class="title-image">
-    <h1>CRITICAL PARTS TO LOAD</h1>
-    <div id="title-info">
-        <span id="currentDate">📅 Date: Loading...</span>
-        <span id="currentShift">🕒 Shift: Loading...</span>
+    <!-- ✅ Title Bar with Image, Title, Date, Shift -->
+    <div id="title-bar">
+        <img src="https://lh3.googleusercontent.com/d/1xRLuEF67gw8aST0g702xuH924SsoYVeA=w300"
+             alt="Final Inspection"
+             class="title-image">
+        <h1>CRITICAL PARTS TO LOAD</h1>
+        <div id="title-info">
+            <span id="currentDate">📅 Date: Loading...</span>
+            <span id="currentShift">🕒 Shift: Loading...</span>
+        </div>
     </div>
-</div>
-
-
 
     <div id="sidebar">
         <button class="close-btn" onclick="closeSidebar()">✖</button>
@@ -33,17 +31,15 @@
     
     <!-- ✅ Sidebar Toggle Button -->
     <button id="menu-btn" onclick="openSidebar()">☰</button>
-
-    <!-- ✅ Transparent overlay for closing the menu -->
     <div id="overlay"></div>
-
 
     <!-- ✅ Four Critical Sections in Columns -->
     <div class="critical-row">
+        
         <!-- ✅ JL/JT Tubes -->
         <div class="critical-section">
             <h3>JL/JT Tubes</h3>
-            <div class="parts-list">
+            <div class="parts-list-single">
                 <label>10284289 <input type="number" class="quantity-input" data-part-number="10284289"></label>
                 <label>10284292 <input type="number" class="quantity-input" data-part-number="10284292"></label>
                 <label>10300399 <input type="number" class="quantity-input" data-part-number="10300399"></label>
@@ -62,7 +58,7 @@
         <!-- ✅ P703 Tubes -->
         <div class="critical-section-P703-and-Arcelor">
             <h3>P703 Tubes</h3>
-            <div class="parts-list">
+            <div class="parts-list-single">
                 <label>10102095-70 <input type="number" class="quantity-input" data-part-number="10102095-70"></label>
                 <label>10102096-70 <input type="number" class="quantity-input" data-part-number="10102096-70"></label>
             </div>
@@ -71,7 +67,7 @@
         <!-- ✅ Arcelor Mittal Tubes -->
         <div class="critical-section-P703-and-Arcelor">
             <h3>Arcelor Mittal Tubes</h3>
-            <div class="parts-list">
+            <div class="parts-list-single">
                 <label>P10393875. <input type="number" class="quantity-input" data-part-number="P10393875."></label>
                 <label>P10393876. <input type="number" class="quantity-input" data-part-number="P10393876."></label>
             </div>
@@ -80,24 +76,15 @@
         <!-- ✅ Driveshafts -->
         <div class="critical-section">
             <h3>Driveshafts</h3>
-            <div class="parts-list">
+            <div class="parts-list-single">
                 <label>10277166U <input type="number" class="quantity-input" data-part-number="10277166U"></label>
                 <label>10097231U <input type="number" class="quantity-input" data-part-number="10097231U"></label>
                 <label>10097235U <input type="number" class="quantity-input" data-part-number="10097235U"></label>
                 <label>10097251U <input type="number" class="quantity-input" data-part-number="10097251U"></label>
                 <label>10097253U <input type="number" class="quantity-input" data-part-number="10097253U"></label>
-                <label>10270993U <input type="number" class="quantity-input" data-part-number="10270993U"></label>
-                <label>10269047U <input type="number" class="quantity-input" data-part-number="10269047U"></label>
-                <label>10270961U <input type="number" class="quantity-input" data-part-number="10270961U"></label>
-                <label>10270946U <input type="number" class="quantity-input" data-part-number="10270946U"></label>
-                <label>10270934U <input type="number" class="quantity-input" data-part-number="10270934U"></label>
-                <label>10210225U <input type="number" class="quantity-input" data-part-number="10210225U"></label>
-                <label>10277215U <input type="number" class="quantity-input" data-part-number="10277215U"></label>
-                <label>10279899U <input type="number" class="quantity-input" data-part-number="10279899U"></label>
             </div>
         </div>
     </div>
-
 
     <script src="Criticl_Prod.js"></script>
     <script src="../../script.js"></script> 
