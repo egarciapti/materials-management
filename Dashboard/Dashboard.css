@@ -1,4 +1,4 @@
-@import url("../../styles.css"); /* ✅ Keep Main Screen Styles */
+@import url("../styles.css"); /* ✅ Keep Main Screen Styles */
 
 /* ✅ Title Bar Shift, Date, and Total Counter */
 #title-info {
