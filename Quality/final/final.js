@@ -127,34 +127,35 @@ function updateTotalDefects() {
     document.getElementById("totalDefects").innerHTML = `🔢 Total Defects: <b>${total}</b>`;
 }
 
-// ✅ Google Apps Script Deployment URLs
+// ✅ Google Apps Script URLs
 const DATA_SHEET_URL = "https://script.google.com/macros/s/AKfycbxAiBAzo6CTA_galZiUwCbzQLOvMTAcuJrknOkWXL2eH-_Px3XZi0Bd-mTH-e6y9tM1/exec";
 const PIVOT_SHEET_URL = "https://script.google.com/macros/s/AKfycbx7YX25om-ff32eSxApJ8Yu8KDxwBugUbmJXYeg_gGPI6ZmHQfY28fBWq7NT2mangJW/exec";
 
-// ✅ Function to Send Data to "Data" Sheet
+// ✅ Function to Send Data to Google Sheets (Data & Pivot Tabs)
 function sendDataToGoogleSheets(buttonElement) {
     const shift = document.getElementById("currentShift").innerText.replace("🕒 Shift: ", "").trim();
-    const defect = buttonElement.innerText.split("\n")[0].trim(); // ✅ Extract main defect name
+    
+    // ✅ Extract only the first line of the button text
+    const mainDefect = buttonElement.innerText.split("\n")[0].trim().toUpperCase();
 
+    // ✅ Prepare Data Object
+    const payload = JSON.stringify({ defect: mainDefect, shift: shift });
+
+    // ✅ Send Data to "Data" Sheet
     fetch(DATA_SHEET_URL, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ defect: defect, shift: shift })
-    }).then(() => console.log(`✅ Sent to Data Sheet: ${defect} | Shift: ${shift}`))
-      .catch(error => console.error("❌ Error:", error));
-}
+        body: payload
+    }).then(() => console.log(`✅ Sent to Data Sheet: ${mainDefect} | Shift: ${shift}`))
+      .catch(error => console.error("❌ Error sending to Data Sheet:", error));
 
-// ✅ Function to Send Data to "Pivot" Sheet
-function sendDataToPivotSheet(buttonElement) {
-    const shift = document.getElementById("currentShift").innerText.replace("🕒 Shift: ", "").trim();
-    const defect = buttonElement.innerText.split("\n")[0].replace(/\//g, "").trim(); // ✅ Remove trailing slashes
-
+    // ✅ Send Data to "Pivot" Sheet
     fetch(PIVOT_SHEET_URL, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ defect: defect, shift: shift })
-    }).then(() => console.log(`✅ Sent to Pivot Sheet: ${defect} | Shift: ${shift}`))
-      .catch(error => console.error("❌ Error:", error));
+        body: payload
+    }).then(() => console.log(`✅ Sent to Pivot Sheet: ${mainDefect} | Shift: ${shift}`))
+      .catch(error => console.error("❌ Error sending to Pivot Sheet:", error));
 }
