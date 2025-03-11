@@ -79,7 +79,7 @@ async function fetchFilteredData() {
 
     console.log("🔎 Fetching data for Date:", selectedDate, "| Shift:", selectedShift);
 
-    const url = "YOUR_DEPLOYMENT_URL_HERE"; // 🔴 Replace with your Google Apps Script URL
+    const url = "https://script.google.com/macros/s/AKfycbxKS6xL2QwuiCv5Ehq9MnhPaSxu9NAw2i0rGjSTV509BKWExOwyRvo5oZWFKERhzvA/exec"; // 🔴 Replace with your Google Apps Script URL
 
     try {
         const response = await fetch(url);
