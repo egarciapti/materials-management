@@ -111,8 +111,8 @@ function validateC12() {
 
 // ✅ Function to Auto Submit & Save to Google Sheets
 function autoSubmit() {
-    let C11 = document.getElementById("C11");  // Part Number Input
-    let C12 = document.getElementById("C12");  // Quantity Input
+    let C11 = document.getElementById("C11");
+    let C12 = document.getElementById("C12");
     let scanMessage = document.getElementById("scanMessage");
     let lastScanInfo = document.getElementById("lastScanInfo");
 
@@ -129,30 +129,11 @@ function autoSubmit() {
         return;
     }
 
-    if (quantity.includes(".")) {
-        quantity = Math.floor(parseFloat(quantity)).toString();
-    }
-
-    // ✅ Get the current time in America/New_York
+    // ✅ Get the current timestamp and date
     let now = new Date();
     
-    let estTimestamp = new Intl.DateTimeFormat("en-US", {
-        timeZone: "America/New_York",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false // ✅ Ensure 24-hour format
-    }).format(now).replace(",", "");
-
-    let estDateOnly = new Intl.DateTimeFormat("en-US", {
-        timeZone: "America/New_York",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit"
-    }).format(now);
+    let estTimestamp = now.toLocaleString("en-US", { timeZone: "America/New_York" });
+    let estDateOnly = now.toLocaleDateString("en-US", { timeZone: "America/New_York" });
 
     let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${estTimestamp}`;
 
@@ -171,22 +152,16 @@ function autoSubmit() {
         quantity: quantity
     };
 
-    console.log("🚀 Sending data:", data); // ✅ Debug: Log data before sending
+    console.log("🚀 Sending data:", data);
 
-    fetch("https://script.google.com/macros/s/AKfycbxa3dTulm69846WIMs_HrcwgAWNFQHbIDHCXpIqvEYz-U8hVxl6lu5ZxX5Y5qU9KmRo2A/exec", {
+    fetch("https://script.google.com/macros/s/YOUR_DEPLOYMENT_URL/exec", {
         method: "POST",
-        mode: "no-cors",  // ✅ Bypass CORS
+        mode: "no-cors",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            timestamp: new Date().toLocaleTimeString(),
-            date: new Date().toLocaleDateString(),
-            partNumber: document.getElementById("C11").value.trim(),
-            quantity: document.getElementById("C12").value.trim()
-        })
+        body: JSON.stringify(data)
     })
     .then(() => console.log("✅ Scan saved to Google Sheets successfully!"))
     .catch(error => console.error("❌ Error:", error));
-    
 
     // ✅ Clear Input Fields & Reset for Next Scan
     C11.value = "";
@@ -199,31 +174,3 @@ function autoSubmit() {
         C11.focus();
     }, 100);
 }
-
-
-
-
-
-
-// ✅ Function to Update Critical Parts in Critical_Prod.html
-function updateCriticalParts(partNumber) {
-    console.log(`🔄 Reducing quantity for part: ${partNumber}`);
-
-    // ✅ Get stored critical part data
-    let criticalParts = JSON.parse(localStorage.getItem("criticalPartsData")) || {};
-
-    if (criticalParts[partNumber] && criticalParts[partNumber] > 0) {
-        criticalParts[partNumber] -= 1; // ✅ Decrease by 1
-    } else {
-        console.warn(`⚠️ Part ${partNumber} not found or already at 0.`);
-        return;
-    }
-
-    // ✅ Save back to localStorage
-    localStorage.setItem("criticalPartsData", JSON.stringify(criticalParts));
-
-    // ✅ Notify Critical_Prod.html about the change
-    window.dispatchEvent(new CustomEvent("criticalPartsUpdated"));
-}
-
-
