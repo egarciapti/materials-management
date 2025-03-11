@@ -21,7 +21,7 @@
 
 /* ✅ Ensure Space Below Title Bar for Counters */
 #table-counters {
-    margin-top: 10px; /* Ensure space between title and counters */
+    margin-top: -50px; /* Ensure space between title and counters */
     display: flex;
     justify-content: center;
     align-items: center;
