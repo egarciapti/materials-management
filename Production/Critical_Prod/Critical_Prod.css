@@ -128,7 +128,7 @@
 /* ✅ Sections Use Full Width */
 .critical-row {
     display: flex;
-    margin-top: 0px;
+    margin-top: -20px;
     justify-content: space-between;
     gap: 20px;
     padding: 20px;
