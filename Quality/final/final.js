@@ -169,17 +169,17 @@ function captureAndSendScreenshot() {
     html2canvas(document.body).then(canvas => {
         let imageData = canvas.toDataURL("image/png"); // Convert to base64
 
-        // Send image data to Google Apps Script
         fetch("https://script.google.com/macros/s/AKfycbzyKU038D9_tmNViHImPYMgw__IzA0iCHcdtIH5KciZLOXQ21ZoAB4_5bnyVgHfGsZFiQ/exec", {
             method: "POST",
+            mode: "no-cors",  // ✅ Bypass CORS restrictions
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ image: imageData })
         })
-        .then(response => response.text())
-        .then(data => {
-            console.log("📤 Screenshot Sent:", data);
+        .then(() => {
+            console.log("📤 Screenshot Sent!");
             alert("✅ Screenshot sent via email!");
         })
         .catch(error => console.error("❌ Error:", error));
     });
 }
+
