@@ -37,15 +37,20 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
     margin-top: 120px;
 }
 
-h2 {
-    font-size: 28px;
+/* ✅ Ensure Proper Button Spacing */
+#platform-selection button {
+    width: 250px; /* Maintain uniform button width */
+    padding: 15px;
+    font-size: 22px;
     font-weight: bold;
-    color: #333;
-    margin-bottom: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    text-align: center;
+    margin: 12px 0; /* ✅ Adds equal vertical spacing between buttons */
 }
 
 /* ✅ Sidebar Styling */
@@ -132,38 +137,9 @@ h2 {
     background-color: #00796B; /* Darker teal on hover */
 }
 
-/* ✅ Adjust spacing between all buttons */
-#platform-selection {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px; /* ✅ Ensures equal spacing between all buttons */
-    margin-top: 120px;
-}
-
-/* ✅ Ensure proper spacing between all buttons */
-#platform-selection button {
-    width: 250px; /* Keep buttons uniform */
-    padding: 15px;
-    font-size: 22px;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    text-align: center;
-    margin-bottom: 20px; /* ✅ Adds space between buttons */
-}
-
-/* ✅ Prevent the last button from having extra margin */
-#platform-selection button:last-child {
-    margin-bottom: 0;
-}
-
-
-
 /* ✅ Style for Critical Parts Button */
 .critical-button {
-    background-color: #d9534f;
+    background-color: #d9534f; /* Red color to indicate urgency */
     font-weight: bold;
     color: white;
     padding: 12px 25px;
@@ -174,7 +150,7 @@ h2 {
     transition: all 0.3s ease-in-out;
     display: inline-block;
     text-align: center;
-    margin-bottom: 15px; /* ✅ Add spacing */
+    margin: 12px 0; /* ✅ Ensure spacing */
 }
 
 /* ✅ Change Button Color on Hover */
@@ -182,4 +158,3 @@ h2 {
     background-color: #c9302c;
     transform: scale(1.05);
 }
-
