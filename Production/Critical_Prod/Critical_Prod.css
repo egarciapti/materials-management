@@ -1,6 +1,19 @@
 @import url("../../styles.css"); /* ✅ Keep Main Screen Styles */
 
-/* ✅ Title Bar Styling */
+/* ✅ Title Bar Shift, Date, and Total Counter */
+#title-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+}
+
 #title-bar {
     margin: 0;
     padding: 40px 0;
@@ -13,6 +26,7 @@
     width: 100px;
     height: auto;
     border-radius: 5px;
+    height: 50px;
 }
 
 /* ✅ Centered Title */
@@ -23,6 +37,7 @@
     color: white;
     font-weight: bold;
     margin: 0;
+    padding: 0;
 }
 
 /* ✅ Sidebar Styling */
@@ -35,56 +50,137 @@
     background-color: #004080;
     color: white;
     padding-top: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
     transition: left 0.3s ease-in-out;
+    z-index: 1100;
 }
 
-/* ✅ Ensure Even Distribution of Sections */
+#sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#sidebar ul li {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid white;
+}
+
+#sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    background-color: #002c5a;
+}
+
+/* ✅ Close Button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* ✅ Menu Button */
+#menu-btn {
+    position: absolute;
+    top: 80px;
+    left: 20px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 1100;
+}
+
+/* ✅ Overlay */
+#overlay {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 70px);
+    background: rgba(0, 0, 0, 0.2);
+    display: none;
+    z-index: 1050;
+}
+
+/* ✅ Make Sections Wider and Use Full Screen */
 .critical-row {
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    justify-content: space-between; /* ✅ Ensures even spacing */
     gap: 20px;
     padding: 20px;
     margin-top: 180px;
+    flex-wrap: wrap;
 }
 
-/* ✅ Section Styling */
+/* ✅ Adjust Section Width for Better Layout */
 .critical-section {
+    flex: 1; /* ✅ Allows sections to expand evenly */
+    background-color: #eef5ff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    min-width: 280px;
+    max-width: 450px; /* ✅ Wider sections */
+    height: 75vh;
+}
+
+/* ✅ Adjust P703 & Arcelor Sections */
+.critical-section-P703-and-Arcelor {
     flex: 1;
     background-color: #eef5ff;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
     text-align: center;
-    min-width: 250px;
-    max-width: 350px;
-    height: 71vh;
+    min-width: 280px;
+    max-width: 450px;
+    height: 55vh;
 }
 
-/* ✅ JL/JT Tubes - Ensure a Single Column */
-.jljt-tubes-list {
+/* ✅ JL/JT Tubes & Driveshafts (Two-Column Layout) */
+.parts-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px 30px; /* ✅ More space between columns */
+    justify-content: center;
+}
+
+/* ✅ P703 Tubes & Arcelor Mittal Tubes (One-Column Layout) */
+.parts-list-single {
     display: grid;
     grid-template-columns: 1fr;
     gap: 8px;
     justify-content: center;
 }
 
-/* ✅ Style for Part Number Labels */
-.jljt-tubes-list label {
+/* ✅ Individual Part Entry */
+.parts-list label {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: white;
-    padding: 6px 10px;
+    padding: 5px 10px;
     border-radius: 5px;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
     font-size: 18px;
     font-weight: bold;
-    width: 100%;
 }
 
-/* ✅ Ensure Quantity Inputs are Properly Aligned */
-.jljt-tubes-list .quantity-input {
+/* ✅ Quantity Input Fields */
+.quantity-input {
     width: 50px;
     padding: 6px;
     font-size: 18px;
