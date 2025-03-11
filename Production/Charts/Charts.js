@@ -250,10 +250,13 @@ function updateScannedPartsChart(data) {
         return;
     }
 
-    scannedPartsChart.data.labels = Object.keys(data);
-    scannedPartsChart.data.datasets[0].data = Object.values(data);
+    console.log("📊 Updating Total Scanned Parts Chart with:", data);
+
+    scannedPartsChart.data.labels = Object.keys(data); // Part numbers
+    scannedPartsChart.data.datasets[0].data = Object.values(data); // Quantities
     scannedPartsChart.update();
 }
+
 
 
 // ✅ Function to Update Hourly Scanned Parts Chart
@@ -263,10 +266,13 @@ function updateHourlyScannedPartsChart(data) {
         return;
     }
 
-    hourlyScannedPartsChart.data.labels = Object.keys(data);
-    hourlyScannedPartsChart.data.datasets[0].data = Object.values(data);
+    console.log("📊 Updating Hourly Scanned Parts Chart with:", data);
+
+    hourlyScannedPartsChart.data.labels = Object.keys(data); // Hours
+    hourlyScannedPartsChart.data.datasets[0].data = Object.values(data); // Quantities
     hourlyScannedPartsChart.update();
 }
+
 
 
 // ✅ Ensure the Date Picker Initializes with Today's Date
