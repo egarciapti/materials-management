@@ -4,43 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inbound</title>
-    <<link rel="stylesheet" href="./inbound.css"> <!-- ✅ Correct -->
-   
-    
-
+    <link rel="stylesheet" href="./inbound.css"> <!-- ✅ Correct -->
 </head>
 <body>
     <h1>Inbound Page</h1>
     <p>This is the Inbound page content.</p>
 
     <!-- ✅ Title Bar with Title and Date/Shift Information -->
-<div id="title-bar">
-    <img src="https://lh3.googleusercontent.com/d/1xRLuEF67gw8aST0g702xuH924SsoYVeA=w300"
-         alt="Inbound Materials"
-         class="title-image">
-    <h1>Inbound Materials</h1>
-    <div id="date-shift-container">
-        <p id="currentDate">📅 Date: Loading...</p>
-        <p id="currentShift">🕒 Shift: Loading...</p>
+    <div id="title-bar">
+        <img src="https://lh3.googleusercontent.com/d/1xRLuEF67gw8aST0g702xuH924SsoYVeA=w300"
+             alt="Inbound Materials"
+             class="title-image">
+        <h1>Inbound Materials</h1>
+        <div id="date-shift-container">
+            <p id="currentDate">📅 Date: Loading...</p>
+            <p id="currentShift">🕒 Shift: Loading...</p>
+        </div>
     </div>
-</div>
 
-<!-- ✅ New Truck Button (Completely Separate) -->
-<div id="new-truck-container">
-    <button id="newTruckButton">🚛 New Truck</button>
-</div>
+    <!-- ✅ New Truck Button (Completely Separate) -->
+    <div id="new-truck-container">
+        <button id="newTruckButton">🚛 New Truck</button>
+    </div>
 
-<!-- ✅ Counter Section -->
-<div id="table-counters">
-    <p>📦 Pallets Received: <span id="palletCount">0</span></p>
-    <p>🔢 Total Parts Received: <span id="totalParts">0</span></p>
-</div>
+    <!-- ✅ NEW BOL INPUT FIELD (Placed in Yellow Box Area) -->
+    <div id="bol-container">
+        <label for="bolNumber">📜 BOL:</label>
+        <input type="text" id="bolNumber" class="input-field">
+    </div>
 
+    <!-- ✅ Counter Section -->
+    <div id="table-counters">
+        <p>📦 Pallets Received: <span id="palletCount">0</span></p>
+        <p>🔢 Total Parts Received: <span id="totalParts">0</span></p>
+    </div>
 
-<!-- ✅ Scanning and Table Layout -->
-<div id="inbound-container">
-
-
+    <!-- ✅ Scanning and Table Layout -->
+    <div id="inbound-container">
         <!-- ✅ Left Scanning Section -->
         <div id="scanning-section">
             <h2>SCAN PALLET</h2>
@@ -58,7 +58,6 @@
             <input type="text" id="quantity" class="input-field">
         </div>
 
-
         <!-- ✅ Right Scanned Pallets Table -->
         <div id="scanned-pallets">
             <h2>SCANNED PALLETS</h2>
@@ -66,48 +65,43 @@
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>BOL</th> <!-- ✅ New Column for BOL -->
                         <th>Part Number</th>
                         <th>HU Number</th>
                         <th>Serial Number</th>
                         <th>Quantity</th>
                         <th>Timestamp</th>
-                        <th>Action</th> <!-- ✅ New Delete Column -->
+                        <th>Action</th>
                     </tr>
                 </thead>
-                
                 <tbody>
                     <!-- ✅ New rows will be added here automatically -->
                 </tbody>
             </table>
-            
         </div>
     </div>
 
-   <!-- ✅ Sidebar Menu -->
-<div id="sidebar">
-    <button class="close-btn" onclick="closeSidebar()">✖</button>
-    <ul>
-        <li><a href="/materials-management/index.html">🏠 Home</a></li>
-        <li><a href="/materials-management/Materials/materials.html">📦 Materials</a></li>
-        <li><a href="/materials-management/Production/production.html">🏭 Production</a></li>
-    </ul>
-</div>
+    <!-- ✅ Sidebar Menu -->
+    <div id="sidebar">
+        <button class="close-btn" onclick="closeSidebar()">✖</button>
+        <ul>
+            <li><a href="/materials-management/index.html">🏠 Home</a></li>
+            <li><a href="/materials-management/Materials/materials.html">📦 Materials</a></li>
+            <li><a href="/materials-management/Production/production.html">🏭 Production</a></li>
+        </ul>
+    </div>
 
-
-
-<!-- ✅ Sidebar Toggle Button -->
-<button id="menu-btn">☰</button>
-
-
+    <!-- ✅ Sidebar Toggle Button -->
+    <button id="menu-btn">☰</button>
 
     <!-- ✅ Transparent overlay for closing the menu -->
     <div id="overlay"></div>
-    
-    <script src="./inbound.js"></script> <!-- ✅ Correct -->
-    </body>
-    </html>
-    
+
     <!-- ✅ Save Button to Send Data to Google Sheets -->
-<div id="save-button-container">
-    <button id="saveToGoogleSheets">📤 Save to Google Sheets</button>
-</div>
+    <div id="save-button-container">
+        <button id="saveToGoogleSheets">📤 Save to Google Sheets</button>
+    </div>
+
+    <script src="./inbound.js"></script> <!-- ✅ Correct -->
+</body>
+</html>
