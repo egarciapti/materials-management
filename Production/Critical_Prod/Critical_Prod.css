@@ -152,6 +152,7 @@
 /* ✅ Makes Sure All Parts Are Stacked in One Column */
 .parts-list-single {
     display: flex;
+    margin-top: 10px;
     flex-direction: column;
     gap: 5px;
     align-items: center;
