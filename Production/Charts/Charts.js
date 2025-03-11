@@ -27,12 +27,6 @@ function closeSidebar() {
     document.getElementById("overlay").style.display = "none";
 }
 
-// ✅ Load Chart.js Properly Before Initializing
-const script = document.createElement("script");
-script.src = "https://cdn.jsdelivr.net/npm/charts.js";
-script.onload = initializeDashboardScreen;
-document.head.appendChild(script);
-
 // ✅ Store Chart Instances Globally
 let scannedPartsChart = null;
 let hourlyScannedPartsChart = null;
@@ -74,90 +68,67 @@ function updateDateAndShift() {
 
 // ✅ Function to Fetch Data Based on Selected Date & Shift
 async function fetchFilteredData() {
-    const selectedDate = document.getElementById("datePicker").value; // User-selected date
+    const selectedDate = document.getElementById("datePicker").value;
     const selectedShift = document.getElementById("shiftPicker").value;
 
     console.log("🔎 Fetching data for Date:", selectedDate, "| Shift:", selectedShift);
 
-    const url = "https://script.google.com/macros/s/AKfycbxKS6xL2QwuiCv5Ehq9MnhPaSxu9NAw2i0rGjSTV509BKWExOwyRvo5oZWFKERhzvA/exec"; // 🔴 Replace with your API URL
+    const url = `https://script.google.com/macros/s/AKfycbxKS6xL2QwuiCv5Ehq9MnhPaSxu9NAw2i0rGjSTV509BKWExOwyRvo5oZWFKERhzvA/exec?date=${encodeURIComponent(selectedDate)}&shift=${encodeURIComponent(selectedShift)}`;
 
     try {
         const response = await fetch(url);
-        const rawData = await response.json();
+        const data = await response.json();
 
-        console.log("✅ API Response:", rawData);
+        console.log("✅ API Response:", data);
 
-        if (!Array.isArray(rawData) || rawData.length === 0) {
-            console.error("❌ No valid data received!");
-            return { totalParts: {}, hourlyParts: {} };
+        if (!Array.isArray(data) || data.length === 0) {
+            console.warn("⚠️ No data found for the selected date:", selectedDate);
+            return null;
         }
 
-        // ✅ Convert `selectedDate` to YYYY-MM-DD format
-        const formattedSelectedDate = new Date(selectedDate).toISOString().split("T")[0];
+        // ✅ Convert Date Format to Match API Data
+        const formattedDate = new Date(selectedDate).toISOString().split("T")[0];
 
-        console.log("🔄 Formatted Selected Date:", formattedSelectedDate);
-
-        // ✅ Normalize and Filter Data by Date
-        const filteredData = rawData.filter(entry => {
-            // Extract only YYYY-MM-DD part from API response
-            let entryDate = new Date(entry.date).toISOString().split("T")[0];
-
-            return entryDate === formattedSelectedDate;
-        });
-
-        if (filteredData.length === 0) {
-            console.warn(`⚠️ No data found for the selected date: ${formattedSelectedDate}`);
-            return { totalParts: {}, hourlyParts: {} };
-        }
+        // ✅ Filter Data by Selected Date
+        const filteredData = data.filter(entry => entry.date.startsWith(formattedDate));
 
         console.log("📋 Filtered Data:", filteredData);
 
-        // ✅ Define Shift Time Ranges
-        const shiftRanges = {
-            "1st Shift": ["07", "08", "09", "10", "11", "12", "13", "14"],
-            "2nd Shift": ["15", "16", "17", "18", "19", "20", "21", "22"]
-        };
-
-        // ✅ Filter Data by Shift
-        const shiftHours = shiftRanges[selectedShift] || [];
-        const shiftFilteredData = filteredData.filter(entry => {
-            let hour = new Date(entry.time).getUTCHours().toString().padStart(2, "0"); // Extract hour
-            return shiftHours.includes(hour);
-        });
-
-        if (shiftFilteredData.length === 0) {
-            console.warn(`⚠️ No data found for the selected shift: ${selectedShift}`);
-            return { totalParts: {}, hourlyParts: {} };
+        if (filteredData.length === 0) {
+            console.warn("⚠️ No data found for the selected date:", formattedDate);
+            return null;
         }
 
-        console.log("📋 Shift Filtered Data:", shiftFilteredData);
+        // ✅ Aggregate total scanned parts by Part Number
+        const totalPartsData = {};
+        const hourlyPartsData = {};
 
-        // ✅ Process Data for Charts
-        const totalParts = {};
-        const hourlyParts = {};
+        filteredData.forEach(entry => {
+            const partNumber = entry.partNumber.toString();
+            const quantity = parseInt(entry.quantity, 10) || 0;
+            const entryHour = new Date(entry.time).getHours();
+            const hourLabel = `${entryHour}:00 - ${entryHour + 1}:00`;
 
-        shiftFilteredData.forEach(entry => {
-            // Count total scanned parts per Part Number
-            if (!totalParts[entry.partNumber]) {
-                totalParts[entry.partNumber] = 0;
+            // Aggregate Total Parts by Part Number
+            if (!totalPartsData[partNumber]) {
+                totalPartsData[partNumber] = 0;
             }
-            totalParts[entry.partNumber] += entry.quantity;
+            totalPartsData[partNumber] += quantity;
 
-            // Count parts scanned per hour
-            let hour = new Date(entry.time).getUTCHours().toString().padStart(2, "0") + ":00";
-            if (!hourlyParts[hour]) {
-                hourlyParts[hour] = 0;
+            // Aggregate Total Parts by Hour
+            if (!hourlyPartsData[hourLabel]) {
+                hourlyPartsData[hourLabel] = 0;
             }
-            hourlyParts[hour] += entry.quantity;
+            hourlyPartsData[hourLabel] += quantity;
         });
 
-        console.log("🔹 Total Parts:", totalParts);
-        console.log("🔹 Hourly Parts:", hourlyParts);
+        console.log("🔹 Total Parts Data:", totalPartsData);
+        console.log("🔹 Hourly Parts Data:", hourlyPartsData);
 
-        return { totalParts, hourlyParts };
+        return { totalParts: totalPartsData, hourlyParts: hourlyPartsData };
     } catch (error) {
         console.error("❌ Error fetching API data:", error);
-        return { totalParts: {}, hourlyParts: {} };
+        return null;
     }
 }
 
@@ -165,19 +136,16 @@ async function fetchFilteredData() {
 async function updateCharts() {
     console.log("🔄 Updating charts with new selection...");
 
-    // ✅ Fetch the latest data from API
     const data = await fetchFilteredData();
 
-    if (!data || Object.keys(data.totalParts).length === 0 || Object.keys(data.hourlyParts).length === 0) {
+    if (!data) {
         console.error("❌ No valid data received, charts won't update.");
         return;
     }
 
-    console.log("📊 Updating Charts with:", data);
     updateScannedPartsChart(data.totalParts);
     updateHourlyScannedPartsChart(data.hourlyParts);
 }
-
 
 // ✅ Function to Destroy Existing Chart Before Redrawing
 function destroyChart(chart) {
@@ -247,38 +215,19 @@ function renderHourlyScannedPartsChart() {
 
 // ✅ Function to Update Scanned Parts Chart
 function updateScannedPartsChart(data) {
-    if (!scannedPartsChart) {
-        console.error("❌ Scanned Parts Chart is not initialized.");
-        return;
-    }
-
-    console.log("📊 Updating Total Scanned Parts Chart with:", data);
-
-    scannedPartsChart.data.labels = Object.keys(data); // Part numbers
-    scannedPartsChart.data.datasets[0].data = Object.values(data); // Quantities
+    scannedPartsChart.data.labels = Object.keys(data);
+    scannedPartsChart.data.datasets[0].data = Object.values(data);
     scannedPartsChart.update();
 }
 
-
-
 // ✅ Function to Update Hourly Scanned Parts Chart
 function updateHourlyScannedPartsChart(data) {
-    if (!hourlyScannedPartsChart) {
-        console.error("❌ Hourly Scanned Parts Chart is not initialized.");
-        return;
-    }
-
-    console.log("📊 Updating Hourly Scanned Parts Chart with:", data);
-
-    hourlyScannedPartsChart.data.labels = Object.keys(data); // Hours
-    hourlyScannedPartsChart.data.datasets[0].data = Object.values(data); // Quantities
+    hourlyScannedPartsChart.data.labels = Object.keys(data);
+    hourlyScannedPartsChart.data.datasets[0].data = Object.values(data);
     hourlyScannedPartsChart.update();
 }
 
-
-
-// ✅ Ensure the Date Picker Initializes with Today's Date
+// ✅ Initialize Date Picker with Today's Date
 document.addEventListener("DOMContentLoaded", function () {
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById("datePicker").value = today;
+    document.getElementById("datePicker").value = new Date().toISOString().split("T")[0];
 });
