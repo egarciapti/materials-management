@@ -357,7 +357,17 @@ function resetData() {
 document.addEventListener("DOMContentLoaded", function () {
     initializeInboundScreen();
 
-    // ✅ Attach event listener to the "Save to Google Sheets" button
+    // ✅ Ensure the button exists before adding an event listener
+    let newTruckButton = document.getElementById("newTruckButton");
+    if (newTruckButton) {
+        newTruckButton.addEventListener("click", function () {
+            let confirmation = confirm("⚠️ Warning: This will reset all scanned pallets and counters. Do you want to continue?");
+            if (confirmation) {
+                resetInboundProcess();
+            }
+        });
+    }
+
     let saveButton = document.getElementById("saveToGoogleSheets");
     if (saveButton) {
         saveButton.addEventListener("click", function () {
@@ -380,22 +390,21 @@ function sendInboundDataToGoogleSheets() {
     for (let i = 0; i < rows.length; i++) {
         let cells = rows[i].cells;
         data.push({
-            timestamp: cells[5].innerText,  // Timestamp Column
-            date: new Date().toLocaleDateString(),
-            partNumber: cells[1].innerText, // Part Number Column
-            huNumber: cells[2].innerText,   // HU Number Column
-            serialNumber: cells[3].innerText, // Serial Number Column
-            quantity: cells[4].innerText   // Quantity Column
+            timestamp: cells[5].innerText,  // ✅ Time
+            date: new Date().toLocaleDateString(), // ✅ Date
+            partNumber: cells[1].innerText, // ✅ Part Number
+            huNumber: cells[2].innerText,   // ✅ HU Number
+            serialNumber: cells[3].innerText, // ✅ Serial Number
+            quantity: cells[4].innerText   // ✅ Quantity
         });
     }
 
-    fetch("https://script.google.com/macros/s/AKfycbxa3dTulm69846WIMs_HrcwgAWNFQHbIDHCXpIqvEYz-U8hVxl6lu5ZxX5Y5qU9KmRo2A/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbzEvJ7pnvm3EObmMrSp25fo2djXwyN_Bp6XNpUZM55sg69fWreHjGOV_FsX1in94VJB/exec", {
         method: "POST",
         mode: "no-cors",  // ✅ Bypass CORS
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ inboundData: data })
     })
-    
     .then(() => {
         console.log("✅ Inbound data saved successfully!");
         alert("✅ Inbound data has been sent to Google Sheets!");
