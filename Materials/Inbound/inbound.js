@@ -350,9 +350,18 @@ function resetData() {
         document.getElementById("scannedPalletsTable").querySelector("tbody").innerHTML = "";
         updateCounters();
         localStorage.removeItem("scannedPalletsData"); // ✅ Clear stored data
+
+        // ✅ Reset the BOL field
+        let bolField = document.getElementById("bolNumber");
+        if (bolField) {
+            bolField.value = "";
+        }
+
+        // ✅ Set focus back to Part Number for new scans
         document.getElementById("partNumber").focus();
     }
 }
+
 
 document.addEventListener("DOMContentLoaded", function () {
     initializeInboundScreen();
