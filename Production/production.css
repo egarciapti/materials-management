@@ -33,7 +33,7 @@
 }
 
 /* ✅ Adjust Content to Avoid Overlap */
-#platform-selection {
+#button-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -41,7 +41,7 @@
 }
 
 /* ✅ Ensure Proper Button Spacing */
-#platform-selection button {
+#button-container .menu-button {
     width: 250px; /* Maintain uniform button width */
     padding: 15px;
     font-size: 22px;
@@ -50,7 +50,7 @@
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     text-align: center;
-    margin-bottom: 20px; /* ✅ Forces equal spacing between all buttons */
+    margin-bottom: 15px; /* ✅ Adds space between buttons */
 }
 
 /* ✅ Sidebar Styling */
@@ -102,7 +102,7 @@
     cursor: pointer;
 }
 
-/* ✅ Menu Button (☰ Icon) - Move to Top Left Under Logo */
+/* ✅ Menu Button (☰ Icon) */
 #menu-btn {
     position: absolute;
     top: 80px;
@@ -115,7 +115,7 @@
     z-index: 1100;
 }
 
-/* ✅ Overlay to Detect Clicks Outside the Menu */
+/* ✅ Overlay */
 #overlay {
     position: fixed;
     top: 125px;
@@ -129,16 +129,16 @@
 
 /* ✅ Updated Charts Button */
 .charts-button {
-    background-color: #009688; /* Teal color to differentiate */
+    background-color: #009688;
 }
 
 .charts-button:hover {
-    background-color: #00796B; /* Darker teal on hover */
+    background-color: #00796B;
 }
 
-/* ✅ Style for Critical Parts Button */
+/* ✅ Critical Parts Button */
 .critical-button {
-    background-color: #d9534f; /* Red color to indicate urgency */
+    background-color: #d9534f;
     font-weight: bold;
     color: white;
     padding: 12px 25px;

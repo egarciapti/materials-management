@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Production - Paint Line Scanner</title>
@@ -23,12 +22,9 @@
             <li><a href="/materials-management/index.html">🏠 Home</a></li>
             <li><a href="/materials-management/Materials/index.html">📦 Materials</a></li>
             <li><a href="production.html">🏭 Production</a></li>
-            <li><a href="/materials-management/Quality/quality.html">✅ Quality</a></li> <!-- ✅ Added Quality Option -->
+            <li><a href="/materials-management/Quality/quality.html">✅ Quality</a></li>
         </ul>
     </div>
-    
-    
-    
 
     <!-- ✅ Sidebar Toggle Button -->
     <button id="menu-btn" onclick="openSidebar()">☰</button>
@@ -36,12 +32,13 @@
     <!-- ✅ Transparent overlay for closing the menu -->
     <div id="overlay"></div>
 
-    <button onclick="window.location.href='Load/Load.html'" class="menu-button">🛠 Load</button>
-    <button onclick="window.location.href='Paintbooth/Paintbooth.html'" class="menu-button">🛠 Paint Booth</button>
-    <button onclick="window.location.href='Critical_Prod/Critical_Prod.html'" class="menu-button critical-button">🚨 Critical Parts</button>
-    <button onclick="window.location.href='Charts/charts.html'" class="menu-button charts-button">📊 Charts</button>
-    
-</div>
+    <!-- ✅ Button Container (Now with Spacing) -->
+    <div id="button-container">
+        <button onclick="window.location.href='Load/Load.html'" class="menu-button">🛠 Load</button>
+        <button onclick="window.location.href='Paintbooth/Paintbooth.html'" class="menu-button">🛠 Paint Booth</button>
+        <button onclick="window.location.href='Critical_Prod/Critical_Prod.html'" class="menu-button critical-button">🚨 Critical Parts</button>
+        <button onclick="window.location.href='Charts/charts.html'" class="menu-button charts-button">📊 Charts</button>
+    </div>
 
     <script src="production.js"></script>
 </body>
