@@ -42,7 +42,7 @@ function updateDateAndShift() {
 }
 
 // ✅ Google Apps Script Deployment URL
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_URL/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxp0t7Ev05cRhr5g2MWrFAW6rQAs9ebdlX9jKfLSg31jCxZ3G_X6zOnG0pDSZnhyA86/exec";
 
 // ✅ Function to Load Critical Parts Quantities from Google Sheets
 function loadCriticalPartsFromGoogleSheets() {
