@@ -428,8 +428,8 @@
 #bol-container {
     width: 100%;
     max-width: 600px;
-    margin-left: 20 px;
-    margin-top: 200px;
+    margin-left: -400 px;
+    margin-top: 600px;
     padding: 10px;
     background: white;
     border: 2px solid #ccc;
