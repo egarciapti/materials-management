@@ -223,7 +223,7 @@ body {
 }
 
 #sendScreenshotEmail {
-    margin-left: 25cm; /* Move 10 cm to the right */
+    margin-left: 24cm; /* Move 10 cm to the right */
     padding: 15px 30px; /* Increase button size */
     font-size: 20px; /* Make text bigger */
     width: 220px; /* Increase button width */
