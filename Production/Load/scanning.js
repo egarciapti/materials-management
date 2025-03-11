@@ -154,7 +154,7 @@ function autoSubmit() {
 
     console.log("🚀 Sending data:", data);
 
-    fetch("https://script.google.com/macros/s/YOUR_DEPLOYMENT_URL/exec", {
+    fetch("https://script.google.com/macros/s/AKfycby0prpxOWmQKUGkmSnBTAAom-NiNkShOWbbKJdW6uhRbYYI6Yq7vD0xZHk27egYcIv3Eg/exec", {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "application/json" },
