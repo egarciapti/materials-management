@@ -53,7 +53,7 @@ function loadCriticalPartsFromGoogleSheets() {
             document.querySelectorAll(".quantity-input").forEach(input => {
                 let partNumber = input.dataset.partNumber;
                 if (data[partNumber] !== undefined) {
-                    input.value = data[partNumber]; // ✅ Set actual quantity
+                    input.value = data[partNumber]; // ✅ Update quantity
                 } else {
                     input.value = 0; // ✅ Default value if part number not found
                 }
@@ -65,5 +65,7 @@ function loadCriticalPartsFromGoogleSheets() {
 // ✅ Load Data on Page Load
 document.addEventListener("DOMContentLoaded", function () {
     loadCriticalPartsFromGoogleSheets();
-});
 
+    // ✅ Auto-Refresh Every 30 Seconds
+    setInterval(loadCriticalPartsFromGoogleSheets, 30000); // Adjust time as needed (milliseconds)
+});
