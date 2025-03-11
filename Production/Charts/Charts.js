@@ -52,7 +52,7 @@ function initializeDashboardScreen() {
 function getCurrentShift() {
     let hours = new Date().getHours();
     return (hours >= 7 && hours < 15) ? "1st Shift"
-        : (hours >= 15 && hours < 23) ? "2nd Shift"
+        : (hours >= 15 && hours <= 23) ? "2nd Shift"
         : "Off Shift";
 }
 
@@ -73,7 +73,7 @@ async function fetchFilteredData() {
 
     console.log("🔎 Fetching data for Date:", selectedDate, "| Shift:", selectedShift);
 
-    const url = `https://script.google.com/macros/s/AKfycbxKS6xL2QwuiCv5Ehq9MnhPaSxu9NAw2i0rGjSTV509BKWExOwyRvo5oZWFKERhzvA/exec?date=${encodeURIComponent(selectedDate)}&shift=${encodeURIComponent(selectedShift)}`;
+    const url = `https://script.google.com/macros/s/AKfycbwBWcpHc8GILRYcIoF9czoyOUtGYtra4Ni1fmCIlDHJ_na1UEJtez4C4rDBAaZ0pICZ/exec?date=${encodeURIComponent(selectedDate)}`;
 
     try {
         const response = await fetch(url);
@@ -89,13 +89,26 @@ async function fetchFilteredData() {
         // ✅ Convert Date Format to Match API Data
         const formattedDate = new Date(selectedDate).toISOString().split("T")[0];
 
-        // ✅ Filter Data by Selected Date
-        const filteredData = data.filter(entry => entry.date.startsWith(formattedDate));
+        // ✅ Filter Data by Selected Date and Shift (Determining Shift from Time)
+        const filteredData = data.filter(entry => {
+            const entryDate = new Date(entry.date).toISOString().split("T")[0];
+
+            // ✅ Convert time to proper hours
+            const entryHour = new Date(entry.time).getUTCHours(); // Ensure proper timezone handling
+
+            // ✅ Determine Shift based on hours
+            const shiftFromTime =
+                (entryHour >= 7 && entryHour < 15) ? "1st Shift" :
+                (entryHour >= 15 && entryHour < 24) ? "2nd Shift" :
+                "Off Shift";
+
+            return entryDate === formattedDate && shiftFromTime === selectedShift;
+        });
 
         console.log("📋 Filtered Data:", filteredData);
 
         if (filteredData.length === 0) {
-            console.warn("⚠️ No data found for the selected date:", formattedDate);
+            console.warn("⚠️ No data found for the selected date & shift:", formattedDate, selectedShift);
             return null;
         }
 
@@ -106,7 +119,7 @@ async function fetchFilteredData() {
         filteredData.forEach(entry => {
             const partNumber = entry.partNumber.toString();
             const quantity = parseInt(entry.quantity, 10) || 0;
-            const entryHour = new Date(entry.time).getHours();
+            const entryHour = new Date(entry.time).getUTCHours();
             const hourLabel = `${entryHour}:00 - ${entryHour + 1}:00`;
 
             // Aggregate Total Parts by Part Number
@@ -212,22 +225,3 @@ function renderHourlyScannedPartsChart() {
         }
     });
 }
-
-// ✅ Function to Update Scanned Parts Chart
-function updateScannedPartsChart(data) {
-    scannedPartsChart.data.labels = Object.keys(data);
-    scannedPartsChart.data.datasets[0].data = Object.values(data);
-    scannedPartsChart.update();
-}
-
-// ✅ Function to Update Hourly Scanned Parts Chart
-function updateHourlyScannedPartsChart(data) {
-    hourlyScannedPartsChart.data.labels = Object.keys(data);
-    hourlyScannedPartsChart.data.datasets[0].data = Object.values(data);
-    hourlyScannedPartsChart.update();
-}
-
-// ✅ Initialize Date Picker with Today's Date
-document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("datePicker").value = new Date().toISOString().split("T")[0];
-});
