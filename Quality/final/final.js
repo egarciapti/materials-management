@@ -34,7 +34,8 @@ function handleButtonClick(button, index) {
         counter.innerText = count + 1;
         saveCounters();
         updateTotalDefects();
-        sendDataToGoogleSheets(button);
+        sendDataToGoogleSheets(button); // ✅ Send to "Data" Tab
+        sendDataToPivotSheet(button);  // ✅ Send to "Pivot" Tab
     }
 }
 
@@ -126,48 +127,34 @@ function updateTotalDefects() {
     document.getElementById("totalDefects").innerHTML = `🔢 Total Defects: <b>${total}</b>`;
 }
 
-// ✅ Google Apps Script Deployment URL
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxAiBAzo6CTA_galZiUwCbzQLOvMTAcuJrknOkWXL2eH-_Px3XZi0Bd-mTH-e6y9tM1/exec";
+// ✅ Google Apps Script Deployment URLs
+const DATA_SHEET_URL = "https://script.google.com/macros/s/AKfycbxAiBAzo6CTA_galZiUwCbzQLOvMTAcuJrknOkWXL2eH-_Px3XZi0Bd-mTH-e6y9tM1/exec";
+const PIVOT_SHEET_URL = "https://script.google.com/macros/s/AKfycbx7YX25om-ff32eSxApJ8Yu8KDxwBugUbmJXYeg_gGPI6ZmHQfY28fBWq7NT2mangJW/exec";
 
-// ✅ Function to Send Data to Google Sheets
+// ✅ Function to Send Data to "Data" Sheet
 function sendDataToGoogleSheets(buttonElement) {
     const shift = document.getElementById("currentShift").innerText.replace("🕒 Shift: ", "").trim();
+    const defect = buttonElement.innerText.split("\n")[0].trim(); // ✅ Extract main defect name
 
-    // ✅ Extract only the first line of the button text
-    const mainDefect = buttonElement.innerText.split("\n")[0].trim();
-
-    fetch(GOOGLE_SCRIPT_URL, {
+    fetch(DATA_SHEET_URL, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ defect: mainDefect, shift: shift })
-    }).then(() => console.log(`✅ Sent: ${mainDefect} | Shift: ${shift}`))
+        body: JSON.stringify({ defect: defect, shift: shift })
+    }).then(() => console.log(`✅ Sent to Data Sheet: ${defect} | Shift: ${shift}`))
       .catch(error => console.error("❌ Error:", error));
 }
 
-// ✅ Screenshot Button Event Listener
-document.addEventListener("DOMContentLoaded", function () {
-    let screenshotButton = document.getElementById("sendScreenshotEmail");
-    if (screenshotButton) {
-        screenshotButton.addEventListener("click", captureAndSendScreenshot);
-    }
-});
+// ✅ Function to Send Data to "Pivot" Sheet
+function sendDataToPivotSheet(buttonElement) {
+    const shift = document.getElementById("currentShift").innerText.replace("🕒 Shift: ", "").trim();
+    const defect = buttonElement.innerText.split("\n")[0].trim(); // ✅ Extract main defect name
 
-// ✅ Function to Capture Screenshot and Send via Email
-function captureAndSendScreenshot() {
-    html2canvas(document.body).then(canvas => {
-        let imageData = canvas.toDataURL("image/png"); // Convert to base64
-
-        fetch("https://script.google.com/macros/s/AKfycbzyKU038D9_tmNViHImPYMgw__IzA0iCHcdtIH5KciZLOXQ21ZoAB4_5bnyVgHfGsZFiQ/exec", {
-            method: "POST",
-            mode: "no-cors",  // ✅ Bypass CORS restrictions
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ image: imageData })
-        })
-        .then(() => {
-            console.log("📤 Screenshot Sent!");
-            alert("✅ Screenshot sent via email!");
-        })
-        .catch(error => console.error("❌ Error:", error));
-    });
+    fetch(PIVOT_SHEET_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ defect: defect, shift: shift })
+    }).then(() => console.log(`✅ Sent to Pivot Sheet: ${defect} | Shift: ${shift}`))
+      .catch(error => console.error("❌ Error:", error));
 }
