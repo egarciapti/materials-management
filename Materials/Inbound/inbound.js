@@ -378,7 +378,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-// ✅ Function to Send Inbound Data to Google Sheets
+// ✅ Function to Send Inbound Data to Google Sheets (Including BOL)
 function sendInboundDataToGoogleSheets() {
     let table = document.getElementById("scannedPalletsTable").querySelector("tbody");
     let rows = table.getElementsByTagName("tr");
@@ -389,11 +389,15 @@ function sendInboundDataToGoogleSheets() {
         return;
     }
 
+    // ✅ Get the BOL field value
+    let bolValue = document.getElementById("bolNumber").value.trim() || "N/A"; // Default to "N/A" if empty
+
     for (let i = 0; i < rows.length; i++) {
         let cells = rows[i].cells;
         data.push({
-            timestamp: cells[5].innerText,  // ✅ Time
+            time: cells[5].innerText,   // ✅ Time
             date: new Date().toLocaleDateString(), // ✅ Date
+            bol: bolValue,  // ✅ BOL (Inbound field)
             partNumber: cells[1].innerText, // ✅ Part Number
             huNumber: cells[2].innerText,   // ✅ HU Number
             serialNumber: cells[3].innerText, // ✅ Serial Number
