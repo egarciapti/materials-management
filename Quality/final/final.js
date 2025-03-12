@@ -144,10 +144,11 @@ async function fetchAndUpdateCounters() {
 
         console.log("✅ Escalation Data Fetched:", data);
 
-        // Normalize API keys to lowercase and trim spaces
+        // ✅ Normalize API keys: Remove quotes, convert to lowercase, and trim spaces
         let normalizedData = {};
         Object.keys(data).forEach(key => {
-            normalizedData[key.toLowerCase().trim()] = data[key];
+            let cleanKey = key.replace(/["']/g, "").trim().toLowerCase(); // Remove quotes and trim spaces
+            normalizedData[cleanKey] = data[key];
         });
 
         console.log("🔍 Normalized Data Keys:", Object.keys(normalizedData));
@@ -163,10 +164,10 @@ async function fetchAndUpdateCounters() {
                 let counterElement = document.getElementById(`counter${index + 1}`);
                 if (counterElement) {
                     counterElement.innerText = defectCount;
-                    console.log(`✅ Updated Counter for ${defectName}: ${defectCount}`);
+                    console.log(`✅ Updated Counter for "${defectName}": ${defectCount}`);
                 }
             } else {
-                console.warn(`⚠️ No matching data found for: ${defectName}`);
+                console.warn(`⚠️ No matching data found for: "${defectName}"`);
             }
         });
 
