@@ -143,11 +143,14 @@ async function fetchAndUpdateCounters() {
         }
 
         console.log("✅ Escalation Data Fetched:", data);
+        console.log("🔍 Data Keys from API:", Object.keys(data)); // Debugging Step
 
-        // ✅ Match Defect Name (Normalize Case & Trim)
+        // ✅ Update counters dynamically
         document.querySelectorAll(".inspection-button").forEach((button, index) => {
             let defectName = button.innerText.split("\n")[0].trim().toUpperCase();
-            let defectCount = data[defectName] || 0;
+            let matchingKey = Object.keys(data).find(key => key.trim().toUpperCase() === defectName);
+
+            let defectCount = matchingKey ? data[matchingKey] : 0; // Get defect count or default to 0
 
             let counterElement = document.getElementById(`counter${index + 1}`);
             if (counterElement) {
