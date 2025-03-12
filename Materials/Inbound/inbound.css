@@ -32,7 +32,7 @@
     font-weight: bold;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
     width: 80%;
-    margin-left: auto;
+    margin-left: 100px; /* Align it with the left table */
     margin-right: auto;
     text-align: center;
 }
