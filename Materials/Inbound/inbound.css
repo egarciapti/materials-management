@@ -428,9 +428,9 @@
 /* ✅ Position the BOL input above the scanning section and align it with counters */
 #bol-container {
     position: absolute;
-    top: 220px; /* Align with counters */
+    top: 225px; /* Align with counters */
     left: 20px; /* Align with scan pallet */
-    width: 500px; /* Adjust width */
+    width: 450px; /* Adjust width */
     padding: 10px;
     background: white;
     border: 2px solid #ccc;
