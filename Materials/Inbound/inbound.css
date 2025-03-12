@@ -20,7 +20,8 @@
 }
 
 #table-counters {
-    left: 350px; 
+    position: relative; /* Ensure it moves relative to its original position */
+    left: 1cm; /* Move 1cm to the right */
     margin-top: -50px; /* Ensure space between title and counters */
     display: flex;
     justify-content: center;
@@ -32,10 +33,11 @@
     font-weight: bold;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
     width: 80%;
-    margin-left: calc(300px + 1cm); /* Move 1 cm to the right */
+    margin-left: 300px; /* Keep this if necessary */
     margin-right: auto;
     text-align: center;
 }
+
 
 /* ✅ Style Individual Counters */
 #table-counters p {
