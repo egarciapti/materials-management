@@ -48,7 +48,7 @@
 
 }
 
-/* ✅ Keep Date/Shift in the Title Bar */
+
 /* ✅ Adjust Date & Shift Position (Move Left by 2cm) */
 #date-shift-container {
     position: absolute;
@@ -71,14 +71,6 @@
     height: calc(100vh - 160px); /* Full screen height minus title bar */
 }
 
-/* ✅ Layout for Scanning and Table Side by Side */
-#inbound-container {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    margin-top: 20px; /* Reduce space so title is visible */
-    height: calc(100vh - 160px); /* Full screen height minus title bar */
-}
 
 /* ✅ Left Scanning Section */
 #scanning-section {
@@ -112,16 +104,12 @@
     font-size: 16px; /* Adjust for header */
 }
 
-/* ✅ Adjust Font Size for Table Content */
-#scanned-pallets tbody td {
-    font-size: 13px; /* Adjust for content */
-}
-
 /* ✅ Reduce the Height of Only the Table Content Rows */
 #scanned-pallets tbody td {
     padding: 2px 8px; /* Reduce padding to shrink row height */
     line-height: 1; /* Reduce spacing inside rows */
     height: 18px; /* Adjust this for smaller rows */
+    font-size: 13px; /* Adjust for content */
 }
 
 /* ✅ Keep the Header Row Unaffected */
