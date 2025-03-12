@@ -143,26 +143,29 @@ async function fetchAndUpdateCounters() {
         }
 
         console.log("✅ Escalation Data Fetched:", data);
-        console.log("🔍 Data Keys from API:", Object.keys(data));
 
-        // ✅ Normalize API keys for comparison
-        const normalizedData = {};
+        // Normalize API keys to lowercase and trim spaces
+        let normalizedData = {};
         Object.keys(data).forEach(key => {
-            normalizedData[key.trim().toLowerCase()] = data[key]; // Convert to lowercase for case-insensitive matching
+            normalizedData[key.toLowerCase().trim()] = data[key];
         });
 
-        // ✅ Update counters dynamically
+        console.log("🔍 Normalized Data Keys:", Object.keys(normalizedData));
+
+        // ✅ Update each counter dynamically
         document.querySelectorAll(".inspection-button").forEach((button, index) => {
             let defectName = button.innerText.split("\n")[0].trim().toLowerCase(); // Normalize button text
 
-            let defectCount = normalizedData[defectName] ?? 0; // Default to 0 if not found
+            if (normalizedData.hasOwnProperty(defectName)) {
+                let defectCount = normalizedData[defectName]; // Retrieve the count
 
-            let counterElement = document.getElementById(`counter${index + 1}`);
-            if (counterElement) {
-                counterElement.innerText = defectCount;
-            }
-
-            if (!(defectName in normalizedData)) {
+                // ✅ Update counter value
+                let counterElement = document.getElementById(`counter${index + 1}`);
+                if (counterElement) {
+                    counterElement.innerText = defectCount;
+                    console.log(`✅ Updated Counter for ${defectName}: ${defectCount}`);
+                }
+            } else {
                 console.warn(`⚠️ No matching data found for: ${defectName}`);
             }
         });
@@ -172,6 +175,5 @@ async function fetchAndUpdateCounters() {
     }
 }
 
-
-// ✅ Run when page loads
+// ✅ Call this function on page load
 document.addEventListener("DOMContentLoaded", fetchAndUpdateCounters);
