@@ -153,6 +153,8 @@ async function fetchAndUpdateCounters() {
 
         console.log("🔍 Normalized Data Keys:", Object.keys(normalizedData));
 
+        let totalDefects = 0; // 🔥 Initialize total defects count
+
         // ✅ Update each counter dynamically
         document.querySelectorAll(".inspection-button").forEach((button, index) => {
             // ✅ Extract the first text node (before any <span>) and clean it up
@@ -161,6 +163,7 @@ async function fetchAndUpdateCounters() {
 
             if (normalizedData.hasOwnProperty(defectName)) {
                 let defectCount = normalizedData[defectName]; // Retrieve the count
+                totalDefects += defectCount; // 🔥 Add to total defects
 
                 // ✅ Update counter value
                 let counterElement = document.getElementById(`counter${index + 1}`);
@@ -172,6 +175,10 @@ async function fetchAndUpdateCounters() {
                 console.warn(`⚠️ No matching data found for: "${defectName}"`);
             }
         });
+
+        // ✅ Update Total Defects Counter
+        document.getElementById("totalDefects").innerHTML = `🔢 Total Defects: <b>${totalDefects}</b>`;
+        console.log(`✅ Updated Total Defects: ${totalDefects}`);
 
     } catch (error) {
         console.error("❌ Error fetching escalation data:", error);
