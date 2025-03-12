@@ -19,9 +19,8 @@
     z-index: 1000;
 }
 
-/* ✅ Ensure Space Below Title Bar for Counters */
 #table-counters {
-    left: 350px; /* Adjust to align with the left table */
+    left: 350px; 
     margin-top: -50px; /* Ensure space between title and counters */
     display: flex;
     justify-content: center;
@@ -33,7 +32,7 @@
     font-weight: bold;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
     width: 80%;
-    margin-left: 300px; /* Align it with the left table */
+    margin-left: calc(300px + 1cm); /* Move 1 cm to the right */
     margin-right: auto;
     text-align: center;
 }
