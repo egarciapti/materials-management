@@ -83,7 +83,7 @@
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
     height: 65vh;
     overflow: hidden;
-    margin-top: -40px; /* Ensure space between title and counters */
+    margin-top: -80px; /* Ensure space between title and counters */
     
 }
 
@@ -98,7 +98,7 @@
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    margin-top: -40px; /* Ensure space between title and counters */
+    margin-top: -80px; /* Ensure space between title and counters */
 }
 
 /* ✅ Adjust Font Size for Table Headers */
