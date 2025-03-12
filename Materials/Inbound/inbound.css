@@ -21,6 +21,7 @@
 
 /* ✅ Ensure Space Below Title Bar for Counters */
 #table-counters {
+    left: 350px; /* Adjust to align with the left table */
     margin-top: -50px; /* Ensure space between title and counters */
     display: flex;
     justify-content: center;
