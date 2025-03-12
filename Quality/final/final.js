@@ -155,7 +155,7 @@ async function fetchAndUpdateCounters() {
 
         // ✅ Update each counter dynamically
         document.querySelectorAll(".inspection-button").forEach((button, index) => {
-            let defectName = button.innerText.split("\n")[0].trim().toLowerCase(); // Normalize button text
+            let defectName = button.childNodes[0].nodeValue.trim().toLowerCase(); // ✅ Extract only the first text node (Main defect)
 
             if (normalizedData.hasOwnProperty(defectName)) {
                 let defectCount = normalizedData[defectName]; // Retrieve the count
