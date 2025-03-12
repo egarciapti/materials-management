@@ -144,7 +144,7 @@ async function fetchAndUpdateCounters() {
 
         console.log("✅ Escalation Data Fetched:", data);
 
-        // ✅ Normalize API keys: Remove quotes, convert to lowercase, and trim spaces
+        // ✅ Normalize API keys: Convert to lowercase, trim spaces, and remove extra characters
         let normalizedData = {};
         Object.keys(data).forEach(key => {
             let cleanKey = key.replace(/["']/g, "").trim().toLowerCase(); // Remove quotes and trim spaces
@@ -155,7 +155,9 @@ async function fetchAndUpdateCounters() {
 
         // ✅ Update each counter dynamically
         document.querySelectorAll(".inspection-button").forEach((button, index) => {
-            let defectName = button.childNodes[0].nodeValue.trim().toLowerCase(); // ✅ Extract only the first text node (Main defect)
+            // ✅ Extract the first text node (before any <span>) and clean it up
+            let defectName = button.childNodes[0].nodeValue.trim().toLowerCase();
+            defectName = defectName.replace(/\/$/, "").trim();  // ✅ Remove trailing slash "/"
 
             if (normalizedData.hasOwnProperty(defectName)) {
                 let defectCount = normalizedData[defectName]; // Retrieve the count
