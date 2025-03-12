@@ -83,7 +83,7 @@
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
     height: 65vh;
     overflow: hidden;
-    margin-top: -80px; /* Ensure space between title and counters */
+    margin-top: 0px; /* Ensure space between title and counters */
     
 }
 
