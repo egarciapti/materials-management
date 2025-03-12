@@ -88,6 +88,10 @@
     height: 65vh;
     overflow: hidden;
     margin-top: -30px; /* Ensure space between title and counters */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f9f9f9;
 }
 
 /* ✅ Right Scanned Pallets Table */
@@ -426,10 +430,10 @@
 
 /* ✅ Position the BOL input above the scanning section and align it with counters */
 #bol-container {
-    position: absolute;
-    top: 210px; /* Align with counters */
-    left: 20px; /* Align with scan pallet */
-    width: 350px; /* Adjust width */
+    position: relative;
+    width: 100%;
+    max-width: 350px; /* Adjust width */
+    margin: 0 auto; /* Center it */
     padding: 10px;
     background: white;
     border: 2px solid #ccc;
