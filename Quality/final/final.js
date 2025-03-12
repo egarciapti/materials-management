@@ -143,18 +143,27 @@ async function fetchAndUpdateCounters() {
         }
 
         console.log("✅ Escalation Data Fetched:", data);
-        console.log("🔍 Data Keys from API:", Object.keys(data)); // Debugging Step
+        console.log("🔍 Data Keys from API:", Object.keys(data));
+
+        // ✅ Normalize API keys for comparison
+        const normalizedData = {};
+        Object.keys(data).forEach(key => {
+            normalizedData[key.trim().toLowerCase()] = data[key]; // Convert to lowercase for case-insensitive matching
+        });
 
         // ✅ Update counters dynamically
         document.querySelectorAll(".inspection-button").forEach((button, index) => {
-            let defectName = button.innerText.split("\n")[0].trim().toUpperCase();
-            let matchingKey = Object.keys(data).find(key => key.trim().toUpperCase() === defectName);
+            let defectName = button.innerText.split("\n")[0].trim().toLowerCase(); // Normalize button text
 
-            let defectCount = matchingKey ? data[matchingKey] : 0; // Get defect count or default to 0
+            let defectCount = normalizedData[defectName] ?? 0; // Default to 0 if not found
 
             let counterElement = document.getElementById(`counter${index + 1}`);
             if (counterElement) {
                 counterElement.innerText = defectCount;
+            }
+
+            if (!(defectName in normalizedData)) {
+                console.warn(`⚠️ No matching data found for: ${defectName}`);
             }
         });
 
@@ -162,6 +171,7 @@ async function fetchAndUpdateCounters() {
         console.error("❌ Error fetching escalation data:", error);
     }
 }
+
 
 // ✅ Run when page loads
 document.addEventListener("DOMContentLoaded", fetchAndUpdateCounters);
