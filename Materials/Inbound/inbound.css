@@ -22,7 +22,7 @@
 #table-counters {
     position: relative; /* Ensure it moves relative to its original position */
     left: 30px; 
-    margin-top: -50px; /* Ensure space between title and counters */
+    margin-top: -100px; /* Ensure space between title and counters */
     display: flex;
     justify-content: center;
     align-items: center;
