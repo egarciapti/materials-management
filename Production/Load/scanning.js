@@ -166,8 +166,8 @@ function autoSubmit() {
         time: estTime,  // ✅ Formatted Time
         date: estDate,  // ✅ Formatted Date
         partNumber: partNumber,
-        quantity: quantity,
-        platform: platform, // ✅ Send Platform Information
+        quantity: quantity
+        
     };
 
     console.log("🚀 Sending data:", data);
