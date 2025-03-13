@@ -36,21 +36,7 @@ function initializeScanningScreen() {
     }
 }
 
-// ✅ Function to Update Date & Shift
-function updateDateAndShift() {
-    const now = new Date();
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    const formattedDate = now.toLocaleDateString("en-US", options);
-
-    let hours = now.getHours();
-    let shift = (hours >= 7 && hours < 15) ? "1st Shift"
-        : (hours >= 15 && hours < 23) ? "2nd Shift"
-        : "Off Shift";
-
-    document.getElementById("currentDate").innerHTML = `📅 Date: <b>${formattedDate}</b>`;
-    document.getElementById("currentShift").innerHTML = `🕒 Shift: <b>${shift}</b>`;
-
-    // ✅ Function to Determine Shift Based on Time
+// ✅ Function to Determine Shift Based on Time (Move this OUTSIDE of updateDateAndShift)
 function determineShiftFromTime(hour, minute) {
     if ((hour === 7 && minute >= 0) || (hour > 7 && hour < 15) || (hour === 15 && minute <= 30)) {
         return "1st Shift";  // ✅ 7:00 AM - 3:30 PM
@@ -60,7 +46,20 @@ function determineShiftFromTime(hour, minute) {
     return "Off Shift";  // ✅ Any other time is "Off Shift"
 }
 
+// ✅ Function to Update Date & Shift
+function updateDateAndShift() {
+    const now = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = now.toLocaleDateString("en-US", options);
+
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+    let shift = determineShiftFromTime(hours, minutes); // ✅ Now it is accessible
+
+    document.getElementById("currentDate").innerHTML = `📅 Date: <b>${formattedDate}</b>`;
+    document.getElementById("currentShift").innerHTML = `🕒 Shift: <b>${shift}</b>`;
 }
+
 
 // ✅ Function to Load Selected Platform
 function loadSelectedPlatform() {
