@@ -83,15 +83,38 @@ async function fetchDefectsData() {
 function processDefectsData(data) {
     let defectCounts = {};
 
-    // ✅ Count defects for the current date and shift
+    // ✅ Extract current date from the title bar
+    let currentDate = document.getElementById("currentDate").innerText.split(":")[1].trim();
+    let currentShift = document.getElementById("currentShift").innerText.split(":")[1].trim();
+
+    console.log(`🔍 Filtering Data for Date: ${currentDate}, Shift: ${currentShift}`);
+
+    // ✅ Loop through data & filter by date & shift
     data.forEach(entry => {
-        defectCounts[entry.defectName] = (defectCounts[entry.defectName] || 0) + 1;
+        let entryDate = entry.date.trim(); // Ensure no extra spaces
+        let entryShift = entry.shift.trim();
+        let defectName = entry.defectName.trim();
+
+        if (entryDate === currentDate && entryShift === currentShift) {
+            defectCounts[defectName] = (defectCounts[defectName] || 0) + 1;
+        }
     });
+
+    console.log("📊 Filtered Defect Data:", defectCounts);
 
     // ✅ Convert data to chart format
     let chartData = [["Defect Name", "Count"]];
     for (let defect in defectCounts) {
-        chartData.push([defect, Number(defectCounts[defect])]); // Ensure Count is a Number
+        chartData.push([String(defect), Number(defectCounts[defect])]); // Ensure correct types
+    }
+
+    console.log("📈 Chart Data:", chartData);
+
+    // ✅ Ensure we have valid data to draw
+    if (chartData.length === 1) {
+        console.warn("⚠️ No defects found for the selected date and shift.");
+        document.getElementById("chartBox1").innerHTML = "<p>No defects recorded for this shift.</p>";
+        return;
     }
 
     // ✅ Load Google Charts and Draw
