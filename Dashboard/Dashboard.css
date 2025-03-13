@@ -133,7 +133,7 @@ body {
     grid-template-rows: repeat(2, 1fr); /* 2 equal rows */
     gap: 30px; /* Increase space between boxes */
     padding: 30px;
-    margin-top: 80px; /* Push content below title bar */
+    margin-top: 20px; /* Push content below title bar */
     width: 95%;
     max-width: 1400px;
     margin-left: auto;
