@@ -22,20 +22,29 @@ function closeSidebar() {
     document.getElementById("overlay").style.display = "none";
 }
 
-// ✅ Function to Initialize Dashboard
-function initializeDashboard() {
-    let now = new Date();
-    let options = { year: 'numeric', month: 'long', day: 'numeric' };
-    let formattedDate = now.toLocaleDateString("en-US", options);
+// ✅ Function to Update Date & Shift
+function updateDateAndShift() {
+    const now = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = now.toLocaleDateString("en-US", options);
 
     let hours = now.getHours();
-    let shift = (hours >= 7 && hours < 15) ? "1st Shift"
-        : (hours >= 15 && hours < 23) ? "2nd Shift"
-        : "Off Shift";
+    let shift = determineShiftFromTime(hours);
 
     document.getElementById("currentDate").innerHTML = `📅 Date: <b>${formattedDate}</b>`;
     document.getElementById("currentShift").innerHTML = `🕒 Shift: <b>${shift}</b>`;
 }
+
+// ✅ Function to Determine Shift Based on Time
+function determineShiftFromTime(hour) {
+    if ((hour >= 7 && hour < 15) || (hour === 15 && new Date().getMinutes() <= 30)) {
+        return "1st Shift";
+    } else if (hour > 15 || hour < 7) {
+        return "2nd Shift";
+    }
+    return "Off Shift";
+}
+
 
 // ✅ Function to Initialize Dashboard
 function initializeDashboard() {
