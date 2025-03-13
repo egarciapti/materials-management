@@ -48,7 +48,7 @@ function sendCriticalPartsToSheets() {
     
     // ✅ Format Time and Date properly
     let formattedTime = now.toLocaleTimeString("en-US", { hour12: false });
-    let formattedDate = now.toLocaleDateString("en-US");
+    let formattedDate = now.toLocaleDateString("en-US", { month: '2-digit', day: '2-digit', year: 'numeric' });
 
     document.querySelectorAll(".quantity-input").forEach(input => {
         let partNumber = input.dataset.partNumber;
