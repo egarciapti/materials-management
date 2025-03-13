@@ -136,7 +136,6 @@ function processDefectsData(data) {
         let chartTable = google.visualization.arrayToDataTable(chartData);
 
         chart.draw(chartTable, {
-            title: "Defects by Shift",
             hAxis: { 
                 title: "Defect Count", 
                 minValue: 0,
