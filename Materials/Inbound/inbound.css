@@ -421,7 +421,7 @@
 #bol-container {
     position: absolute;
     top: 18vh; /* ✅ Uses viewport height for better alignment */
-    left: 2vw; /* ✅ Uses viewport width for relative positioning */
+    left: 1vw; /* ✅ Uses viewport width for relative positioning */
     width: 25vw; /* ✅ Adjusts width dynamically */
     max-width: 420px; /* ✅ Prevents it from getting too large */
     padding: 1rem; /* ✅ Uses relative padding */
