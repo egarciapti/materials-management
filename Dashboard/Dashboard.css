@@ -131,14 +131,14 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
     grid-template-rows: repeat(2, 1fr); /* 2 equal rows */
-    gap: 30px; /* Increase space between boxes */
+    gap: 30px; /* ✅ Add spacing between boxes */
     padding: 30px;
     margin-top: -20px; /* Push content below title bar */
     width: 95%;
     max-width: 1400px;
     margin-left: auto;
     margin-right: auto;
-    height: 80vh; /* Increase height to use more screen space */
+    height: 80vh; /* Keep the height */
 }
 
 #dashboard-container .chart-box {
@@ -149,16 +149,15 @@ body {
 
 .chart-box {
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* Stack title & chart */
     align-items: center;
+    justify-content: center;
     background: white;
     border: 3px solid #004080;
     border-radius: 12px;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
-    padding: 10px; /* Reduce padding to prevent excess space */
-    width: 100%;
-    height: 100%;
-    overflow: hidden; /* Prevents oversized charts */
+    padding: 20px; /* ✅ Ensures spacing inside */
+    min-height: 200px; /* ✅ Prevents collapsing */
 }
 
 
@@ -169,21 +168,9 @@ body {
     font-weight: bold;
     color: #004080;
     width: 100%;
-    padding-bottom: 10px; /* ✅ Space between title and chart */
+    padding-bottom: 10px; /* ✅ Ensures space between title and chart */
 }
 
-/* ✅ Adjust the Chart Box to Keep Everything Aligned */
-.chart-box {
-    display: flex;
-    flex-direction: column; /* ✅ Stack title & chart */
-    align-items: center;
-    justify-content: center;
-    background: white;
-    border: 3px solid #004080;
-    border-radius: 12px;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
-    padding: 15px; /* ✅ Ensures spacing inside */
-}
 
 /* ✅ Ensure the Chart Itself Fills the Box */
 .chart-content {
