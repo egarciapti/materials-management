@@ -424,7 +424,7 @@
     left: 1vw; /* ✅ Uses viewport width for relative positioning */
     width: 25vw; /* ✅ Adjusts width dynamically */
     max-width: 420px; /* ✅ Prevents it from getting too large */
-    height: 5vh; /* ✅ Adjusts height dynamically */
+    height: 3vh; /* ✅ Adjusts height dynamically */
     min-height: 50px; /* ✅ Ensures it doesn’t get too small */
     padding: 1rem; /* ✅ Uses relative padding */
     background: white;
