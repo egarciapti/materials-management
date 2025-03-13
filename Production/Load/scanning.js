@@ -43,22 +43,13 @@ function updateDateAndShift() {
     const formattedDate = now.toLocaleDateString("en-US", options);
 
     let hours = now.getHours();
-    let shift = determineShiftFromTime(hours);
+    let shift = (hours >= 7 && hours < 15) ? "1st Shift"
+        : (hours >= 15 && hours < 23) ? "2nd Shift"
+        : "Off Shift";
 
     document.getElementById("currentDate").innerHTML = `📅 Date: <b>${formattedDate}</b>`;
     document.getElementById("currentShift").innerHTML = `🕒 Shift: <b>${shift}</b>`;
 }
-
-// ✅ Function to Determine Shift Based on Time
-function determineShiftFromTime(hour, minute) {
-    if ((hour === 7 && minute >= 0) || (hour > 7 && hour < 15) || (hour === 15 && minute <= 30)) {
-        return "1st Shift";  // ✅ 7:00 AM - 3:30 PM
-    } else if ((hour === 15 && minute >= 31) || (hour > 15 && hour < 24) || (hour === 0 && minute === 0)) {
-        return "2nd Shift";  // ✅ 3:31 PM - 12:00 AM
-    }
-    return "Off Shift";  // ✅ Any other time is "Off Shift"
-}
-
 
 // ✅ Function to Load Selected Platform
 function loadSelectedPlatform() {
@@ -160,10 +151,7 @@ function autoSubmit() {
         day: "2-digit"
     }).format(now);
 
-    let shift = determineShiftFromTime(now.getHours(), now.getMinutes());
-
-
-    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${estTime} | 📅 ${estDate} | 🏭 ${shift}`;
+    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${estTime} | 📅 ${estDate}`;
 
     // ✅ Update Last Scan Info
     lastScanInfo.innerHTML = scanText;
@@ -177,10 +165,8 @@ function autoSubmit() {
         timestamp: now.toISOString(),  // ✅ Send as ISO string for proper parsing
         time: estTime,  // ✅ Formatted Time
         date: estDate,  // ✅ Formatted Date
-        shift: shift,   // ✅ Shift
         partNumber: partNumber,
-        quantity: quantity,
-        platform: platform // ✅ Send Platform Information
+        quantity: quantity
     };
 
     console.log("🚀 Sending data:", data);
@@ -193,9 +179,12 @@ function autoSubmit() {
     })
     .then(() => {
         console.log("✅ Scan saved to Google Sheets successfully!");
+    
+        // ✅ Dispatch Event to `Critical_Prod.js` to Refresh Data
+        window.dispatchEvent(new CustomEvent("partScanned", { detail: { partNumber, quantity } }));
     })
     .catch(error => console.error("❌ Error:", error));
-
+    
     // ✅ Clear Input Fields & Reset for Next Scan
     C11.value = "";
     C12.value = "";
@@ -207,3 +196,4 @@ function autoSubmit() {
         C11.focus();
     }, 100);
 }
+
