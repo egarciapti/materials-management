@@ -281,36 +281,30 @@ function drawScanningChart(data) {
             totalScannedParts += count; // ✅ Sum total scanned parts
         });
 
+        // ✅ Update the counter in the existing placeholder
+        document.getElementById("scannedCounter").innerHTML = `Total Scanned: ${totalScannedParts}`;
+
         let chartTable = google.visualization.arrayToDataTable(chartData);
         let options = {
-            title: "", // ✅ Removes any additional chart titles
+            titleTextStyle: { fontSize: 18, bold: true, color: "#004080" },
             hAxis: { 
-                textStyle: { fontSize: 14 }, 
-                slantedText: false, // ✅ Keeps part numbers straight
-                title: "" // ✅ Removes x-axis title
+                textStyle: { fontSize: 14 },  
+                slantedText: false,           
+                title: "" 
             },
             vAxis: { 
                 textStyle: { fontSize: 14 },
                 minValue: 0,
-                title: "" // ✅ Removes y-axis title
+                title: ""  
             },
             legend: { position: "none" }, 
             colors: ["#2E86C1"],  
-            chartArea: { left: 50, top: 50, width: "85%", height: "65%" }
+            chartArea: { left: 50, top: 40, width: "85%", height: "75%" }
         };
-
-        // ✅ Insert the counter dynamically into the container
-        let chartContainer = document.getElementById("chartBox2");
-        chartContainer.innerHTML = `
-            <div style="text-align: center; font-size: 18px; font-weight: bold; color: #004080; margin-bottom: 5px;">
-                Total Scanned: ${totalScannedParts}
-            </div>
-            <div id="scanningChart"></div> <!-- ✅ The chart will render inside this div -->
-        `;
 
         let chart = new google.visualization.ColumnChart(document.getElementById("scanningChart"));
         chart.draw(chartTable, options);
-
         console.log("✅ Scanning Chart Updated. Total Scanned Parts:", totalScannedParts);
     });
 }
+
