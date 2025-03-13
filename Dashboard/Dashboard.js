@@ -271,30 +271,32 @@ async function fetchScanningData() {
     }
 }
 
-function drawScanningChart(data) {
-    google.charts.load("current", { packages: ["corechart"] });
-    google.charts.setOnLoadCallback(() => {
-        let chartData = [["Part Number", "Total Quantity"]];
+// ✅ Load Google Charts and Draw
+google.charts.load("current", { packages: ["corechart"] });
+google.charts.setOnLoadCallback(() => {
+    let chart = new google.visualization.ColumnChart(document.getElementById("chartBox2"));
+    let chartTable = google.visualization.arrayToDataTable(chartData);
 
-        Object.entries(data).forEach(([part, count]) => {
-            chartData.push([part, count]);
-        });
-
-        let chartTable = google.visualization.arrayToDataTable(chartData);
-        let options = {
-            title: "Total Pieces by Part Number",
-            hAxis: { title: "Part Number", textStyle: { fontSize: 14 }, slantedText: true, slantedTextAngle: 45 },
-            vAxis: { title: "Total Quantity", minValue: 0, textStyle: { fontSize: 14 } },
-            legend: { position: "none" },
-            colors: ["#2E86C1"],
-            chartArea: { left: 80, top: 40, width: "80%", height: "75%" }
-        };
-
-        let chart = new google.visualization.ColumnChart(document.getElementById("chartBox2"));
-        chart.draw(chartTable, options);
-        console.log("✅ Scanning Chart Updated.");
+    chart.draw(chartTable, {
+        title: "Total Pieces by Part Number",
+        legend: { position: "none" }, // ✅ Hide legend
+        hAxis: { 
+            textStyle: { fontSize: 14 }, // ✅ Show part numbers properly under bars
+            title: "", // ✅ Remove x-axis title
+            slantedText: false // ✅ Ensure part numbers appear straight under bars
+        },
+        vAxis: { 
+            textStyle: { fontSize: 14 },
+            title: "", // ✅ Remove y-axis title
+            minValue: 0
+        },
+        colors: ["#4B85CD"], // ✅ Keep or change color as needed
+        chartArea: { left: 50, top: 30, width: "85%", height: "75%" } // ✅ Adjust chart area
     });
-}
+
+    console.log("✅ Updated chart with part numbers under bars and no axis titles.");
+});
+
 
 // ✅ Call the function on page load
 document.addEventListener("DOMContentLoaded", function () {
