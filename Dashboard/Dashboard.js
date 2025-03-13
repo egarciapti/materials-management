@@ -165,3 +165,69 @@ document.addEventListener("DOMContentLoaded", function () {
     fetchDefectsData();
 });
 
+
+// ✅ Google Apps Script Web App URL for Adhesion Data
+const adhesionGaugeScriptURL = "https://script.google.com/macros/s/AKfycbwInHlHKaUHSsli8x6KjMnk-PVaZAR6t-VxflJ7eCBQbsTcEUDjsZaNYzvR9IyjeRnyBg/exec";
+
+// ✅ Fetch Adhesion Data from Google Sheets
+async function fetchAdhesionData() {
+    try {
+        const response = await fetch(adhesionGaugeScriptURL, { mode: "no-cors" });
+
+        console.log("🚀 Data request sent successfully for Adhesion Gauge.");
+        
+        // Delay processing to allow the spreadsheet to update
+        setTimeout(() => {
+            console.log("⏳ Waiting for Google Sheets update...");
+            processAdhesionData();
+        }, 3000);
+
+    } catch (error) {
+        console.error("❌ Error fetching Adhesion data:", error);
+    }
+}
+
+// ✅ Process Adhesion Data and Draw Gauge Chart
+function processAdhesionData() {
+    google.charts.load("current", { packages: ["gauge"] });
+    google.charts.setOnLoadCallback(async () => {
+        try {
+            const response = await fetch(adhesionGaugeScriptURL);
+            const data = await response.json();
+            let adhesionValue = data.adhesion;
+
+            // ✅ Convert Adhesion values ("1A" to "5A") into numeric scale
+            const adhesionMapping = { "1A": 1, "2A": 2, "3A": 3, "4A": 4, "5A": 5 };
+            let numericAdhesion = adhesionMapping[adhesionValue] || 0; // Default to 0 if not found
+
+            // ✅ Prepare Data for the Gauge Chart
+            let chartData = google.visualization.arrayToDataTable([
+                ["Label", "Value"],
+                ["Adhesion", numericAdhesion]
+            ]);
+
+            let options = {
+                width: 300, height: 300,
+                redFrom: 0, redTo: 2,
+                yellowFrom: 2, yellowTo: 3,
+                greenFrom: 3, greenTo: 5,
+                minorTicks: 1,
+                max: 5
+            };
+
+            let chart = new google.visualization.Gauge(document.getElementById("chartBox3"));
+            chart.draw(chartData, options);
+
+            console.log("✅ Adhesion Gauge Chart updated. Value:", adhesionValue);
+        } catch (error) {
+            console.error("❌ Error processing Adhesion data:", error);
+        }
+    });
+}
+
+// ✅ Initialize Dashboard (Include Adhesion Chart)
+document.addEventListener("DOMContentLoaded", function () {
+    updateDateAndShift();
+    fetchDefectsData();
+    fetchAdhesionData(); // ✅ Fetch Adhesion Data
+});
