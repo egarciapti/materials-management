@@ -282,7 +282,6 @@ function drawScanningChart(data) {
 
         let chartTable = google.visualization.arrayToDataTable(chartData);
         let options = {
-            title: "Total Pieces by Part Number",
             titleTextStyle: { fontSize: 18, bold: true, color: "#004080" },
             hAxis: { 
                 textStyle: { fontSize: 14 },  // ✅ Ensures part numbers are visible
