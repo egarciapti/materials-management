@@ -139,17 +139,18 @@ function processDefectsData(data) {
             hAxis: { 
                 title: "Defect Count", 
                 minValue: 0,
-                textStyle: { fontSize: 14 } // ✅ Bigger X-axis numbers
+                textStyle: { fontSize: 14 }
             },
             vAxis: { 
                 title: "Defect Type",
-                titleTextStyle: { fontSize: 16, bold: true }, // ✅ Bigger Y-axis label
-                textStyle: { fontSize: 14 } // ✅ Bigger Y-axis text
+                titleTextStyle: { fontSize: 16, bold: true },
+                textStyle: { fontSize: 14 }
             },
             legend: { position: "none" },
             colors: ["#FF5733"],
-            chartArea: { left: 120, top: 40, width: "75%", height: "80%" } // ✅ Moves chart to the right
+            chartArea: { left: 120, top: 20, width: "75%", height: "80%" } // ✅ Adjust top spacing
         });
+        
         
 
         console.log("✅ Defect chart updated successfully.");
