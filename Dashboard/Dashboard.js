@@ -283,11 +283,20 @@ function drawScanningChart(data) {
         let chartTable = google.visualization.arrayToDataTable(chartData);
         let options = {
             title: "Total Pieces by Part Number",
-            hAxis: { title: "Part Number", textStyle: { fontSize: 14 }, slantedText: true, slantedTextAngle: 45 },
-            vAxis: { title: "Total Quantity", minValue: 0, textStyle: { fontSize: 14 } },
-            legend: { position: "none" },
-            colors: ["#2E86C1"],
-            chartArea: { left: 80, top: 40, width: "80%", height: "75%" }
+            titleTextStyle: { fontSize: 18, bold: true, color: "#004080" },
+            hAxis: { 
+                textStyle: { fontSize: 14 },  // ✅ Ensures part numbers are visible
+                slantedText: false,           // ✅ Keeps them straight (not rotated)
+                title: "",                    // ✅ Removes x-axis title
+            },
+            vAxis: { 
+                textStyle: { fontSize: 14 },
+                minValue: 0,
+                title: "",                     // ✅ Removes y-axis title
+            },
+            legend: { position: "none" }, // ✅ No legend needed
+            colors: ["#2E86C1"],          // ✅ Keeps the original color
+            chartArea: { left: 50, top: 40, width: "85%", height: "75%" } // ✅ Adjusted space
         };
 
         let chart = new google.visualization.ColumnChart(document.getElementById("chartBox2"));
