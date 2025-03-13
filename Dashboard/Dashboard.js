@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (closeBtn) closeBtn.addEventListener("click", closeSidebar);
 
     initializeDashboard(); // Ensures the date & shift info is loaded correctly
+    updateDateAndShift();
 });
 
 // ✅ Function to Open Sidebar
@@ -25,24 +26,34 @@ function closeSidebar() {
 // ✅ Function to Update Date & Shift
 function updateDateAndShift() {
     const now = new Date();
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const options = { year: "numeric", month: "long", day: "numeric" };
     const formattedDate = now.toLocaleDateString("en-US", options);
 
     let hours = now.getHours();
-    let shift = determineShiftFromTime(hours);
+    let minutes = now.getMinutes();
+    let shift = determineShiftFromTime(hours, minutes);
 
     document.getElementById("currentDate").innerHTML = `📅 Date: <b>${formattedDate}</b>`;
     document.getElementById("currentShift").innerHTML = `🕒 Shift: <b>${shift}</b>`;
 }
 
 // ✅ Function to Determine Shift Based on Time
-function determineShiftFromTime(hour) {
-    if ((hour >= 7 && hour < 15) || (hour === 15 && new Date().getMinutes() <= 30)) {
+function determineShiftFromTime(hour, minutes) {
+    // Convert time into minutes since midnight
+    let totalMinutes = hour * 60 + minutes;
+
+    // 1st Shift: 07:00 - 15:30
+    if (totalMinutes >= 420 && totalMinutes <= 930) {
         return "1st Shift";
-    } else if (hour > 15 || hour < 7) {
+    }
+    // 2nd Shift: 15:31 - 00:00
+    else if (totalMinutes >= 931 || totalMinutes === 0) {
         return "2nd Shift";
     }
-    return "Off Shift";
+    // Off Shift: 00:01 - 06:59
+    else {
+        return "Off Shift";
+    }
 }
 
 
