@@ -142,6 +142,7 @@ body {
 }
 
 /* ✅ Bigger Chart Boxes */
+/* ✅ Ensure the Chart is Centered */
 .chart-box {
     display: flex;
     justify-content: center;
@@ -150,17 +151,18 @@ body {
     border: 3px solid #004080;
     border-radius: 12px;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
-    padding: 20px; /* Add padding to give more space inside */
+    padding: 25px; /* More space inside */
 }
 
 /* ✅ Ensure Chart Takes Full Width & Height Inside the Box */
 #chartBox1 {
-    width: 90%;
-    height: 90%;
+    width: 95%;  /* Increased width */
+    height: 95%; /* Increased height */
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 
 /* ✅ Ensure Responsiveness */
 @media (max-width: 1100px) {
