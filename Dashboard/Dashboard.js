@@ -252,52 +252,68 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const scanningChartURL = "https://script.google.com/macros/s/AKfycbwqFc-Vw0xIUe2rnu5l8QYxTIqhYnXOesnxk-rXia4RPQmSRaHMOGQHLtNALKuX2zwfnA/exec";
 
+
+
 async function fetchScanningData() {
     try {
-        const response = await fetch(scanningChartURL);
-        const data = await response.json();
+        const response = await fetch("https://script.google.com/macros/s/AKfycbwqFc-Vw0xIUe2rnu5l8QYxTIqhYnXOesnxk-rXia4RPQmSRaHMOGQHLtNALKuX2zwfnA/exec"); // ✅ Replace with actual URL
+        const jsonData = await response.json();
 
-        if (!data || Object.keys(data).length === 0) {
-            console.warn("⚠️ No scanning data found for today's date and shift.");
-            document.getElementById("chartBox2").innerHTML = "<p>No data available for today's shift.</p>";
+        if (!jsonData || jsonData.status === "error") {
+            console.error("❌ Error fetching scanning data:", jsonData.message);
             return;
         }
 
-        console.log("📦 Scanning Data:", data);
-        drawScanningChart(data);
+        console.log("✅ Successfully fetched scanning data:", jsonData);
+
+        // ✅ Prepare Data for Chart
+        let chartData = [["Part Number", "Total Quantity"]];
+        jsonData.forEach(entry => {
+            chartData.push([String(entry.partNumber), Number(entry.quantity)]); // ✅ Convert data correctly
+        });
+
+        console.log("📊 Chart Data:", chartData);
+
+        // ✅ Ensure Data Exists Before Drawing Chart
+        if (chartData.length > 1) {
+            drawScanningChart(chartData);
+        } else {
+            document.getElementById("chartBox2").innerHTML = "<p>No scanning data available.</p>";
+        }
 
     } catch (error) {
         console.error("❌ Error fetching scanning data:", error);
     }
 }
 
-function drawScanningChart(data) {
+function drawScanningChart(chartData) {
     // ✅ Load Google Charts and Draw
-google.charts.load("current", { packages: ["corechart"] });
-google.charts.setOnLoadCallback(() => {
-    let chart = new google.visualization.ColumnChart(document.getElementById("chartBox2"));
-    let chartTable = google.visualization.arrayToDataTable(chartData);
+    google.charts.load("current", { packages: ["corechart"] });
+    google.charts.setOnLoadCallback(() => {
+        let chart = new google.visualization.ColumnChart(document.getElementById("chartBox2"));
+        let chartTable = google.visualization.arrayToDataTable(chartData);
 
-    chart.draw(chartTable, {
-        title: "Total Pieces by Part Number",
-        legend: { position: "none" }, // ✅ Hide legend
-        hAxis: { 
-            textStyle: { fontSize: 14 }, // ✅ Show part numbers properly under bars
-            title: "", // ✅ Remove x-axis title
-            slantedText: false // ✅ Ensure part numbers appear straight under bars
-        },
-        vAxis: { 
-            textStyle: { fontSize: 14 },
-            title: "", // ✅ Remove y-axis title
-            minValue: 0
-        },
-        colors: ["#4B85CD"], // ✅ Keep or change color as needed
-        chartArea: { left: 50, top: 30, width: "85%", height: "75%" } // ✅ Adjust chart area
+        chart.draw(chartTable, {
+            title: "Total Pieces by Part Number",
+            legend: { position: "none" }, // ✅ Hide legend
+            hAxis: { 
+                textStyle: { fontSize: 14 }, // ✅ Show part numbers properly under bars
+                title: "", // ✅ Remove x-axis title
+                slantedText: false // ✅ Ensure part numbers appear straight under bars
+            },
+            vAxis: { 
+                textStyle: { fontSize: 14 },
+                title: "", // ✅ Remove y-axis title
+                minValue: 0
+            },
+            colors: ["#4B85CD"], // ✅ Keep or change color as needed
+            chartArea: { left: 50, top: 30, width: "85%", height: "75%" } // ✅ Adjust chart area
+        });
+
+        console.log("✅ Updated chart with part numbers under bars and no axis titles.");
     });
-
-    console.log("✅ Updated chart with part numbers under bars and no axis titles.");
-});
 }
+
 
 // ✅ Call the function on page load
 document.addEventListener("DOMContentLoaded", function () {
