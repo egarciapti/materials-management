@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (closeBtn) closeBtn.addEventListener("click", closeSidebar);
 
     updateDateAndShift();
-    
+
 });
 
 // ✅ Function to Open Sidebar
@@ -173,7 +173,7 @@ function autoSubmit() {
         day: "2-digit"
     }).format(now);
 
-    let shift = determineShiftFromTime(now.getHours());
+    let shift = determineShiftFromTime(hours, minutes);
 
     let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${estTime} | 📅 ${estDate} | 🏭 ${shift} | 🏗 Platform: ${platform}`;
 
