@@ -271,7 +271,8 @@ async function fetchScanningData() {
     }
 }
 
-// ✅ Load Google Charts and Draw
+function drawScanningChart(data) {
+    // ✅ Load Google Charts and Draw
 google.charts.load("current", { packages: ["corechart"] });
 google.charts.setOnLoadCallback(() => {
     let chart = new google.visualization.ColumnChart(document.getElementById("chartBox2"));
