@@ -258,7 +258,9 @@ async function fetchScanningData() {
 
         if (!data || Object.keys(data).length === 0) {
             console.warn("⚠️ No scanning data found for today's date and shift.");
-            document.getElementById("chartBox2").innerHTML = "<p>No data available for today's shift.</p>";
+            document.getElementById("chartBox2").innerHTML = `
+                <p style="font-size: 16px; font-weight: bold; color: red;">No data available for today's shift.</p>
+            `;
             return;
         }
 
@@ -274,13 +276,17 @@ function drawScanningChart(data) {
     google.charts.load("current", { packages: ["corechart"] });
     google.charts.setOnLoadCallback(() => {
         let chartData = [["Part Number", "Total Quantity"]];
+        let totalScannedParts = 0;
 
         Object.entries(data).forEach(([part, count]) => {
             chartData.push([part, count]);
+            totalScannedParts += count; // ✅ Sum up total scanned parts
         });
 
         let chartTable = google.visualization.arrayToDataTable(chartData);
+        
         let options = {
+            title: "Total Pieces by Part Number",
             titleTextStyle: { fontSize: 18, bold: true, color: "#004080" },
             hAxis: { 
                 textStyle: { fontSize: 14 },  // ✅ Ensures part numbers are visible
@@ -294,12 +300,21 @@ function drawScanningChart(data) {
             },
             legend: { position: "none" }, // ✅ No legend needed
             colors: ["#2E86C1"],          // ✅ Keeps the original color
-            chartArea: { left: 50, top: 40, width: "85%", height: "75%" } // ✅ Adjusted space
+            chartArea: { left: 50, top: 40, width: "85%", height: "65%" } // ✅ Adjusted space
         };
 
-        let chart = new google.visualization.ColumnChart(document.getElementById("chartBox2"));
+        // ✅ Insert the counter above the chart
+        document.getElementById("chartBox2").innerHTML = `
+            <div style="text-align: center; font-size: 20px; font-weight: bold; color: #004080;">
+                Total Scanned: ${totalScannedParts}
+            </div>
+            <div id="scanningChart"></div>
+        `;
+
+        let chart = new google.visualization.ColumnChart(document.getElementById("scanningChart"));
         chart.draw(chartTable, options);
-        console.log("✅ Scanning Chart Updated.");
+
+        console.log("✅ Scanning Chart Updated. Total Scanned Parts:", totalScannedParts);
     });
 }
 
@@ -307,3 +322,4 @@ function drawScanningChart(data) {
 document.addEventListener("DOMContentLoaded", function () {
     fetchScanningData();
 });
+
