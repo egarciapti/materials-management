@@ -123,14 +123,16 @@ function autoSubmit() {
     let C12 = document.getElementById("C12");  // Quantity Input
     let scanMessage = document.getElementById("scanMessage");
     let lastScanInfo = document.getElementById("lastScanInfo");
+    let platformElement = document.getElementById("selectedPlatform"); // ✅ Get Platform
 
-    if (!C11 || !C12 || !scanMessage || !lastScanInfo) {
+    if (!C11 || !C12 || !scanMessage || !lastScanInfo || !platformElement) {
         console.error("❌ Missing required elements in autoSubmit(). Check HTML IDs.");
         return;
     }
 
     let partNumber = C11.value.trim();
     let quantity = C12.value.trim();
+    let platform = platformElement.innerText.replace("🔹 Platform: ", "").trim(); // ✅ Extract Platform Name
 
     if (!partNumber || !quantity) {
         console.warn("⚠️ Part Number or Quantity missing. Skipping entry.");
@@ -161,7 +163,7 @@ function autoSubmit() {
 
     let shift = determineShiftFromTime(now.getHours());
 
-    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${estTime} | 📅 ${estDate} | 🏭 ${shift}`;
+    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${estTime} | 📅 ${estDate} | 🏭 ${shift} | 🏗 Platform: ${platform}`;
 
     // ✅ Update Last Scan Info
     lastScanInfo.innerHTML = scanText;
@@ -172,12 +174,13 @@ function autoSubmit() {
 
     // ✅ Send Data to Google Sheets
     let data = {
-        timestamp: now.toISOString(),  // ✅ Send as ISO string for proper parsing
-        time: estTime,  // ✅ Formatted Time
-        date: estDate,  // ✅ Formatted Date
-        shift: shift,   // ✅ Shift
+        timestamp: now.toISOString(),
+        time: estTime,
+        date: estDate,
+        shift: shift,
         partNumber: partNumber,
-        quantity: quantity
+        quantity: quantity,
+        platform: platform // ✅ Send Platform Information
     };
 
     console.log("🚀 Sending data:", data);
