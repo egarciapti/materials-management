@@ -9,9 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (menuButton) menuButton.addEventListener("click", openSidebar);
     if (overlay) overlay.addEventListener("click", closeSidebar);
     if (closeBtn) closeBtn.addEventListener("click", closeSidebar);
-
-    updateDateAndShift();
-    
 });
 
 // ✅ Function to Open Sidebar
@@ -42,34 +39,26 @@ function initializeScanningScreen() {
 // ✅ Function to Update Date & Shift
 function updateDateAndShift() {
     const now = new Date();
-    const options = { year: "numeric", month: "long", day: "numeric" };
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const formattedDate = now.toLocaleDateString("en-US", options);
 
     let hours = now.getHours();
-    let minutes = now.getMinutes();
-    let shift = determineShiftFromTime(hours, minutes);
+    let shift = determineShiftFromTime(hours);
 
     document.getElementById("currentDate").innerHTML = `📅 Date: <b>${formattedDate}</b>`;
     document.getElementById("currentShift").innerHTML = `🕒 Shift: <b>${shift}</b>`;
 }
-// ✅ Function to Determine Shift Based on Time
-function determineShiftFromTime(hour, minutes) {
-    // Convert time into minutes since midnight
-    let totalMinutes = hour * 60 + minutes;
 
-    // 1st Shift: 07:00 - 15:30
-    if (totalMinutes >= 420 && totalMinutes <= 930) {
-        return "1st Shift";
+// ✅ Function to Determine Shift Based on Time (Eastern Time)
+function determineShiftFromTime(hour, minute) {
+    if ((hour === 7 && minute >= 0) || (hour > 7 && hour < 15) || (hour === 15 && minute <= 30)) {
+        return "1st Shift";  // ✅ 7:00 AM - 3:30 PM
+    } else if ((hour === 15 && minute >= 31) || (hour > 15 && hour < 24) || (hour === 0 && minute === 0)) {
+        return "2nd Shift";  // ✅ 3:31 PM - 12:00 AM
     }
-    // 2nd Shift: 15:31 - 00:00
-    else if (totalMinutes >= 931 || totalMinutes === 0) {
-        return "2nd Shift";
-    }
-    // Off Shift: 00:01 - 06:59
-    else {
-        return "Off Shift";
-    }
+    return "Off Shift";  // ✅ Any other time is "Off Shift"
 }
+
 
 // ✅ Function to Load Selected Platform
 function loadSelectedPlatform() {
@@ -129,51 +118,38 @@ function validateC12() {
     }
 }
 
-// ✅ Function to Auto Submit & Save to Google Sheets
-function autoSubmit() {
-    let C11 = document.getElementById("C11");  // Part Number Input
-    let C12 = document.getElementById("C12");  // Quantity Input
-    let scanMessage = document.getElementById("scanMessage");
-    let lastScanInfo = document.getElementById("lastScanInfo");
-    let platformElement = document.getElementById("selectedPlatform"); // ✅ Get Platform
+// ✅ Get Current Timestamp in the Correct Format (Eastern Time)
+let now = new Date();
 
-    if (!C11 || !C12 || !scanMessage || !lastScanInfo || !platformElement) {
-        console.error("❌ Missing required elements in autoSubmit(). Check HTML IDs.");
-        return;
-    }
+let estTime = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/New_York",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false // ✅ 24-hour format
+}).format(now);
 
-    let partNumber = C11.value.trim();
-    let quantity = C12.value.trim();
-    let platform = platformElement.innerText.replace("🔹 Platform: ", "").trim(); // ✅ Extract Platform Name
+let estDate = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/New_York",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+}).format(now);
 
-    if (!partNumber || !quantity) {
-        console.warn("⚠️ Part Number or Quantity missing. Skipping entry.");
-        return;
-    }
+let estHours = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/New_York",
+    hour: "2-digit",
+    hour12: false
+}).format(now);
 
-    if (quantity.includes(".")) {
-        quantity = Math.floor(parseFloat(quantity)).toString();
-    }
+let estMinutes = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/New_York",
+    minute: "2-digit",
+    hour12: false
+}).format(now);
 
-    // ✅ Get Current Timestamp in the Correct Format (Eastern Time)
-    let now = new Date();
+let shift = determineShiftFromTime(parseInt(estHours), parseInt(estMinutes)); // ✅ Pass correct hour and minutes
 
-    let estTime = new Intl.DateTimeFormat("en-US", {
-        timeZone: "America/New_York",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false // ✅ 24-hour format
-    }).format(now);
-
-    let estDate = new Intl.DateTimeFormat("en-US", {
-        timeZone: "America/New_York",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit"
-    }).format(now);
-
-    let shift = determineShiftFromTime(now.getHours());
 
     let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${estTime} | 📅 ${estDate} | 🏭 ${shift} | 🏗 Platform: ${platform}`;
 
@@ -218,4 +194,4 @@ function autoSubmit() {
     setTimeout(() => {
         C11.focus();
     }, 100);
-}
+
