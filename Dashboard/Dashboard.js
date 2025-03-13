@@ -258,9 +258,7 @@ async function fetchScanningData() {
 
         if (!data || Object.keys(data).length === 0) {
             console.warn("⚠️ No scanning data found for today's date and shift.");
-            document.getElementById("chartBox2").innerHTML = `
-                <p style="font-size: 16px; font-weight: bold; color: red;">No data available for today's shift.</p>
-            `;
+            document.getElementById("chartBox2").innerHTML = "<p>No data available for today's shift.</p>";
             return;
         }
 
@@ -284,28 +282,27 @@ function drawScanningChart(data) {
         });
 
         let chartTable = google.visualization.arrayToDataTable(chartData);
-        
+
         let options = {
-            title: "Total Pieces by Part Number",
-            titleTextStyle: { fontSize: 18, bold: true, color: "#004080" },
+            title: "",
             hAxis: { 
-                textStyle: { fontSize: 14 },  // ✅ Ensures part numbers are visible
-                slantedText: false,           // ✅ Keeps them straight (not rotated)
-                title: "",                    // ✅ Removes x-axis title
+                textStyle: { fontSize: 14 }, 
+                slantedText: false,  // ✅ Keeps part numbers straight
+                title: ""            // ✅ Removes x-axis title
             },
             vAxis: { 
                 textStyle: { fontSize: 14 },
                 minValue: 0,
-                title: "",                     // ✅ Removes y-axis title
+                title: ""            // ✅ Removes y-axis title
             },
-            legend: { position: "none" }, // ✅ No legend needed
-            colors: ["#2E86C1"],          // ✅ Keeps the original color
-            chartArea: { left: 50, top: 40, width: "85%", height: "65%" } // ✅ Adjusted space
+            legend: { position: "none" }, 
+            colors: ["#2E86C1"],  
+            chartArea: { left: 50, top: 40, width: "85%", height: "65%" }
         };
 
-        // ✅ Insert the counter above the chart
+        // ✅ Update `chartBox2` content with counter above the chart
         document.getElementById("chartBox2").innerHTML = `
-            <div style="text-align: center; font-size: 20px; font-weight: bold; color: #004080;">
+            <div style="text-align: center; font-size: 18px; font-weight: bold; color: #004080; margin-bottom: 5px;">
                 Total Scanned: ${totalScannedParts}
             </div>
             <div id="scanningChart"></div>
@@ -317,9 +314,3 @@ function drawScanningChart(data) {
         console.log("✅ Scanning Chart Updated. Total Scanned Parts:", totalScannedParts);
     });
 }
-
-// ✅ Call the function on page load
-document.addEventListener("DOMContentLoaded", function () {
-    fetchScanningData();
-});
-
