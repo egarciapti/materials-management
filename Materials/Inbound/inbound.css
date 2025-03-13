@@ -21,7 +21,7 @@
 
 #table-counters {
     position: relative; /* Ensure it moves relative to its original position */
-    left: 50px; 
+    left: 30px; 
     top: 47px;
     margin-top: -100px; /* Ensure space between title and counters */
     display: flex;
@@ -422,7 +422,7 @@
     position: absolute;
     top: 175px; /* Align with counters */
     left: 20px; /* Align with scan pallet */
-    width: 450px; /* Adjust width */
+    width: 425px; /* Adjust width */
     padding: 10px;
     background: white;
     border: 2px solid #ccc;
