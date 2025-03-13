@@ -425,7 +425,7 @@
     width: 25vw; /* ✅ Adjusts width dynamically */
     max-width: 420px; /* ✅ Prevents it from getting too large */
     height: 3vh; /* ✅ Adjusts height dynamically */
-    min-height: 50px; /* ✅ Ensures it doesn’t get too small */
+    min-height: 20px; /* ✅ Ensures it doesn’t get too small */
     padding: 1rem; /* ✅ Uses relative padding */
     background: white;
     border: 2px solid #ccc;
