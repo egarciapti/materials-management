@@ -49,16 +49,15 @@ function updateDateAndShift() {
     document.getElementById("currentShift").innerHTML = `🕒 Shift: <b>${shift}</b>`;
 }
 
-// ✅ Function to Determine Shift Based on Time (Eastern Time)
-function determineShiftFromTime(hour, minute) {
-    if ((hour === 7 && minute >= 0) || (hour > 7 && hour < 15) || (hour === 15 && minute <= 30)) {
-        return "1st Shift";  // ✅ 7:00 AM - 3:30 PM
-    } else if ((hour === 15 && minute >= 31) || (hour > 15 && hour < 24) || (hour === 0 && minute === 0)) {
-        return "2nd Shift";  // ✅ 3:31 PM - 12:00 AM
+// ✅ Function to Determine Shift Based on Time
+function determineShiftFromTime(hour) {
+    if ((hour >= 7 && hour < 15) || (hour === 15 && new Date().getMinutes() <= 30)) {
+        return "1st Shift";
+    } else if (hour > 15 || hour < 7) {
+        return "2nd Shift";
     }
-    return "Off Shift";  // ✅ Any other time is "Off Shift"
+    return "Off Shift";
 }
-
 
 // ✅ Function to Load Selected Platform
 function loadSelectedPlatform() {
@@ -118,40 +117,51 @@ function validateC12() {
     }
 }
 
-// ✅ Get Current Timestamp in the Correct Format (Eastern Time)
-let now = new Date();
+// ✅ Function to Auto Submit & Save to Google Sheets
+function autoSubmit() {
+    let C11 = document.getElementById("C11");  // Part Number Input
+    let C12 = document.getElementById("C12");  // Quantity Input
+    let scanMessage = document.getElementById("scanMessage");
+    let lastScanInfo = document.getElementById("lastScanInfo");
 
-let estTime = new Intl.DateTimeFormat("en-US", {
-    timeZone: "America/New_York",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false // ✅ 24-hour format
-}).format(now);
+    if (!C11 || !C12 || !scanMessage || !lastScanInfo) {
+        console.error("❌ Missing required elements in autoSubmit(). Check HTML IDs.");
+        return;
+    }
 
-let estDate = new Intl.DateTimeFormat("en-US", {
-    timeZone: "America/New_York",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit"
-}).format(now);
+    let partNumber = C11.value.trim();
+    let quantity = C12.value.trim();
 
-let estHours = new Intl.DateTimeFormat("en-US", {
-    timeZone: "America/New_York",
-    hour: "2-digit",
-    hour12: false
-}).format(now);
+    if (!partNumber || !quantity) {
+        console.warn("⚠️ Part Number or Quantity missing. Skipping entry.");
+        return;
+    }
 
-let estMinutes = new Intl.DateTimeFormat("en-US", {
-    timeZone: "America/New_York",
-    minute: "2-digit",
-    hour12: false
-}).format(now);
+    if (quantity.includes(".")) {
+        quantity = Math.floor(parseFloat(quantity)).toString();
+    }
 
-let shift = determineShiftFromTime(parseInt(estHours), parseInt(estMinutes)); // ✅ Pass correct hour and minutes
+    // ✅ Get Current Timestamp in the Correct Format (Eastern Time)
+    let now = new Date();
 
+    let estTime = new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/New_York",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false // ✅ 24-hour format
+    }).format(now);
 
-    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${estTime} | 📅 ${estDate} | 🏭 ${shift} | 🏗 Platform: ${platform}`;
+    let estDate = new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/New_York",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+    }).format(now);
+
+    let shift = determineShiftFromTime(now.getHours());
+
+    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${estTime} | 📅 ${estDate} | 🏭 ${shift}`;
 
     // ✅ Update Last Scan Info
     lastScanInfo.innerHTML = scanText;
@@ -162,13 +172,12 @@ let shift = determineShiftFromTime(parseInt(estHours), parseInt(estMinutes)); //
 
     // ✅ Send Data to Google Sheets
     let data = {
-        timestamp: now.toISOString(),
-        time: estTime,
-        date: estDate,
-        shift: shift,
+        timestamp: now.toISOString(),  // ✅ Send as ISO string for proper parsing
+        time: estTime,  // ✅ Formatted Time
+        date: estDate,  // ✅ Formatted Date
+        shift: shift,   // ✅ Shift
         partNumber: partNumber,
-        quantity: quantity,
-        platform: platform // ✅ Send Platform Information
+        quantity: quantity
     };
 
     console.log("🚀 Sending data:", data);
@@ -194,4 +203,4 @@ let shift = determineShiftFromTime(parseInt(estHours), parseInt(estMinutes)); //
     setTimeout(() => {
         C11.focus();
     }, 100);
-
+}
