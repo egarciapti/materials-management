@@ -420,10 +420,10 @@
 /* ✅ Position the BOL input above the scanning section and align it with counters */
 #bol-container {
     position: absolute;
-    top: 12vh; /* ✅ Uses viewport height for better alignment */
-    left: 2vw; /* ✅ Uses viewport width for relative positioning */
+    top: 20vh; /* ✅ Uses viewport height for better alignment */
+    left: 1vw; /* ✅ Uses viewport width for relative positioning */
     width: 30vw; /* ✅ Adjusts width dynamically */
-    max-width: 425px; /* ✅ Prevents it from getting too large */
+    max-width: 420px; /* ✅ Prevents it from getting too large */
     padding: 1rem; /* ✅ Uses relative padding */
     background: white;
     border: 2px solid #ccc;
