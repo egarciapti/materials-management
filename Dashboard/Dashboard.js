@@ -87,20 +87,27 @@ function processDefectsData(data) {
     let currentDateText = document.getElementById("currentDate").innerText.split(":")[1].trim();
     let currentShift = document.getElementById("currentShift").innerText.split(":")[1].trim();
 
-    // ✅ Convert displayed date (March 12, 2025) to Google Sheets format (YYYY-MM-DD)
+    // ✅ Convert displayed date to YYYY-MM-DD format
     let formattedDateObj = new Date(currentDateText);
-    let formattedDate = formattedDateObj.toISOString().split("T")[0]; // YYYY-MM-DD
+    let formattedDate = formattedDateObj.toISOString().split("T")[0]; // "YYYY-MM-DD"
 
     console.log(`🔍 Filtering Data for Date: ${formattedDate}, Shift: ${currentShift}`);
+    
+    // ✅ Log the raw fetched data
+    console.log("✅ Raw Data from Google Sheets:", data);
 
     // ✅ Loop through data & filter by date & shift
     data.forEach(entry => {
-        let entryDate = (entry.date || "").trim(); // Ensure it's a string & trimmed
-        let entryShift = (entry.shift || "").trim();
-        let defectName = (entry.defectName || "").trim();
+        let entryDate = String(entry.date || "").trim(); // Ensure it's a string & trimmed
+        let entryShift = String(entry.shift || "").trim();
+        let defectName = String(entry.defectName || "").trim();
 
-        // ✅ Convert all values to lowercase for comparison
-        if (entryDate.toLowerCase() === formattedDate.toLowerCase() && entryShift.toLowerCase() === currentShift.toLowerCase()) {
+        console.log(`📌 Checking Entry: Date: ${entryDate}, Shift: ${entryShift}, Defect: ${defectName}`);
+
+        // ✅ Normalize date formats to ensure exact match
+        let normalizedEntryDate = new Date(entryDate).toISOString().split("T")[0]; // Convert to YYYY-MM-DD
+
+        if (normalizedEntryDate === formattedDate && entryShift.toLowerCase() === currentShift.toLowerCase()) {
             defectCounts[defectName] = (defectCounts[defectName] || 0) + 1;
         }
     });
@@ -139,6 +146,7 @@ function processDefectsData(data) {
         console.log("✅ Defect chart updated successfully.");
     });
 }
+
 
 
 // ✅ Initialize Dashboard
