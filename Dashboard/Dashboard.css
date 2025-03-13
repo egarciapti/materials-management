@@ -208,3 +208,22 @@ body {
     width: 100%;
     height: 100%;
 }
+
+
+/* ✅ Adjusts the container to hold two charts side by side */
+.dual-chart-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* ✅ Ensure each chart takes half the width */
+.gauge-chart {
+    width: 45%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -167,72 +167,74 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-// ✅ Google Apps Script Web App URL for Adhesion Data
-const adhesionGaugeScriptURL = "https://script.google.com/macros/s/AKfycbwInHlHKaUHSsli8x6KjMnk-PVaZAR6t-VxflJ7eCBQbsTcEUDjsZaNYzvR9IyjeRnyBg/exec";
+// ✅ Google Apps Script Web App URL for Both Adhesion & Film Thickness
+const gaugeScriptURL = "https://script.google.com/macros/s/AKfycbwInHlHKaUHSsli8x6KjMnk-PVaZAR6t-VxflJ7eCBQbsTcEUDjsZaNYzvR9IyjeRnyBg/exec";
 
-// ✅ Fetch Adhesion Data from Google Sheets
-async function fetchAdhesionData() {
+// ✅ Fetch Data for Both Charts
+async function fetchGaugeData() {
     try {
-        const response = await fetch(adhesionGaugeScriptURL, { mode: "no-cors" });
-
-        console.log("🚀 Data request sent successfully for Adhesion Gauge.");
-        
-        // Delay processing to allow the spreadsheet to update
-        setTimeout(() => {
-            console.log("⏳ Waiting for Google Sheets update...");
-            processAdhesionData();
-        }, 3000);
-
+        const response = await fetch(gaugeScriptURL);
+        const data = await response.json();
+        console.log("🚀 Gauge Data Fetched:", data);
+        processGaugeData(data);
     } catch (error) {
-        console.error("❌ Error fetching Adhesion data:", error);
+        console.error("❌ Error fetching Gauge data:", error);
     }
 }
 
-// ✅ Process Adhesion Data and Draw Gauge Chart
-function processAdhesionData() {
+// ✅ Process Data & Draw Gauges for Adhesion & Film Thickness
+function processGaugeData(data) {
     google.charts.load("current", { packages: ["gauge"] });
-    google.charts.setOnLoadCallback(async () => {
+    google.charts.setOnLoadCallback(() => {
         try {
-            const response = await fetch(adhesionGaugeScriptURL);
-            const data = await response.json();
-            let adhesionValue = data.adhesion;
+            const adhesionValue = data.adhesion;
+            const filmThicknessValue = data.filmThickness;
 
             // ✅ Convert Adhesion values ("1A" to "5A") into numeric scale
             const adhesionMapping = { "1A": 1, "2A": 2, "3A": 3, "4A": 4, "5A": 5 };
-            let numericAdhesion = adhesionMapping[adhesionValue] || 0; // Default to 0 if not found
+            let numericAdhesion = adhesionMapping[adhesionValue] || 0;
 
-            // ✅ Prepare Data for the Gauge Chart
-            let chartData = google.visualization.arrayToDataTable([
+            // ✅ Prepare Data for Adhesion Chart
+            let adhesionChartData = google.visualization.arrayToDataTable([
                 ["Label", "Value"],
                 ["Adhesion", numericAdhesion]
             ]);
 
+            // ✅ Prepare Data for Film Thickness Chart
+            let filmThicknessChartData = google.visualization.arrayToDataTable([
+                ["Label", "Value"],
+                ["Thickness", filmThicknessValue]
+            ]);
+
             let options = {
-                width: 200, // Reduce width
-                height: 200, // Reduce height
-                chartArea: { left: 20, top: 20, width: "80%", height: "80%" }, // Adjust margins
+                width: 200, height: 200,
                 redFrom: 0, redTo: 2,
-                yellowFrom: 2, yellowTo: 3,
-                greenFrom: 3, greenTo: 5,
+                yellowFrom: 2, yellowTo: 2.49,
+                greenFrom: 2.5, greenTo: 5,
                 minorTicks: 1,
                 max: 5,
-                fontSize: 14 // Reduce font size
+                fontSize: 14
             };
-            
 
-            let chart = new google.visualization.Gauge(document.getElementById("chartBox3"));
-            chart.draw(chartData, options);
+            // ✅ Draw the Adhesion Gauge
+            let adhesionChart = new google.visualization.Gauge(document.getElementById("chartBox3"));
+            adhesionChart.draw(adhesionChartData, options);
 
-            console.log("✅ Adhesion Gauge Chart updated. Value:", adhesionValue);
+            // ✅ Draw the Film Thickness Gauge
+            let thicknessChart = new google.visualization.Gauge(document.getElementById("chartBox3B"));
+            thicknessChart.draw(filmThicknessChartData, options);
+
+            console.log("✅ Gauges Updated: Adhesion:", numericAdhesion, "Thickness:", filmThicknessValue);
+
         } catch (error) {
-            console.error("❌ Error processing Adhesion data:", error);
+            console.error("❌ Error processing Gauge data:", error);
         }
     });
 }
 
-// ✅ Initialize Dashboard (Include Adhesion Chart)
+// ✅ Initialize Dashboard with Both Gauges
 document.addEventListener("DOMContentLoaded", function () {
     updateDateAndShift();
     fetchDefectsData();
-    fetchAdhesionData(); // ✅ Fetch Adhesion Data
+    fetchGaugeData(); // ✅ Fetch Adhesion & Thickness Data
 });

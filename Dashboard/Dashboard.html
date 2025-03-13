@@ -49,8 +49,13 @@
         <div class="chart-box">Box 2</div>
 
         <div class="chart-box">
-            <div id="chartBox3" style="width: 100%; height: 100%;"></div> <!-- ✅ Chart for Box 3 -->
+            <div class="chart-header">Adhesion & Film Thickness</div> <!-- ✅ Shared title -->
+            <div class="dual-chart-container">
+                <div id="chartBox3" class="gauge-chart"></div> <!-- ✅ Adhesion Gauge -->
+                <div id="chartBox3B" class="gauge-chart"></div> <!-- ✅ Film Thickness Gauge -->
+            </div>
         </div>
+        
         
         <div class="chart-box">Box 4</div>
         <div class="chart-box">Box 5</div>
