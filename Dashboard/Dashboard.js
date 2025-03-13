@@ -297,7 +297,7 @@ google.charts.setOnLoadCallback(() => {
 
     console.log("✅ Updated chart with part numbers under bars and no axis titles.");
 });
-
+}
 
 // ✅ Call the function on page load
 document.addEventListener("DOMContentLoaded", function () {
