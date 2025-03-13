@@ -137,11 +137,21 @@ function processDefectsData(data) {
 
         chart.draw(chartTable, {
             title: "Defects by Shift",
-            hAxis: { title: "Defect Count", minValue: 0 },
-            vAxis: { title: "Defect Type" },
+            hAxis: { 
+                title: "Defect Count", 
+                minValue: 0,
+                textStyle: { fontSize: 14 } // ✅ Bigger X-axis numbers
+            },
+            vAxis: { 
+                title: "Defect Type",
+                titleTextStyle: { fontSize: 16, bold: true }, // ✅ Bigger Y-axis label
+                textStyle: { fontSize: 14 } // ✅ Bigger Y-axis text
+            },
             legend: { position: "none" },
-            colors: ["#FF5733"]
+            colors: ["#FF5733"],
+            chartArea: { left: 120, top: 40, width: "75%", height: "80%" } // ✅ Moves chart to the right
         });
+        
 
         console.log("✅ Defect chart updated successfully.");
     });
