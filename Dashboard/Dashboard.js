@@ -274,37 +274,36 @@ function drawScanningChart(data) {
     google.charts.load("current", { packages: ["corechart"] });
     google.charts.setOnLoadCallback(() => {
         let chartData = [["Part Number", "Total Quantity"]];
-        let totalScannedParts = 0;
 
         Object.entries(data).forEach(([part, count]) => {
             chartData.push([part, count]);
-            totalScannedParts += count; // ✅ Sum total scanned parts
         });
-
-        // ✅ Update the counter in the existing placeholder
-        document.getElementById("scannedCounter").innerHTML = `Total Scanned: ${totalScannedParts}`;
 
         let chartTable = google.visualization.arrayToDataTable(chartData);
         let options = {
             titleTextStyle: { fontSize: 18, bold: true, color: "#004080" },
             hAxis: { 
-                textStyle: { fontSize: 14 },  
-                slantedText: false,           
-                title: "" 
+                textStyle: { fontSize: 14 },  // ✅ Ensures part numbers are visible
+                slantedText: false,           // ✅ Keeps them straight (not rotated)
+                title: "",                    // ✅ Removes x-axis title
             },
             vAxis: { 
                 textStyle: { fontSize: 14 },
                 minValue: 0,
-                title: ""  
+                title: "",                     // ✅ Removes y-axis title
             },
-            legend: { position: "none" }, 
-            colors: ["#2E86C1"],  
-            chartArea: { left: 50, top: 40, width: "85%", height: "75%" }
+            legend: { position: "none" }, // ✅ No legend needed
+            colors: ["#2E86C1"],          // ✅ Keeps the original color
+            chartArea: { left: 50, top: 40, width: "85%", height: "75%" } // ✅ Adjusted space
         };
 
-        let chart = new google.visualization.ColumnChart(document.getElementById("scanningChart"));
+        let chart = new google.visualization.ColumnChart(document.getElementById("chartBox2"));
         chart.draw(chartTable, options);
-        console.log("✅ Scanning Chart Updated. Total Scanned Parts:", totalScannedParts);
+        console.log("✅ Scanning Chart Updated.");
     });
 }
 
+// ✅ Call the function on page load
+document.addEventListener("DOMContentLoaded", function () {
+    fetchScanningData();
+});
