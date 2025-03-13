@@ -148,12 +148,11 @@ function processDefectsData(data) {
 
         chart.draw(chartTable, {
             hAxis: { 
-                title: "Defect Count", 
+                title: "", 
                 minValue: 0,
                 textStyle: { fontSize: 14 }
             },
             vAxis: { 
-                title: "Defect Type",
                 titleTextStyle: { fontSize: 16, bold: true },
                 textStyle: { fontSize: 14 }
             },
