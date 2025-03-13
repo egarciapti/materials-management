@@ -142,7 +142,7 @@ td {
 #sidebar {
     position: fixed;
     left: -250px; /* Hidden initially */
-    top: 70px; /* Start below the title bar */
+    top: 85px; /* Start below the title bar */
     width: 250px;
     height: calc(100vh - 70px); /* Cover below the title bar */
     background-color: #004080;
