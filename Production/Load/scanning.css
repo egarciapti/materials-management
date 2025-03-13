@@ -190,7 +190,7 @@ td {
 /* ✅ Menu Button (☰ Icon) - Move to Top Left Under Logo */
 #menu-btn {
     position: absolute; /* Ensures it stays positioned inside the title bar */
-    top: 60px; /* Adjust the spacing to position it under the logo */
+    top: 80px; /* Adjust the spacing to position it under the logo */
     left: 20px; /* Keep it aligned to the left */
     background: none;
     border: none;
