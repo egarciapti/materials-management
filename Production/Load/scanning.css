@@ -56,7 +56,7 @@ body {
 
 /* ✅ Back Button */
 .home-button {
-    margin-top: 50px; /* Increased to move it lower */
+    margin-top: 60px; /* Increased to move it lower */
     padding: 20px 40px;
     font-size: 22px;
     background: #555; 
