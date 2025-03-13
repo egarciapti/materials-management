@@ -49,6 +49,17 @@ function updateDateAndShift() {
 
     document.getElementById("currentDate").innerHTML = `📅 Date: <b>${formattedDate}</b>`;
     document.getElementById("currentShift").innerHTML = `🕒 Shift: <b>${shift}</b>`;
+
+    // ✅ Function to Determine Shift Based on Time
+function determineShiftFromTime(hour, minute) {
+    if ((hour === 7 && minute >= 0) || (hour > 7 && hour < 15) || (hour === 15 && minute <= 30)) {
+        return "1st Shift";  // ✅ 7:00 AM - 3:30 PM
+    } else if ((hour === 15 && minute >= 31) || (hour > 15 && hour < 24) || (hour === 0 && minute === 0)) {
+        return "2nd Shift";  // ✅ 3:31 PM - 12:00 AM
+    }
+    return "Off Shift";  // ✅ Any other time is "Off Shift"
+}
+
 }
 
 // ✅ Function to Load Selected Platform
