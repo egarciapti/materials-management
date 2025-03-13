@@ -151,7 +151,13 @@ function autoSubmit() {
         day: "2-digit"
     }).format(now);
 
-    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${estTime} | 📅 ${estDate}`;
+    // ✅ Get Shift
+    let shift = determineShiftFromTime(now.getHours(), now.getMinutes());
+
+    // ✅ Get Platform from localStorage
+    let platform = localStorage.getItem("selectedPlatform") || "Unknown";
+
+    let scanText = `📦 Part: ${partNumber} | 🔢 Qty: ${quantity} | 🕒 ${estTime} | 📅 ${estDate} | 🏭 ${shift} | 🏗 Platform: ${platform}`;
 
     // ✅ Update Last Scan Info
     lastScanInfo.innerHTML = scanText;
@@ -165,9 +171,10 @@ function autoSubmit() {
         timestamp: now.toISOString(),  // ✅ Send as ISO string for proper parsing
         time: estTime,  // ✅ Formatted Time
         date: estDate,  // ✅ Formatted Date
+        shift: shift,   // ✅ Shift
         partNumber: partNumber,
-        quantity: quantity
-        
+        quantity: quantity,
+        platform: platform  // ✅ Send Platform Number
     };
 
     console.log("🚀 Sending data:", data);
@@ -197,4 +204,5 @@ function autoSubmit() {
         C11.focus();
     }, 100);
 }
+
 
