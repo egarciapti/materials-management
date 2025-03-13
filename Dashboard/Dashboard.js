@@ -58,7 +58,12 @@ const googleAppsScriptURL = "https://script.google.com/macros/s/AKfycbxvcq30l_-V
 // ✅ Function to Fetch Defects Data from Google Apps Script
 async function fetchDefectsData() {
     try {
-        const response = await fetch(googleAppsScriptURL);
+        let currentShift = document.getElementById("currentShift").innerText.split(":")[1].trim();
+        
+        // ✅ Append shift to the request URL
+        let urlWithParams = `${googleAppsScriptURL}?shift=${encodeURIComponent(currentShift)}`;
+        
+        const response = await fetch(urlWithParams);
         const jsonData = await response.json();
 
         if (!jsonData || jsonData.status === "error") {
@@ -76,14 +81,11 @@ async function fetchDefectsData() {
 
 // ✅ Function to Process and Display the Defect Chart
 function processDefectsData(data) {
-    let currentShift = document.getElementById("currentShift").innerText.split(":")[1].trim();
     let defectCounts = {};
 
-    // ✅ Filter data for the current shift
+    // ✅ Count defects for the current date and shift
     data.forEach(entry => {
-        if (entry.shift === currentShift) {
-            defectCounts[entry.defectName] = (defectCounts[entry.defectName] || 0) + 1;
-        }
+        defectCounts[entry.defectName] = (defectCounts[entry.defectName] || 0) + 1;
     });
 
     // ✅ Convert data to chart format
@@ -115,3 +117,4 @@ document.addEventListener("DOMContentLoaded", function () {
     updateDateAndShift();
     fetchDefectsData();
 });
+
