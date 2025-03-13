@@ -162,26 +162,30 @@ body {
 }
 
 
-/* ✅ Ensure Chart Takes Full Width & Height Inside the Box Quality Defects*/
-#chartBox1 {
-    width: 90%;
-    height: 90%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* ✅ Style for the Chart Title */
-.chart-title {
+/* ✅ Style the Chart Title (Now Above the Chart) */
+.chart-header {
     text-align: center;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: bold;
     color: #004080;
-    margin-bottom: 10px; /* Space between title and chart */
     width: 100%;
+    padding-bottom: 10px; /* ✅ Space between title and chart */
 }
 
-/* ✅ Ensure the Chart Takes Full Space */
+/* ✅ Adjust the Chart Box to Keep Everything Aligned */
+.chart-box {
+    display: flex;
+    flex-direction: column; /* ✅ Stack title & chart */
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border: 3px solid #004080;
+    border-radius: 12px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+    padding: 15px; /* ✅ Ensures spacing inside */
+}
+
+/* ✅ Ensure the Chart Itself Fills the Box */
 .chart-content {
     width: 100%;
     height: 90%;
@@ -189,6 +193,7 @@ body {
     justify-content: center;
     align-items: center;
 }
+
 
 
 

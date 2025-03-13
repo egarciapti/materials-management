@@ -148,8 +148,9 @@ function processDefectsData(data) {
             },
             legend: { position: "none" },
             colors: ["#FF5733"],
-            chartArea: { left: 120, top: 20, width: "75%", height: "80%" } // ✅ Adjust top spacing
+            chartArea: { left: 120, top: 20, width: "75%", height: "75%" } // ✅ Adjust top spacing
         });
+        
         
         
 
