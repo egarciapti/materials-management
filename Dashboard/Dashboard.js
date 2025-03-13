@@ -91,7 +91,7 @@ function processDefectsData(data) {
     // ✅ Convert data to chart format
     let chartData = [["Defect Name", "Count"]];
     for (let defect in defectCounts) {
-        chartData.push([defect, defectCounts[defect]]);
+        chartData.push([defect, Number(defectCounts[defect])]); // Ensure Count is a Number
     }
 
     // ✅ Load Google Charts and Draw
@@ -111,6 +111,7 @@ function processDefectsData(data) {
         console.log("✅ Defect chart updated successfully.");
     });
 }
+
 
 // ✅ Initialize Dashboard
 document.addEventListener("DOMContentLoaded", function () {
