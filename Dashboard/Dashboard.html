@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Final Inspection - Paint Line Scanner</title>
-    <link rel="stylesheet" href="Dashboard.css">
-</head>
 <body onload="initializeDashboard()">
 
-    <!-- ✅ Title Bar with Image, Title, Date, Shift, and Total Defects -->
+    <!-- ✅ Title Bar -->
     <div id="title-bar">
         <img src="https://lh3.googleusercontent.com/d/1xRLuEF67gw8aST0g702xuH924SsoYVeA=w300"
              alt="Final Inspection"
@@ -34,11 +26,20 @@
     <!-- ✅ Sidebar Toggle Button -->
     <button id="menu-btn" onclick="openSidebar()">☰</button>
 
-    <!-- ✅ Transparent overlay for closing the menu -->
+    <!-- ✅ Transparent overlay -->
     <div id="overlay" onclick="closeSidebar()"></div>
+
+    <!-- ✅ Dashboard Grid Layout for Charts -->
+    <div id="dashboard-container">
+        <div class="chart-box" id="chart1">📊 Chart 1</div>
+        <div class="chart-box" id="chart2">📊 Chart 2</div>
+        <div class="chart-box" id="chart3">📊 Chart 3</div>
+        <div class="chart-box" id="chart4">📊 Chart 4</div>
+        <div class="chart-box" id="chart5">📊 Chart 5</div>
+        <div class="chart-box" id="chart6">📊 Chart 6</div>
+    </div>
 
     <!-- ✅ JavaScript -->
     <script src="Dashboard.js"></script>
     <script src="../script.js"></script> 
 </body>
-</html>
