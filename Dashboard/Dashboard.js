@@ -52,69 +52,81 @@ function initializeDashboard() {
     fetchDefectsData();
 }
 
-// ✅ Function to Fetch Data from Google Spreadsheet
-function fetchDefectsData() {
-    const sheetURL = "https://docs.google.com/spreadsheets/d/1tJ3fmzrefXDdsiKqVHJtEmjALTbV1PvEz6H0GKizONc/gviz/tq?tqx=out:json&sheet=Data";
-    
-    fetch(sheetURL)
-        .then(res => res.text())
-        .then(data => {
-            const json = JSON.parse(data.substring(47).slice(0, -2)); // ✅ Parse Google Sheets JSON
-            const rows = json.table.rows.map(row => ({
-                time: row.c[0]?.v || "",
-                date: row.c[1]?.v || "",
-                shift: row.c[2]?.v || "",
-                defect: row.c[3]?.v || ""
-            }));
+// ✅ Google Apps Script Web App URL (Replace with your actual URL)
+const googleAppsScriptURL = "https://script.google.com/macros/s/AKfycbxvcq30l_-VnzajDymgstR0IiVBFaelDsrZWSoRJILoVWeK1XstUK2jvZn4zAuVpgHVMg/exec";
 
-            const currentShift = document.getElementById("currentShift").innerText.split(": ")[1]; // Get Shift from Title Bar
-            const filteredData = rows.filter(row => row.shift === currentShift);
+// ✅ Fetch Defects Data from Google Apps Script
+async function fetchDefectsData() {
+    try {
+        const response = await fetch(googleAppsScriptURL, { mode: "no-cors" });
 
-            processDefectData(filteredData);
-        })
-        .catch(error => console.error("❌ Error fetching data:", error));
+        // Since "no-cors" doesn't allow direct response reading, we assume success
+        console.log("🚀 Data request sent successfully. The response is blocked due to no-cors.");
+        
+        // Call process function after a delay to allow data update in the spreadsheet
+        setTimeout(() => {
+            console.log("⏳ Waiting for Google Sheets update...");
+            processDefectsData();
+        }, 3000); // Wait 3 seconds before processing (adjust as needed)
+
+    } catch (error) {
+        console.error("❌ Error fetching data:", error);
+    }
 }
 
-// ✅ Function to Process Defects and Render Chart
-function processDefectData(data) {
-    const defectCounts = {};
-    
-    data.forEach(row => {
-        if (row.defect) {
-            defectCounts[row.defect] = (defectCounts[row.defect] || 0) + 1;
-        }
-    });
+// ✅ Function to Process and Display the Defect Chart
+function processDefectsData() {
+    // ✅ Extract shift from title bar
+    let currentShift = document.getElementById("currentShift").innerText.split(":")[1].trim();
 
-    const labels = Object.keys(defectCounts);
-    const values = Object.values(defectCounts);
+    // ✅ Use Google Visualization API to fetch the latest sheet data
+    google.charts.load("current", { packages: ["corechart"] });
+    google.charts.setOnLoadCallback(() => {
+        const query = new google.visualization.Query(googleAppsScriptURL);
+        query.send((response) => {
+            const dataTable = response.getDataTable();
+            if (!dataTable) {
+                console.error("❌ Error: No data received from Google Sheets.");
+                return;
+            }
 
-    renderDefectChart(labels, values);
-}
+            let defectCounts = {};
 
-// ✅ Function to Render Defects Chart
-function renderDefectChart(labels, values) {
-    const ctx = document.getElementById("defectsChart").getContext("2d");
+            // ✅ Read data and filter by shift
+            for (let i = 0; i < dataTable.getNumberOfRows(); i++) {
+                let shift = dataTable.getValue(i, 2); // Column C (Shift)
+                let defectName = dataTable.getValue(i, 3); // Column D (Defect Name)
 
-    new Chart(ctx, {
-        type: "bar",
-        data: {
-            labels: labels,
-            datasets: [{
-                label: "Defects Count",
-                data: values,
-                backgroundColor: "rgba(255, 99, 132, 0.5)",
-                borderColor: "rgba(255, 99, 132, 1)",
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true
+                if (shift === currentShift) {
+                    defectCounts[defectName] = (defectCounts[defectName] || 0) + 1;
                 }
             }
-        }
+
+            // ✅ Convert data to chart format
+            let chartData = [["Defect Name", "Count"]];
+            for (let defect in defectCounts) {
+                chartData.push([defect, defectCounts[defect]]);
+            }
+
+            // ✅ Draw Chart
+            let chart = new google.visualization.BarChart(document.getElementById("chartBox1"));
+            let chartTable = google.visualization.arrayToDataTable(chartData);
+
+            chart.draw(chartTable, {
+                title: "Defects by Shift",
+                hAxis: { title: "Defect Count", minValue: 0 },
+                vAxis: { title: "Defect Type" },
+                legend: { position: "none" },
+                colors: ["#FF5733"]
+            });
+
+            console.log("✅ Defect chart updated successfully.");
+        });
     });
 }
+
+// ✅ Initialize Dashboard
+document.addEventListener("DOMContentLoaded", function () {
+    updateDateAndShift();
+    fetchDefectsData();
+});
