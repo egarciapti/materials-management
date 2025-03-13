@@ -207,13 +207,17 @@ function processAdhesionData() {
             ]);
 
             let options = {
-                width: 300, height: 300,
+                width: 200, // Reduce width
+                height: 200, // Reduce height
+                chartArea: { left: 20, top: 20, width: "80%", height: "80%" }, // Adjust margins
                 redFrom: 0, redTo: 2,
                 yellowFrom: 2, yellowTo: 3,
                 greenFrom: 3, greenTo: 5,
                 minorTicks: 1,
-                max: 5
+                max: 5,
+                fontSize: 14 // Reduce font size
             };
+            
 
             let chart = new google.visualization.Gauge(document.getElementById("chartBox3"));
             chart.draw(chartData, options);
