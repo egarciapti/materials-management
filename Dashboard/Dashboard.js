@@ -300,15 +300,22 @@ function drawScanningChart(data) {
             chartArea: { left: 50, top: 40, width: "85%", height: "65%" }
         };
 
-        // ✅ Update `chartBox2` content with counter above the chart
-        document.getElementById("chartBox2").innerHTML = `
-            <div style="text-align: center; font-size: 18px; font-weight: bold; color: #004080; margin-bottom: 5px;">
-                Total Scanned: ${totalScannedParts}
-            </div>
-            <div id="scanningChart"></div>
-        `;
+        // ✅ Ensure the container exists BEFORE drawing the chart
+        let chartContainer = document.getElementById("scanningChart");
+        if (!chartContainer) {
+            document.getElementById("chartBox2").innerHTML = `
+                <div style="text-align: center; font-size: 18px; font-weight: bold; color: #004080; margin-bottom: 5px;">
+                    Total Scanned: ${totalScannedParts}
+                </div>
+                <div id="scanningChart"></div> <!-- ✅ Ensure chart container exists -->
+            `;
+            chartContainer = document.getElementById("scanningChart");
+        } else {
+            // ✅ Update the counter without overwriting the chart
+            document.getElementById("chartBox2").firstElementChild.innerHTML = `Total Scanned: ${totalScannedParts}`;
+        }
 
-        let chart = new google.visualization.ColumnChart(document.getElementById("scanningChart"));
+        let chart = new google.visualization.ColumnChart(chartContainer);
         chart.draw(chartTable, options);
 
         console.log("✅ Scanning Chart Updated. Total Scanned Parts:", totalScannedParts);
