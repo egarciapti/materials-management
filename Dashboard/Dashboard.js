@@ -83,18 +83,19 @@ async function fetchDefectsData() {
 function processDefectsData(data) {
     let defectCounts = {};
 
-    // ✅ Extract and format the current date from the title bar
+    // ✅ Extract current date & shift from the title bar
     let currentDateText = document.getElementById("currentDate").innerText.split(":")[1].trim();
     let currentShift = document.getElementById("currentShift").innerText.split(":")[1].trim();
 
-    // ✅ Convert displayed date to match Google Sheets format (YYYY-MM-DD)
-    let formattedDate = new Date(currentDateText).toISOString().split("T")[0]; // Converts to YYYY-MM-DD
+    // ✅ Convert displayed date (March 12, 2025) → Google Sheets format (YYYY-MM-DD)
+    let formattedDateObj = new Date(currentDateText);
+    let formattedDate = formattedDateObj.toISOString().split("T")[0]; // YYYY-MM-DD
 
     console.log(`🔍 Filtering Data for Date: ${formattedDate}, Shift: ${currentShift}`);
 
     // ✅ Loop through data & filter by date & shift
     data.forEach(entry => {
-        let entryDate = entry.date.trim(); // Ensure no extra spaces
+        let entryDate = entry.date.trim();  // From Google Sheets (YYYY-MM-DD)
         let entryShift = entry.shift.trim();
         let defectName = entry.defectName.trim();
 
@@ -137,8 +138,6 @@ function processDefectsData(data) {
         console.log("✅ Defect chart updated successfully.");
     });
 }
-
-
 
 // ✅ Initialize Dashboard
 document.addEventListener("DOMContentLoaded", function () {
