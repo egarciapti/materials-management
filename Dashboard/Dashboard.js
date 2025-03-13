@@ -52,22 +52,22 @@ function initializeDashboard() {
     fetchDefectsData();
 }
 
-// ✅ Google Apps Script Web App URL (Replace with your actual URL)
+// ✅ Google Apps Script Web App URL
 const googleAppsScriptURL = "https://script.google.com/macros/s/AKfycbxvcq30l_-VnzajDymgstR0IiVBFaelDsrZWSoRJILoVWeK1XstUK2jvZn4zAuVpgHVMg/exec";
 
-// ✅ Fetch Defects Data from Google Apps Script
+// ✅ Function to Fetch Defects Data from Google Apps Script
 async function fetchDefectsData() {
     try {
-        const response = await fetch(googleAppsScriptURL, { mode: "no-cors" });
+        const response = await fetch(googleAppsScriptURL);
+        const jsonData = await response.json();
 
-        // Since "no-cors" doesn't allow direct response reading, we assume success
-        console.log("🚀 Data request sent successfully. The response is blocked due to no-cors.");
-        
-        // Call process function after a delay to allow data update in the spreadsheet
-        setTimeout(() => {
-            console.log("⏳ Waiting for Google Sheets update...");
-            processDefectsData();
-        }, 3000); // Wait 3 seconds before processing (adjust as needed)
+        if (!jsonData || jsonData.status === "error") {
+            console.error("❌ Error fetching defect data:", jsonData.message);
+            return;
+        }
+
+        console.log("✅ Successfully fetched defect data:", jsonData);
+        processDefectsData(jsonData);
 
     } catch (error) {
         console.error("❌ Error fetching data:", error);
@@ -75,53 +75,38 @@ async function fetchDefectsData() {
 }
 
 // ✅ Function to Process and Display the Defect Chart
-function processDefectsData() {
-    // ✅ Extract shift from title bar
+function processDefectsData(data) {
     let currentShift = document.getElementById("currentShift").innerText.split(":")[1].trim();
+    let defectCounts = {};
 
-    // ✅ Use Google Visualization API to fetch the latest sheet data
+    // ✅ Filter data for the current shift
+    data.forEach(entry => {
+        if (entry.shift === currentShift) {
+            defectCounts[entry.defectName] = (defectCounts[entry.defectName] || 0) + 1;
+        }
+    });
+
+    // ✅ Convert data to chart format
+    let chartData = [["Defect Name", "Count"]];
+    for (let defect in defectCounts) {
+        chartData.push([defect, defectCounts[defect]]);
+    }
+
+    // ✅ Load Google Charts and Draw
     google.charts.load("current", { packages: ["corechart"] });
     google.charts.setOnLoadCallback(() => {
-        const query = new google.visualization.Query(googleAppsScriptURL);
-        query.send((response) => {
-            const dataTable = response.getDataTable();
-            if (!dataTable) {
-                console.error("❌ Error: No data received from Google Sheets.");
-                return;
-            }
+        let chart = new google.visualization.BarChart(document.getElementById("chartBox1"));
+        let chartTable = google.visualization.arrayToDataTable(chartData);
 
-            let defectCounts = {};
-
-            // ✅ Read data and filter by shift
-            for (let i = 0; i < dataTable.getNumberOfRows(); i++) {
-                let shift = dataTable.getValue(i, 2); // Column C (Shift)
-                let defectName = dataTable.getValue(i, 3); // Column D (Defect Name)
-
-                if (shift === currentShift) {
-                    defectCounts[defectName] = (defectCounts[defectName] || 0) + 1;
-                }
-            }
-
-            // ✅ Convert data to chart format
-            let chartData = [["Defect Name", "Count"]];
-            for (let defect in defectCounts) {
-                chartData.push([defect, defectCounts[defect]]);
-            }
-
-            // ✅ Draw Chart
-            let chart = new google.visualization.BarChart(document.getElementById("chartBox1"));
-            let chartTable = google.visualization.arrayToDataTable(chartData);
-
-            chart.draw(chartTable, {
-                title: "Defects by Shift",
-                hAxis: { title: "Defect Count", minValue: 0 },
-                vAxis: { title: "Defect Type" },
-                legend: { position: "none" },
-                colors: ["#FF5733"]
-            });
-
-            console.log("✅ Defect chart updated successfully.");
+        chart.draw(chartTable, {
+            title: "Defects by Shift",
+            hAxis: { title: "Defect Count", minValue: 0 },
+            vAxis: { title: "Defect Type" },
+            legend: { position: "none" },
+            colors: ["#FF5733"]
         });
+
+        console.log("✅ Defect chart updated successfully.");
     });
 }
 
