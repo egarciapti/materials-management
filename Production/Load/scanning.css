@@ -54,36 +54,6 @@ body {
     white-space: nowrap;
 }
 
-/* ✅ Back Button */
-.home-button {
-    margin-top: 60px; /* Increased to move it lower */
-    padding: 20px 40px;
-    font-size: 22px;
-    background: #555; 
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 12px;
-    width: 300px;
-    height: 80px;
-    font-weight: bold;
-    transition: all 0.3s ease-in-out;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.home-button img {
-    width: 25px;
-    height: 25px;
-    display: inline-block;
-}
-
-.home-button:hover {
-    background: #333;
-    transform: scale(1.05);
-}
 
 /* ✅ Table Styling */
 table {
