@@ -249,3 +249,54 @@ document.addEventListener("DOMContentLoaded", function () {
     fetchDefectsData();
     fetchGaugeData(); // ✅ Fetch Adhesion & Thickness Data
 });
+
+const scanningChartURL = "https://script.google.com/macros/s/AKfycbwqFc-Vw0xIUe2rnu5l8QYxTIqhYnXOesnxk-rXia4RPQmSRaHMOGQHLtNALKuX2zwfnA/exec";
+
+async function fetchScanningData() {
+    try {
+        const response = await fetch(scanningChartURL);
+        const data = await response.json();
+
+        if (!data || Object.keys(data).length === 0) {
+            console.warn("⚠️ No scanning data found for today's date and shift.");
+            document.getElementById("chartBox2").innerHTML = "<p>No data available for today's shift.</p>";
+            return;
+        }
+
+        console.log("📦 Scanning Data:", data);
+        drawScanningChart(data);
+
+    } catch (error) {
+        console.error("❌ Error fetching scanning data:", error);
+    }
+}
+
+function drawScanningChart(data) {
+    google.charts.load("current", { packages: ["corechart"] });
+    google.charts.setOnLoadCallback(() => {
+        let chartData = [["Part Number", "Total Quantity"]];
+
+        Object.entries(data).forEach(([part, count]) => {
+            chartData.push([part, count]);
+        });
+
+        let chartTable = google.visualization.arrayToDataTable(chartData);
+        let options = {
+            title: "Total Pieces by Part Number",
+            hAxis: { title: "Part Number", textStyle: { fontSize: 14 }, slantedText: true, slantedTextAngle: 45 },
+            vAxis: { title: "Total Quantity", minValue: 0, textStyle: { fontSize: 14 } },
+            legend: { position: "none" },
+            colors: ["#2E86C1"],
+            chartArea: { left: 80, top: 40, width: "80%", height: "75%" }
+        };
+
+        let chart = new google.visualization.ColumnChart(document.getElementById("chartBox2"));
+        chart.draw(chartTable, options);
+        console.log("✅ Scanning Chart Updated.");
+    });
+}
+
+// ✅ Call the function on page load
+document.addEventListener("DOMContentLoaded", function () {
+    fetchScanningData();
+});
