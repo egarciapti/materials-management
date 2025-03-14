@@ -151,28 +151,17 @@ body {
     display: flex;
     flex-direction: column; /* Stack title & chart */
     align-items: center;
-    justify-content: center;
-    background: white;
-    border: 3px solid #004080;
-    border-radius: 12px;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
-    padding: 20px; /* ✅ Ensures spacing inside */
-    min-height: 200px; /* ✅ Prevents collapsing */
-}
-/* ✅ Ensures text is visible at the bottom */
-.chart-box {
-    min-height: 320px; /* ✅ Increased to ensure labels fit */
-    max-height: 380px; /* ✅ Prevents cutting */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
+    justify-content: flex-start; /* ⬅️ Ensure the chart stays lower */
     background: white;
     border: 3px solid #004080;
     border-radius: 12px;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
     padding: 20px;
-    overflow: visible; /* ✅ Ensures nothing is cut */
+    padding-bottom: 0px !important; /* ✅ No extra space at the bottom */
+    margin-bottom: 0px !important;
+    min-height: 320px; /* ✅ Increased to ensure labels fit */
+    max-height: 380px; /* ✅ Prevents cutting */
+    overflow: visible;  /* ✅ Ensure nothing is clipped */
 }
 
 
@@ -199,7 +188,7 @@ body {
 /* ✅ Ensure the Chart Itself Fills the Box */
 .chart-content {
     width: 100%;
-    height: 90%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
