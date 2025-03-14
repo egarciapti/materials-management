@@ -313,10 +313,11 @@ function drawScanningChart(data) {
             colors: ["#2E86C1"],
             chartArea: { 
                 left: 50, 
-                top: 40, 
+                top: 80,  // ✅ Increases the top space, pushing the chart down
                 width: "85%", 
-                height: "55%"  // ✅ Increase bottom space to show part numbers
+                height: "45%"  // ✅ Decreases height slightly to maintain spacing
             }
+            
         };
         
 
