@@ -293,19 +293,19 @@ function drawScanningChart(data) {
         let options = {
             titleTextStyle: { fontSize: 18, bold: true, color: "#004080" },
             hAxis: { 
-                textStyle: { fontSize: 14 },  // ✅ Ensures part numbers are visible
-                slantedText: true,           // ✅ Rotates text if necessary
-                slantedTextAngle: 45,        // ✅ 45-degree rotation to prevent overlap
-                textPosition: "out",         // ✅ Forces text to appear outside the axis
-                showTextEvery: 1,            // ✅ Ensures all labels appear
-                maxAlternation: 1,           // ✅ Forces Google Charts to not hide labels
-                minTextSpacing: 1,           // ✅ Ensures spacing between labels
-                title: "",                    // ✅ Removes x-axis title
+                title: "",                     // ✅ Removes x-axis title
+                textStyle: { fontSize: 14 },   // ✅ Ensures text size is readable
+                slantedText: true,             // ✅ Forces diagonal labels
+                slantedTextAngle: 45,          // ✅ Rotates text to prevent overlap
+                showTextEvery: 1,              // ✅ Forces Google Charts to show all labels
+                maxAlternation: 1,             // ✅ Prevents Google from hiding labels
+                minTextSpacing: 0,             // ✅ Ensures spacing is as small as possible
+                gridlines: { count: 0 },       // ✅ Removes grid lines to prevent conflicts
             },
             vAxis: { 
+                title: "",                     // ✅ Removes y-axis title
                 textStyle: { fontSize: 14 },
                 minValue: 0,
-                title: "",                     // ✅ Removes y-axis title
             },
             legend: { position: "none" }, // ✅ No legend needed
             colors: ["#2E86C1"],          // ✅ Keeps the original color
@@ -318,8 +318,6 @@ function drawScanningChart(data) {
         console.log("✅ Scanning Chart Updated.");
     });
 }
-
-
 
 
 // ✅ Call the function on page load
