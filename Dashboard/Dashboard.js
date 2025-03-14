@@ -156,9 +156,14 @@ function processDefectsData(data) {
                 titleTextStyle: { fontSize: 16, bold: true },
                 textStyle: { fontSize: 14 }
             },
-            legend: { position: "none" },
-            colors: ["#FF5733"],
-            chartArea: { left: 120, top: 20, width: "75%", height: "75%" } // ✅ Adjust top spacing
+            width: "100%",  
+    height: "100%",
+    chartArea: { left: "10%", top: "10%", width: "80%", height: "80%" },  // ✅ Adjusted space for centering
+    hAxis: { textStyle: { fontSize: 14 } },
+    vAxis: { textStyle: { fontSize: 14 } },
+    legend: { position: "none" },
+    colors: ["#FF5733"]
+            
         });
         
         
