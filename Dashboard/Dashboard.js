@@ -294,9 +294,10 @@ function drawScanningChart(data) {
             titleTextStyle: { fontSize: 18, bold: true, color: "#004080" },
             hAxis: { 
                 textStyle: { fontSize: 14 },  // ✅ Ensures part numbers are visible
-                slantedText: false,           // ✅ Keeps them straight (not rotated)
-                textPosition: "out",          // ✅ Ensures part numbers are shown
+                slantedText: true,            // ✅ Rotates part numbers for better fit
+                slantedTextAngle: 45,         // ✅ Angles text at 45 degrees
                 showTextEvery: 1,             // ✅ Show all part numbers
+                textPosition: "out",          // ✅ Ensures part numbers are outside
                 title: "",                    // ✅ Removes x-axis title
             },
             vAxis: { 
@@ -306,7 +307,8 @@ function drawScanningChart(data) {
             },
             legend: { position: "none" }, // ✅ No legend needed
             colors: ["#2E86C1"],          // ✅ Keeps the original color
-            chartArea: { left: 50, top: 60, width: "85%", height: "70%" } // ✅ Adjusted space
+            chartArea: { left: 50, top: 60, width: "85%", height: "70%" }, // ✅ Adjusted space
+            bar: { groupWidth: "60%" }    // ✅ Adjusts bar width to fit labels
         };
 
         let chart = new google.visualization.ColumnChart(document.getElementById("chartBox2"));
@@ -314,6 +316,7 @@ function drawScanningChart(data) {
         console.log("✅ Scanning Chart Updated.");
     });
 }
+
 
 
 // ✅ Call the function on page load
