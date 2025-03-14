@@ -282,7 +282,7 @@ function drawScanningChart(data) {
         let totalScanned = 0; // ✅ Initialize counter
 
         Object.entries(data).forEach(([part, count]) => {
-            chartData.push([part, count]);
+            chartData.push([part.toString(), count]); // ✅ Ensure part numbers are treated as strings
             totalScanned += count; // ✅ Sum total scanned pieces
         });
 
@@ -297,7 +297,7 @@ function drawScanningChart(data) {
                 slantedText: true,            // ✅ Rotates part numbers for better fit
                 slantedTextAngle: 45,         // ✅ Angles text at 45 degrees
                 showTextEvery: 1,             // ✅ Show all part numbers
-                textPosition: "out",          // ✅ Ensures part numbers are outside
+                textPosition: "out",          // ✅ Ensures part numbers are displayed
                 title: "",                    // ✅ Removes x-axis title
             },
             vAxis: { 
@@ -316,6 +316,7 @@ function drawScanningChart(data) {
         console.log("✅ Scanning Chart Updated.");
     });
 }
+
 
 
 
