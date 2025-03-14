@@ -282,7 +282,7 @@ function drawScanningChart(data) {
         let totalScanned = 0;
 
         Object.entries(data).forEach(([part, count]) => {
-            chartData.push([String(part), count]); // ✅ Ensure part numbers are treated as text
+            chartData.push([String(part), count]); // ✅ Convert part numbers to strings
             totalScanned += count;
         });
 
@@ -293,9 +293,10 @@ function drawScanningChart(data) {
             titleTextStyle: { fontSize: 18, bold: true, color: "#004080" },
             hAxis: { 
                 textStyle: { fontSize: 14 },  
-                slantedText: true, 
+                slantedText: true, // ✅ Rotates the part numbers
                 slantedTextAngle: 45,  
                 showTextEvery: 1,  
+                textPosition: "out", // ✅ Forces the labels to be visible
                 title: "",  
             },
             vAxis: { 
@@ -305,7 +306,7 @@ function drawScanningChart(data) {
             },
             legend: { position: "none" }, 
             colors: ["#2E86C1"],  
-            chartArea: { left: 50, top: 60, width: "85%", height: "65%" } // ✅ Reduced height to avoid cut-off
+            chartArea: { left: 50, top: 60, width: "85%", height: "55%" } // ✅ Shrinks height to allow space for labels
         };
 
         let chart = new google.visualization.ColumnChart(document.getElementById("chartBox2"));

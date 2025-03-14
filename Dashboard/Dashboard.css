@@ -216,18 +216,19 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-bottom: 50px; /* ✅ Adds more space below */
-    overflow: visible; /* ✅ Ensures no cropping */
+    padding-bottom: 60px; /* ✅ More space for labels */
+    overflow: visible; /* ✅ Prevents cropping */
 }
 
 .chart-content {
     width: 100%;
-    height: 90%;
+    height: 85%; /* ✅ Slightly reduce height */
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: visible; /* ✅ Ensures labels are fully visible */
 }
+
 
 
 /* ✅ Ensures text is visible at the bottom */
