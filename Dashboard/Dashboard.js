@@ -274,27 +274,24 @@ function drawScanningChart(data) {
     google.charts.load("current", { packages: ["corechart"] });
     google.charts.setOnLoadCallback(() => {
         let chartData = [["Part Number", "Total Quantity"]];
+        let totalScanned = 0; // ✅ Initialize counter
 
         Object.entries(data).forEach(([part, count]) => {
             chartData.push([part, count]);
+            totalScanned += count; // ✅ Sum total scanned pieces
         });
+
+        // ✅ Update the counter display
+        document.getElementById("totalScannedCounter").innerText = `Total Scanned: ${totalScanned}`;
 
         let chartTable = google.visualization.arrayToDataTable(chartData);
         let options = {
             titleTextStyle: { fontSize: 18, bold: true, color: "#004080" },
-            hAxis: { 
-                textStyle: { fontSize: 14 },  // ✅ Ensures part numbers are visible
-                slantedText: false,           // ✅ Keeps them straight (not rotated)
-                title: "",                    // ✅ Removes x-axis title
-            },
-            vAxis: { 
-                textStyle: { fontSize: 14 },
-                minValue: 0,
-                title: "",                     // ✅ Removes y-axis title
-            },
-            legend: { position: "none" }, // ✅ No legend needed
-            colors: ["#2E86C1"],          // ✅ Keeps the original color
-            chartArea: { left: 50, top: 40, width: "85%", height: "75%" } // ✅ Adjusted space
+            hAxis: { textStyle: { fontSize: 14 }, slantedText: false, title: "" },
+            vAxis: { textStyle: { fontSize: 14 }, minValue: 0, title: "" },
+            legend: { position: "none" },
+            colors: ["#2E86C1"],
+            chartArea: { left: 50, top: 40, width: "85%", height: "75%" }
         };
 
         let chart = new google.visualization.ColumnChart(document.getElementById("chartBox2"));
@@ -302,6 +299,7 @@ function drawScanningChart(data) {
         console.log("✅ Scanning Chart Updated.");
     });
 }
+
 
 // ✅ Call the function on page load
 document.addEventListener("DOMContentLoaded", function () {
