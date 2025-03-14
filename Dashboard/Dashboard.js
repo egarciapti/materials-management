@@ -315,7 +315,7 @@ function drawScanningChart(data) {
                 left: 50, 
                 top: 80,  // ✅ Increases the top space, pushing the chart down
                 width: "85%", 
-                height: "80%"  // ✅ Decreases height slightly to maintain spacing
+                height: "45%"  // ✅ Decreases height slightly to maintain spacing
             }
             
         };
