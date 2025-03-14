@@ -159,7 +159,7 @@ function processDefectsData(data) {
             width: "100%",  
     height: "100%",
     chartArea: { left: "10%", top: "10%", width: "80%", height: "80%" },  // ✅ Adjusted space for centering
-    hAxis: { textStyle: { fontSize: 14 } },
+    hAxis: { textStyle: { fontSize: 10 } },
     vAxis: { textStyle: { fontSize: 14 } },
     legend: { position: "none" },
     colors: ["#FF5733"]
