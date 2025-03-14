@@ -282,7 +282,7 @@ function drawScanningChart(data) {
         let totalScanned = 0; // ✅ Initialize counter
 
         Object.entries(data).forEach(([part, count]) => {
-            chartData.push([String(part), count]); // ✅ Force part number as a string
+            chartData.push([String(part), count]); // ✅ Ensure part number is a string
             totalScanned += count; // ✅ Sum total scanned pieces
         });
 
@@ -293,24 +293,20 @@ function drawScanningChart(data) {
         let options = {
             titleTextStyle: { fontSize: 18, bold: true, color: "#004080" },
             hAxis: { 
-                title: "",                     // ✅ Removes x-axis title
-                textStyle: { fontSize: 14 },   // ✅ Ensures text size is readable
-                slantedText: true,             // ✅ Forces diagonal labels
-                slantedTextAngle: 45,          // ✅ Rotates text to prevent overlap
-                showTextEvery: 1,              // ✅ Forces Google Charts to show all labels
-                maxAlternation: 1,             // ✅ Prevents Google from hiding labels
-                minTextSpacing: 0,             // ✅ Ensures spacing is as small as possible
-                gridlines: { count: 0 },       // ✅ Removes grid lines to prevent conflicts
+                textStyle: { fontSize: 14 },  // ✅ Ensures part numbers are visible
+                slantedText: true,            // ✅ Rotates text to prevent overlap
+                slantedTextAngle: 45,         // ✅ Adjusts the angle for readability
+                showTextEvery: 1,             // ✅ Forces all labels to display
+                title: "",                    // ✅ Removes x-axis title
             },
             vAxis: { 
-                title: "",                     // ✅ Removes y-axis title
                 textStyle: { fontSize: 14 },
                 minValue: 0,
+                title: "",                     // ✅ Removes y-axis title
             },
             legend: { position: "none" }, // ✅ No legend needed
             colors: ["#2E86C1"],          // ✅ Keeps the original color
-            chartArea: { left: 50, top: 60, width: "85%", height: "70%" }, // ✅ Adjusted space
-            bar: { groupWidth: "60%" }  // ✅ Ensures bars are wide enough for labels
+            chartArea: { left: 50, top: 60, width: "85%", height: "70%" } // ✅ Adjusted space
         };
 
         let chart = new google.visualization.ColumnChart(document.getElementById("chartBox2"));
@@ -318,6 +314,7 @@ function drawScanningChart(data) {
         console.log("✅ Scanning Chart Updated.");
     });
 }
+
 
 
 // ✅ Call the function on page load

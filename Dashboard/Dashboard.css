@@ -216,19 +216,19 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-bottom: 40px; /* ✅ Ensures space for part numbers */
+    padding-bottom: 60px; /* ✅ More space for part numbers */
     overflow: visible; /* ✅ Ensures labels are not cut off */
 }
 
-/* ✅ Ensures the entire chart is visible */
 .chart-content {
     width: 100%;
     height: 90%;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: visible; /* ✅ Prevents cutting off the part numbers */
+    overflow: visible; /* ✅ Prevents cutting off part numbers */
 }
+
 
 /* ✅ Ensures text is visible at the bottom */
 .chart-box {
