@@ -279,34 +279,33 @@ function drawScanningChart(data) {
     google.charts.load("current", { packages: ["corechart"] });
     google.charts.setOnLoadCallback(() => {
         let chartData = [["Part Number", "Total Quantity"]];
-        let totalScanned = 0; // ✅ Initialize counter
+        let totalScanned = 0;
 
         Object.entries(data).forEach(([part, count]) => {
-            chartData.push([String(part), count]); // ✅ Ensure part number is a string
-            totalScanned += count; // ✅ Sum total scanned pieces
+            chartData.push([String(part), count]); // ✅ Ensure part numbers are treated as text
+            totalScanned += count;
         });
 
-        // ✅ Update the counter display
         document.getElementById("totalScannedCounter").innerText = `Total Scanned: ${totalScanned}`;
 
         let chartTable = google.visualization.arrayToDataTable(chartData);
         let options = {
             titleTextStyle: { fontSize: 18, bold: true, color: "#004080" },
             hAxis: { 
-                textStyle: { fontSize: 14 },  // ✅ Ensures part numbers are visible
-                slantedText: true,            // ✅ Rotates text to prevent overlap
-                slantedTextAngle: 45,         // ✅ Adjusts the angle for readability
-                showTextEvery: 1,             // ✅ Forces all labels to display
-                title: "",                    // ✅ Removes x-axis title
+                textStyle: { fontSize: 14 },  
+                slantedText: true, 
+                slantedTextAngle: 45,  
+                showTextEvery: 1,  
+                title: "",  
             },
             vAxis: { 
                 textStyle: { fontSize: 14 },
                 minValue: 0,
-                title: "",                     // ✅ Removes y-axis title
+                title: "",  
             },
-            legend: { position: "none" }, // ✅ No legend needed
-            colors: ["#2E86C1"],          // ✅ Keeps the original color
-            chartArea: { left: 50, top: 60, width: "85%", height: "70%" } // ✅ Adjusted space
+            legend: { position: "none" }, 
+            colors: ["#2E86C1"],  
+            chartArea: { left: 50, top: 60, width: "85%", height: "65%" } // ✅ Reduced height to avoid cut-off
         };
 
         let chart = new google.visualization.ColumnChart(document.getElementById("chartBox2"));
@@ -314,6 +313,7 @@ function drawScanningChart(data) {
         console.log("✅ Scanning Chart Updated.");
     });
 }
+
 
 
 

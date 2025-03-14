@@ -216,8 +216,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-bottom: 60px; /* ✅ More space for part numbers */
-    overflow: visible; /* ✅ Ensures labels are not cut off */
+    padding-bottom: 50px; /* ✅ Adds more space below */
+    overflow: visible; /* ✅ Ensures no cropping */
 }
 
 .chart-content {
@@ -226,7 +226,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: visible; /* ✅ Prevents cutting off part numbers */
+    overflow: visible; /* ✅ Ensures labels are fully visible */
 }
 
 
