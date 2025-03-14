@@ -294,7 +294,7 @@ function drawScanningChart(data) {
             hAxis: { 
                 textStyle: { fontSize: 14 },
                 slantedText: true, // ✅ Rotates the part numbers if needed
-                slantedTextAngle: 45,  
+                slantedTextAngle: 90,  
                 showTextEvery: 1,  
                 textPosition: "out", 
                 title: "Part Numbers", // ✅ Adds a title to the X-axis
