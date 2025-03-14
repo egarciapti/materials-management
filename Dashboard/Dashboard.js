@@ -293,8 +293,8 @@ function drawScanningChart(data) {
             titleTextStyle: { fontSize: 18, bold: true, color: "#004080" },
             hAxis: { 
                 textStyle: { fontSize: 14 },
-                slantedText: true, // ✅ Rotates the part numbers if needed
-                slantedTextAngle: 90,  
+                slantedText: true, 
+                slantedTextAngle: 60,  // ✅ Rotates labels so they fit
                 showTextEvery: 1,  
                 textPosition: "out", 
                 title: "Part Numbers", // ✅ Adds a title to the X-axis
@@ -305,14 +305,15 @@ function drawScanningChart(data) {
                 title: "Total Quantity", // ✅ Adds a title to the Y-axis
             },
             legend: { position: "none" }, 
-            colors: ["#2E86C1"],  
+            colors: ["#2E86C1"],
             chartArea: { 
                 left: 50, 
-                top: 60, 
+                top: 40, 
                 width: "85%", 
-                height: "65%"  // ✅ Increased height to prevent cropping
+                height: "50%"  // ✅ Increase bottom space to show part numbers
             }
         };
+        
 
         let chart = new google.visualization.ColumnChart(document.getElementById("chartBox2"));
         chart.draw(chartTable, options);
