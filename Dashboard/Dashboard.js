@@ -294,11 +294,14 @@ function drawScanningChart(data) {
             hAxis: { 
                 textStyle: { fontSize: 14 },
                 slantedText: true, 
-                slantedTextAngle: 60,  // ✅ Rotates labels so they fit
+                slantedTextAngle: 45,  // ✅ Adjust angle for better spacing
                 showTextEvery: 1,  
                 textPosition: "out", 
-                title: "Part Numbers", // ✅ Adds a title to the X-axis
+                maxAlternation: 1,  // ✅ Ensures all labels are shown
+                minTextSpacing: 5,  // ✅ Increases spacing between labels
+                maxTextLines: 2     // ✅ Allows labels to wrap if needed
             },
+            
             vAxis: { 
                 textStyle: { fontSize: 14 },
                 minValue: 0,
@@ -310,7 +313,7 @@ function drawScanningChart(data) {
                 left: 50, 
                 top: 40, 
                 width: "85%", 
-                height: "50%"  // ✅ Increase bottom space to show part numbers
+                height: "55%"  // ✅ Increase bottom space to show part numbers
             }
         };
         
