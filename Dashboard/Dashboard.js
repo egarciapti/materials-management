@@ -292,11 +292,21 @@ function drawScanningChart(data) {
         let chartTable = google.visualization.arrayToDataTable(chartData);
         let options = {
             titleTextStyle: { fontSize: 18, bold: true, color: "#004080" },
-            hAxis: { textStyle: { fontSize: 14 }, slantedText: false, title: "" },
-            vAxis: { textStyle: { fontSize: 14 }, minValue: 0, title: "" },
-            legend: { position: "none" },
-            colors: ["#2E86C1"],
-            chartArea: { left: 50, top: 40, width: "85%", height: "75%" }
+            hAxis: { 
+                textStyle: { fontSize: 14 },  // ✅ Ensures part numbers are visible
+                slantedText: false,           // ✅ Keeps them straight (not rotated)
+                textPosition: "out",          // ✅ Ensures part numbers are shown
+                showTextEvery: 1,             // ✅ Show all part numbers
+                title: "",                    // ✅ Removes x-axis title
+            },
+            vAxis: { 
+                textStyle: { fontSize: 14 },
+                minValue: 0,
+                title: "",                     // ✅ Removes y-axis title
+            },
+            legend: { position: "none" }, // ✅ No legend needed
+            colors: ["#2E86C1"],          // ✅ Keeps the original color
+            chartArea: { left: 50, top: 60, width: "85%", height: "70%" } // ✅ Adjusted space
         };
 
         let chart = new google.visualization.ColumnChart(document.getElementById("chartBox2"));
