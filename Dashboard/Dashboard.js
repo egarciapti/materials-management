@@ -292,20 +292,22 @@ function drawScanningChart(data) {
         let options = {
             titleTextStyle: { fontSize: 18, bold: true, color: "#004080" },
             hAxis: { 
-                textStyle: { fontSize: 14 },
+                textStyle: { 
+                    fontSize: 10  // ✅ Reduce font size for better fit
+                },
                 slantedText: true, 
                 slantedTextAngle: 45,  // ✅ Adjust angle for better spacing
                 showTextEvery: 1,  
                 textPosition: "out", 
                 maxAlternation: 1,  // ✅ Ensures all labels are shown
-                minTextSpacing: 5,  // ✅ Increases spacing between labels
+                minTextSpacing: 1,  // ✅ Reduces space between labels
                 maxTextLines: 2     // ✅ Allows labels to wrap if needed
             },
+            
             
             vAxis: { 
                 textStyle: { fontSize: 14 },
                 minValue: 0,
-                title: "Total Quantity", // ✅ Adds a title to the Y-axis
             },
             legend: { position: "none" }, 
             colors: ["#2E86C1"],
