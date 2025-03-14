@@ -274,36 +274,51 @@ function drawScanningChart(data) {
     google.charts.load("current", { packages: ["corechart"] });
     google.charts.setOnLoadCallback(() => {
         let chartData = [["Part Number", "Total Quantity"]];
+        let totalScannedParts = 0;
 
         Object.entries(data).forEach(([part, count]) => {
             chartData.push([part, count]);
+            totalScannedParts += count; // ✅ Sum total scanned parts
         });
+
+        // ✅ Update the counter without affecting the chart
+        let counterElement = document.getElementById("scannedCounter");
+        if (counterElement) {
+            counterElement.innerHTML = `Total Scanned: ${totalScannedParts}`;
+        }
+
+        // ✅ Ensure there is valid data
+        if (chartData.length === 1) {
+            console.warn("⚠️ No scanning data available.");
+            document.getElementById("scanningChart").innerHTML = "<p style='text-align: center;'>No data available</p>";
+            return;
+        }
 
         let chartTable = google.visualization.arrayToDataTable(chartData);
         let options = {
-            titleTextStyle: { fontSize: 18, bold: true, color: "#004080" },
             hAxis: { 
-                textStyle: { fontSize: 14 },  // ✅ Ensures part numbers are visible
-                slantedText: false,           // ✅ Keeps them straight (not rotated)
-                title: "",                    // ✅ Removes x-axis title
+                textStyle: { fontSize: 14 }, 
+                slantedText: false, // ✅ Keep part numbers straight
+                title: ""  
             },
             vAxis: { 
                 textStyle: { fontSize: 14 },
                 minValue: 0,
-                title: "",                     // ✅ Removes y-axis title
+                title: ""  
             },
-            legend: { position: "none" }, // ✅ No legend needed
-            colors: ["#2E86C1"],          // ✅ Keeps the original color
-            chartArea: { left: 50, top: 40, width: "85%", height: "75%" } // ✅ Adjusted space
+            legend: { position: "none" },
+            colors: ["#2E86C1"],  
+            chartArea: { left: 50, top: 40, width: "85%", height: "75%" } 
         };
 
-        let chart = new google.visualization.ColumnChart(document.getElementById("chartBox2"));
+        let chart = new google.visualization.ColumnChart(document.getElementById("scanningChart"));
         chart.draw(chartTable, options);
-        console.log("✅ Scanning Chart Updated.");
+        console.log("✅ Scanning Chart Updated. Total Scanned Parts:", totalScannedParts);
     });
 }
 
-// ✅ Call the function on page load
+// ✅ Fetch and draw chart on page load
 document.addEventListener("DOMContentLoaded", function () {
     fetchScanningData();
 });
+
