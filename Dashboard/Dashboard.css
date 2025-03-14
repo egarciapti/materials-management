@@ -228,13 +228,14 @@ body {
 
 #chartBox2 {
     width: 100%;
-    height: 100%;
+    height: 90%; /* ✅ Reduce height to allow space for labels */
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-bottom: 40px; /* ✅ Ensure space for part numbers */
-    overflow: visible; /* ✅ Prevents cropping */
+    padding-bottom: 20px; /* ✅ Reduce bottom padding */
+    overflow: visible;
 }
+
 
 .chart-content {
     width: 100%;
