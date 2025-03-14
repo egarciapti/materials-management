@@ -282,7 +282,7 @@ function drawScanningChart(data) {
         let totalScanned = 0; // ✅ Initialize counter
 
         Object.entries(data).forEach(([part, count]) => {
-            chartData.push([part.toString(), count]); // ✅ Ensure part numbers are treated as strings
+            chartData.push([String(part), count]); // ✅ Force part number as a string
             totalScanned += count; // ✅ Sum total scanned pieces
         });
 
@@ -294,10 +294,12 @@ function drawScanningChart(data) {
             titleTextStyle: { fontSize: 18, bold: true, color: "#004080" },
             hAxis: { 
                 textStyle: { fontSize: 14 },  // ✅ Ensures part numbers are visible
-                slantedText: true,            // ✅ Rotates part numbers for better fit
-                slantedTextAngle: 45,         // ✅ Angles text at 45 degrees
-                showTextEvery: 1,             // ✅ Show all part numbers
-                textPosition: "out",          // ✅ Ensures part numbers are displayed
+                slantedText: true,           // ✅ Rotates text if necessary
+                slantedTextAngle: 45,        // ✅ 45-degree rotation to prevent overlap
+                textPosition: "out",         // ✅ Forces text to appear outside the axis
+                showTextEvery: 1,            // ✅ Ensures all labels appear
+                maxAlternation: 1,           // ✅ Forces Google Charts to not hide labels
+                minTextSpacing: 1,           // ✅ Ensures spacing between labels
                 title: "",                    // ✅ Removes x-axis title
             },
             vAxis: { 
@@ -308,7 +310,7 @@ function drawScanningChart(data) {
             legend: { position: "none" }, // ✅ No legend needed
             colors: ["#2E86C1"],          // ✅ Keeps the original color
             chartArea: { left: 50, top: 60, width: "85%", height: "70%" }, // ✅ Adjusted space
-            bar: { groupWidth: "60%" }    // ✅ Adjusts bar width to fit labels
+            bar: { groupWidth: "60%" }  // ✅ Ensures bars are wide enough for labels
         };
 
         let chart = new google.visualization.ColumnChart(document.getElementById("chartBox2"));
