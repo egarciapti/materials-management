@@ -161,8 +161,8 @@ body {
 }
 /* ✅ Ensures text is visible at the bottom */
 .chart-box {
-    min-height: 280px; /* ✅ Ensures enough space for chart + labels */
-    max-height: 320px;
+    min-height: 320px; /* ✅ Increased to ensure labels fit */
+    max-height: 380px; /* ✅ Prevents cutting */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -172,8 +172,9 @@ body {
     border-radius: 12px;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
     padding: 20px;
-    overflow: visible; /* ✅ Prevents content from being hidden */
+    overflow: visible; /* ✅ Ensures nothing is cut */
 }
+
 
 #chartBox1 {
     display: flex;
